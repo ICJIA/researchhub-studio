@@ -2,10 +2,10 @@
   <v-container>
     <v-layout justify-center>
       <v-flex v-if="view" xs12 sm10 md8>
-        <RHDatasetView :item="item" />
+        <RHDatasetView :item="item" :downloader="nodownloader" />
       </v-flex>
 
-      <v-flex v-else xs12 sm10 xl8>
+      <v-flex v-else xs12 sm6 md4>
         <RHDatasetCard :item="item" />
       </v-flex>
     </v-layout>
@@ -26,6 +26,11 @@ export default {
   props: {
     item: Object,
     view: Boolean
+  },
+  methods: {
+    nodownloader() {
+      alert('Cannot download files in preview!')
+    }
   }
 }
 </script>

@@ -6,7 +6,10 @@ import {
   fetchItemById as fetchArticleById,
   fetchItemsList as fetchArticlesList
 } from '@/services/client.articles.js'
-import { fetchItemsList as fetchAuthorsList } from '@/services/client.authors.js'
+import {
+  fetchItemById as fetchAuthorById,
+  fetchItemsList as fetchAuthorsList
+} from '@/services/client.authors.js'
 import {
   fetchItemById as fetchDatasetById,
   fetchItemsList as fetchDatasetsList
@@ -15,7 +18,8 @@ import {
   createItem,
   deleteItem,
   updateItem,
-  updateItemStatus
+  updateItemStatus,
+  uploadFile
 } from '@/services/client.jobs.js'
 
 export { namespaced, state, getters, mutations, actions }
@@ -23,6 +27,7 @@ export { namespaced, state, getters, mutations, actions }
 const namespaced = true
 
 const state = {
+  filelist: [],
   item: {},
   itemId: '',
   itemlist: [],
@@ -32,12 +37,15 @@ const state = {
 
 const getters = {
   itemToPost: state => {
-    let item = state.item
-    item.external = false
+    const item = { ...state.item }
+    if (Object.keys(item).length) item.external = false
+
+    Object.keys(item)
+      .filter(key => key.includes('file'))
+      .forEach(key => delete item[key])
 
     if (item.apps) item.apps = item.apps.map(el => el._id)
     if (item.articles) item.articles = item.articles.map(el => el._id)
-    if (item.authors) item.authors = item.authors.map(el => el._id)
     if (item.datasets) item.datasets = item.datasets.map(el => el._id)
 
     return item
@@ -45,6 +53,9 @@ const getters = {
 }
 
 const mutations = {
+  SET_FILE_LIST(state, payload) {
+    state.filelist = payload
+  },
   SET_ITEM(state, payload) {
     state.item = payload
   },
@@ -57,6 +68,9 @@ const mutations = {
 }
 
 const actions = {
+  setFilelist({ commit }, filelist) {
+    commit('SET_FILE_LIST', filelist)
+  },
   setItem({ commit }, item) {
     commit('SET_ITEM', item)
   },
@@ -69,52 +83,57 @@ const actions = {
     commit('SET_ITEM_LIST', [])
   },
   async fetchItem({ commit }, { contentType, id }) {
-    let item
+    let res
 
     switch (contentType) {
       case 'apps':
-        item = (await fetchAppById(id)).data
+        res = await fetchAppById(id)
         break
       case 'articles':
-        item = (await fetchArticleById(id)).data
-        break
-      case 'datasets':
-        item = (await fetchDatasetById(id)).data
-    }
-
-    commit('SET_ITEM', item)
-    commit('SET_ITEM_ID', id)
-  },
-  async fetchItemList({ commit }, { contentType, status }) {
-    let list
-
-    switch (contentType) {
-      case 'apps':
-        list = (await fetchAppsList(status)).data
-        break
-      case 'articles':
-        list = (await fetchArticlesList(status)).data
+        res = await fetchArticleById(id)
         break
       case 'authors':
-        list = (await fetchAuthorsList()).data
+        res = await fetchAuthorById(id)
         break
       case 'datasets':
-        list = (await fetchDatasetsList(status)).data
+        res = await fetchDatasetById(id)
     }
 
-    commit('SET_ITEM_LIST', list)
+    commit('SET_ITEM', res.data)
+    commit('SET_ITEM_ID', id)
+    return res
   },
-  async updateItemToPublished(context, { contentType, id }) {
+  async fetchItemList({ commit }, { contentType, status }) {
+    let res
+
+    switch (contentType) {
+      case 'apps':
+        res = await fetchAppsList(status)
+        break
+      case 'articles':
+        res = await fetchArticlesList(status)
+        break
+      case 'authors':
+        res = await fetchAuthorsList()
+        break
+      case 'datasets':
+        res = await fetchDatasetsList(status)
+    }
+
+    commit('SET_ITEM_LIST', res.data)
+    return res
+  },
+  async updateItemToPublished(_, { contentType, id }) {
     return await updateItemStatus(contentType, id, 'published')
   },
-  async updateItemToSubmitted(context, { contentType, id }) {
+  async updateItemToSubmitted(_, { contentType, id }) {
     return await updateItemStatus(contentType, id, 'submitted')
   },
-  async updateItemToCreated(context, { contentType, id }) {
+  async updateItemToCreated(_, { contentType, id }) {
     return await updateItemStatus(contentType, id, 'created')
   },
 
-  async deleteItem(context, { contentType, id }) {
+  async deleteItem(_, { contentType, id }) {
     return await deleteItem(contentType, id)
   },
   async createItem({ state, getters }, contentType) {
@@ -124,6 +143,12 @@ const actions = {
     await createItem(contentType, getters.itemToPost, state.item)
   },
   async updateItem({ state, getters }, contentType) {
+    console.log(getters.itemToPost)
     return await updateItem(contentType, getters.itemToPost, state.itemId)
+  },
+  async uploadFiles({ state }, contentType) {
+    state.filelist.forEach(async el => {
+      await uploadFile(contentType, el.field, el.file, state.itemId)
+    })
   }
 }

@@ -1,6 +1,6 @@
 import { fetchData, buildQuery } from './client'
 
-export { fetchItemById, fetchItemsList, fetchDataById }
+export { fetchItemById, fetchItemsList }
 
 /**
  * Fetch a dataset using id.
@@ -12,7 +12,7 @@ async function fetchItemById(id) {
   const query = buildQuery('dataset', params, fields)
   const [data, HTTPstatus] = await fetchData(query)
   return {
-    data: data ? data.dataset : null,
+    data: data ? data.dataset : {},
     status: HTTPstatus
   }
 }
@@ -27,29 +27,7 @@ async function fetchItemsList(status) {
   const query = buildQuery('datasets', params, fields)
   const [data, HTTPstatus] = await fetchData(query)
   return {
-    data: data ? data.datasets : null,
-    status: HTTPstatus
-  }
-}
-
-/**
- * Fetch data, or info on data, by id.
- * @param {String} id
- * @param {Boolean} csv
- */
-async function fetchDataById(id, csv) {
-  const params = `id: "${id}"`
-  const fields = csv
-    ? `datacsv
-      datafilename`
-    : `datafile {
-        name
-        url
-      }`
-  const query = buildQuery('dataset', params, fields)
-  const [data, HTTPstatus] = await fetchData(query)
-  return {
-    data: data ? data.dataset : null,
+    data: data ? data.datasets : [],
     status: HTTPstatus
   }
 }
@@ -73,18 +51,16 @@ function getDatasetFields(isList) {
       tags
       sources
       timeperiod
-      agegroup
       unit
       variables
       description
       notes
       citation
       funding
-      datacsv
-      # datafile {
-      #  name
-      #  url
-      # }
+      datafile {
+        name
+        url
+      }
       apps (sort: "date:desc", where: { status: "published" }) {
         _id
         title

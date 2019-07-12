@@ -1,5 +1,5 @@
 <template>
-  <BaseStepper :stepNumTotal="2">
+  <BaseStepper :stepNumTotal="2" @stepper-navigate-before="navigateBefore">
     <template v-slot:stepHeader1>{{ stepHeader1 }}</template>
 
     <template v-slot:stepHeader2>{{ stepHeader2 }}</template>
@@ -39,6 +39,7 @@ export default {
   methods: {
     navigateBefore() {
       this.$store.dispatch('content/setItem', {})
+      this.$store.dispatch('content/setItemId', '')
     }
   }
 }

@@ -6,6 +6,7 @@
     @form-reset="onReset"
   >
     <v-form ref="form" v-model="valid" lazy-validation>
+      <!-- common fields input 1 -->
       <v-layout row wrap>
         <v-flex class="px-3" xs12 md6 lg4>
           <v-text-field
@@ -57,260 +58,96 @@
         </v-flex>
       </v-layout>
 
-      <v-layout row wrap>
-        <template v-if="contentType === 'apps'">
-          <v-flex class="px-3" xs12 md6 lg4>
-            <v-text-field
-              v-model="item.url"
-              label="URL"
-              :rules="[rules.required]"
-            />
-          </v-flex>
+      <!-- content type specific fields input  -->
+      <CreateFormAppFields
+        v-if="contentType === 'apps'"
+        v-model="item"
+        :rules="rules"
+      >
+        <template v-slot:image>
+          <MyDropzone
+            ref="DropzoneImage"
+            fileTypes=".jpg, .jpeg, .png"
+            :maxOne="true"
+            :update="update"
+          >
+            <template v-slot:title>{{ 'Image' }}</template>
+            <template v-slot:message>{{ dropzoneMsgImage }}</template>
+          </MyDropzone>
+        </template>
+      </CreateFormAppFields>
 
-          <v-flex xs12>
-            <v-layout row wrap>
-              <v-flex class="px-3" xs12 md6 lg4>
-                <v-select
-                  v-model="item.articles"
-                  item-text="title"
-                  label="Related articles"
-                  clearable
-                  multiple
-                  return-object
-                  :items="articleOptions"
-                />
-              </v-flex>
-
-              <v-flex class="px-3" xs12 md6 lg4>
-                <v-select
-                  v-model="item.datasets"
-                  item-text="title"
-                  label="Related datasets"
-                  clearable
-                  multiple
-                  return-object
-                  :items="datasetOptions"
-                />
-              </v-flex>
-            </v-layout>
-          </v-flex>
-
-          <v-flex class="px-3 pt-3" xs12>
-            <BaseDropzoneTitle :update="update">Image</BaseDropzoneTitle>
-
-            <MyDropzone
-              ref="DropzoneImage"
-              fileTypes=".jpg, .jpeg, .png"
-              :maxOne="true"
-            >
-              <template>{{ msgDropzoneImage }}</template>
-            </MyDropzone>
-          </v-flex>
-
-          <v-flex class="px-3" xs12 md10 lg6>
-            <v-textarea
-              v-model="item.description"
-              label="Description"
-              :rules="[rules.required]"
-            />
-          </v-flex>
+      <CreateFormArticleFields
+        v-if="contentType === 'articles'"
+        v-model="item"
+        :rules="rules"
+        :update="update"
+      >
+        <template v-slot:mainfile>
+          <MyDropzone
+            ref="DropzoneMainfile"
+            fileTypes=".pdf"
+            :maxOne="true"
+            :update="update"
+          >
+            <template v-slot:title>{{ 'Main file' }}</template>
+            <template v-slot:message>{{ dropzoneMsgPDF }}</template>
+          </MyDropzone>
         </template>
 
-        <template v-if="contentType === 'articles'">
-          <v-flex class="px-3" xs12 md6 lg4>
-            <v-select
-              v-model="item.authors"
-              item-text="title"
-              label="Authors"
-              clearable
-              multiple
-              return-object
-              :items="authorOptions"
-              :rules="[rules.required]"
-            />
-          </v-flex>
-
-          <v-flex xs12>
-            <v-layout row wrap>
-              <v-flex class="px-3" xs12 md6 lg4>
-                <v-select
-                  v-model="item.apps"
-                  item-text="title"
-                  label="Related apps"
-                  clearable
-                  multiple
-                  return-object
-                  :items="appOptions"
-                />
-              </v-flex>
-
-              <v-flex class="px-3" xs12 md6 lg4>
-                <v-select
-                  v-model="item.datasets"
-                  item-text="title"
-                  label="Related datasets"
-                  clearable
-                  multiple
-                  return-object
-                  :items="datasetOptions"
-                />
-              </v-flex>
-            </v-layout>
-          </v-flex>
-
-          <v-flex class="px-3 pt-3" xs12>
-            <BaseDropzoneTitle :update="update">Splash image</BaseDropzoneTitle>
-
-            <MyDropzone
-              ref="DropzoneSplash"
-              fileTypes=".jpg, .jpeg, .png"
-              :maxOne="true"
-            >
-              <template>{{ msgDropzoneImage }}</template>
-            </MyDropzone>
-          </v-flex>
-
-          <v-flex class="px-3 pt-3" xs12>
-            <BaseDropzoneTitle :update="update">Figures</BaseDropzoneTitle>
-
-            <MyDropzone ref="DropzoneImages" fileTypes=".jpg, .jpeg, .png">
-              <template>{{ msgDropzoneImages }}</template>
-            </MyDropzone>
-          </v-flex>
-
-          <v-flex class="px-3 pt-3" xs12>
-            <p class="pt-2 greycolor">Article body</p>
-            <MarkdownEditor
-              :markdown.sync="item.markdown"
-              :rules="[rules.required]"
-            />
-          </v-flex>
-
-          <v-flex class="px-3" xs12 md10 lg6>
-            <v-textarea
-              v-model="item.abstract"
-              label="Abstract"
-              :rules="[rules.required]"
-            />
-          </v-flex>
+        <template v-slot:extrafile>
+          <MyDropzone ref="DropzoneExtrafile" :maxOne="true" :update="update">
+            <template v-slot:title>{{ 'Extra file' }}</template>
+            <template v-slot:message>{{ dropzoneMsgFile }}</template>
+          </MyDropzone>
         </template>
 
-        <template v-if="contentType === 'datasets'">
-          <v-flex xs12>
-            <v-layout row wrap>
-              <v-flex class="px-3" xs12 md6 lg4>
-                <v-text-field
-                  v-model="item.sourceTitleString"
-                  label="Sources"
-                  hint="Separate sources with commas"
-                />
-              </v-flex>
-
-              <v-flex class="px-3" xs12 md6 lg4>
-                <v-text-field
-                  v-model="item.sourceUrlString"
-                  label="Source URLs"
-                  hint="Separate URLs with commas"
-                />
-              </v-flex>
-            </v-layout>
-          </v-flex>
-
-          <v-flex xs12>
-            <v-layout row wrap>
-              <v-flex class="px-3" xs12 md6 lg4>
-                <v-text-field
-                  v-model="item.timeperiodString"
-                  label="Time period"
-                  hint="Format: yyyy-yyyy"
-                  :rules="[rules.timeperiod]"
-                />
-              </v-flex>
-
-              <v-flex class="px-3" xs12 md6 lg4>
-                <v-select
-                  v-model="item.timeperiodType"
-                  label="Time period type"
-                  clearable
-                  :items="timeperiodOptions"
-                />
-              </v-flex>
-            </v-layout>
-          </v-flex>
-
-          <v-flex class="px-3" xs12 md6 lg4>
-            <v-select
-              v-model="item.unit"
-              label="Unit"
-              clearable
-              :items="unitOptions"
-            />
-          </v-flex>
-
-          <v-flex xs12>
-            <v-layout row wrap>
-              <v-flex class="px-3" xs12 md6 lg4>
-                <v-select
-                  v-model="item.apps"
-                  item-text="title"
-                  label="Related apps"
-                  clearable
-                  multiple
-                  return-object
-                  :items="appOptions"
-                />
-              </v-flex>
-
-              <v-flex class="px-3" xs12 md6 lg4>
-                <v-select
-                  v-model="item.articles"
-                  item-text="title"
-                  label="Related articles"
-                  clearable
-                  multiple
-                  return-object
-                  :items="articleOptions"
-                />
-              </v-flex>
-            </v-layout>
-          </v-flex>
-
-          <v-flex class="px-3 pt-3" xs12>
-            <BaseDropzoneTitle :update="update">Data file</BaseDropzoneTitle>
-
-            <MyDropzone
-              ref="DropzoneData"
-              fileTypes=".csv"
-              :maxOne="true"
-              :limitFilesize="false"
-            >
-              <template>{{ msgDropzoneCsv }}</template>
-            </MyDropzone>
-          </v-flex>
-
-          <v-flex class="px-3" xs12 md10 lg6>
-            <v-textarea v-model="item.description" label="Description" />
-          </v-flex>
-
-          <v-flex class="px-3" xs12 md10 lg6>
-            <v-textarea
-              v-model="item.noteString"
-              label="Notes"
-              hint="Separate notes with new lines"
-            />
-          </v-flex>
-
-          <v-flex class="px-3" xs12 md10 lg6>
-            <v-textarea
-              v-model="item.variableString"
-              label="Variables"
-              placeholder=""
-              hint="Format: name | type | definition | values; separate rows with new lines"
-            />
-          </v-flex>
+        <template v-slot:splash>
+          <MyDropzone
+            ref="DropzoneSplash"
+            fileTypes=".jpg, .jpeg, .png"
+            :maxOne="true"
+            :update="update"
+          >
+            <template v-slot:title>{{ 'Splash image' }}</template>
+            <template v-slot:message>{{ dropzoneMsgImage }}</template>
+          </MyDropzone>
         </template>
-      </v-layout>
 
+        <template v-slot:figures>
+          <MyDropzone
+            ref="DropzoneFigures"
+            fileTypes=".jpg, .jpeg, .png"
+            :maxOne="false"
+            :update="update"
+          >
+            <template v-slot:title>{{ 'Figures' }}</template>
+            <template v-slot:message>{{ dropzoneMsgImages }}</template>
+          </MyDropzone>
+        </template>
+      </CreateFormArticleFields>
+
+      <CreateFormDatasetFields
+        v-if="contentType === 'datasets'"
+        v-model="item"
+        :rules="rules"
+        :update="update"
+      >
+        <template v-slot:datafile>
+          <MyDropzone
+            ref="DropzoneDatafile"
+            fileTypes=".csv"
+            :maxOne="true"
+            :limitFilesize="false"
+            :update="update"
+          >
+            <template v-slot:title>{{ 'Data file' }}</template>
+            <template v-slot:message>{{ dropzoneMsgCsv }}</template>
+          </MyDropzone>
+        </template>
+      </CreateFormDatasetFields>
+
+      <!-- common fields input 2 -->
       <v-layout row wrap>
         <v-flex class="px-3" xs12 md10 lg6>
           <v-textarea v-model="item.citation" label="Suggested citation" />
@@ -323,7 +160,7 @@
 
       <div style="height: 50px;"></div>
 
-      <v-btn outline @click="saveItem">Save</v-btn>
+      <v-btn outline @click="onSave">Save</v-btn>
       <PreviewDialog
         v-if="saved"
         :key="previewKey"
@@ -341,16 +178,14 @@ import { mapState } from 'vuex'
 import dropzoneMixin from '@/mixins/dropzoneMixin'
 import formMixin from '@/mixins/formMixin'
 
-import { fetchItemsList as fetchAppsList } from '@/services/client.apps.js'
-import { fetchItemsList as fetchArticlesList } from '@/services/client.articles.js'
-import { fetchItemsList as fetchAuthorsList } from '@/services/client.authors.js'
-import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets.js'
-
-const BaseDropzoneTitle = () => import('@/components/BaseDropzoneTitle')
 const BaseForm = () => import('@/components/BaseForm')
+const CreateFormAppFields = () => import('@/components/CreateFormAppFields')
+const CreateFormArticleFields = () =>
+  import('@/components/CreateFormArticleFields')
+const CreateFormDatasetFields = () =>
+  import('@/components/CreateFormDatasetFields')
 const DatePicker = () => import('@/components/DatePicker')
 const MyDropzone = () => import('@/components/MyDropzone')
-const MarkdownEditor = () => import('@/components/MarkdownEditor')
 const PreviewDialog = () => import('@/components/PreviewDialog')
 
 const today = new Date().toISOString().substr(0, 10)
@@ -367,6 +202,7 @@ const emptyItem = {
   citation: null,
   description: null,
   funding: null,
+  mainfiletype: '',
   notes: null,
   noteString: null,
   sources: null,
@@ -384,16 +220,26 @@ const emptyItem = {
   articles: null,
   datasets: null
 }
+const temporaryFields = [
+  'noteString',
+  'sourceTitleString',
+  'sourceUrlString',
+  'tagString',
+  'timeperiodString',
+  'timeperiodType',
+  'variableString'
+]
 
 export default {
   name: 'createform',
   mixins: [dropzoneMixin, formMixin],
   components: {
-    BaseDropzoneTitle,
     BaseForm,
+    CreateFormAppFields,
+    CreateFormArticleFields,
+    CreateFormDatasetFields,
     DatePicker,
     MyDropzone,
-    MarkdownEditor,
     PreviewDialog
   },
   props: {
@@ -402,153 +248,148 @@ export default {
   },
   data() {
     return {
-      appOptions: [],
-      articleOptions: [],
-      authorOptions: [],
-      datasetOptions: [],
+      categoryOptions: [
+        'corrections',
+        'courts',
+        'crimes',
+        'law enforcement',
+        'victimization',
+        'other'
+      ],
       dropzoneList: {},
       item: { ...emptyItem },
+      previewKey: 0,
+      rules: {
+        required: value => !!value || 'Required.',
+        timeperiod: value =>
+          /^\d{4}-\d{4}$/g.test(value) || 'Correct format: yyyy-yyyy'
+      },
       saved: false,
-      valid: false,
-      previewKey: 0
+      valid: false
     }
   },
   computed: {
     ...mapState('content', {
       content: 'item',
-      contentId: 'itemId',
-      rules: 'rules'
-    }),
-    ...mapState('form', {
-      agegroupOptions: 'agegroupOptions',
-      categoryOptions: 'categoryOptions',
-      timeperiodOptions: 'timeperiodOptions',
-      typeOptions: 'typeOptions',
-      unitOptions: 'unitOptions',
-      rules: 'rules'
+      contentId: 'itemId'
     })
   },
   watch: {
-    contentType() {
-      this.resetItem()
-    },
-    content(newContent, oldContent) {
+    content(newContent, _) {
       if (this.update && newContent && Object.keys(newContent).length) {
-        this.item = newContent
-        this.item.date = this.item.date.slice(0, 10)
-        this.item.tagString = this.item.tags ? this.item.tags.join(', ') : ''
-
-        if (this.item.hasOwnProperty('timeperiod')) {
-          this.item.timeperiodString =
-            this.item.timeperiod.yearmin + '-' + this.item.timeperiod.yearmax
-          this.item.timeperiodType = this.item.timeperiod.yeartype
-        }
-
+        this.item = this.prepareItem(newContent)
         this.saved = true
       }
     }
   },
-  async created() {
-    this.authorOptions = (await fetchAuthorsList()).data
-    this.appOptions = (await fetchAppsList('published')).data
-    this.articleOptions = (await fetchArticlesList('published')).data
-    this.datasetOptions = (await fetchDatasetsList('published')).data
-  },
   mounted() {
-    this.getDropzonelist()
+    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs)
   },
   updated() {
-    this.dropzoneList = {}
-    this.getDropzonelist()
+    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs)
   },
   methods: {
-    getDropzonelist() {
-      switch (this.contentType) {
-        case 'apps':
-          this.dropzoneList.image = this.$refs.DropzoneImage
-            ? this.$refs.DropzoneImage.$refs.MyDropzone
-            : null
-          break
-        case 'articles':
-          this.dropzoneList.images = this.$refs.DropzoneImages
-            ? this.$refs.DropzoneImages.$refs.MyDropzone
-            : null
-          this.dropzoneList.splash = this.$refs.DropzoneSplash
-            ? this.$refs.DropzoneSplash.$refs.MyDropzone
-            : null
-          break
-        case 'datasets':
-          this.dropzoneList.data = this.$refs.DropzoneData
-            ? this.$refs.DropzoneData.$refs.MyDropzone
-            : null
-      }
-    },
-    parseItem() {
-      let item = { ...this.item }
+    async parseItem() {
+      const item = { ...this.item }
 
       item.markdown = this.contentType === 'articles' ? item.markdown : null
-
-      item.notes = this.item.noteString
-        ? this.item.noteString
-            .split(/[\r\n]+/)
-            .map(el => el.trim())
-            .filter(el => el)
+      item.authors =
+        this.contentType === 'articles'
+          ? item.authors.map(el => ({ title: el.title, slug: el.slug }))
+          : null
+      item.notes = item.noteString ? this.parseNotes(item.noteString) : []
+      item.sources = item.sourceTitleString
+        ? this.parseSources(item.sourceTitleString, item.sourceUrlString)
         : []
-
-      const sourceTitles = this.item.sourceTitleString
-        ? this.item.sourceTitleString.split(',').map(el => el.trim())
-        : []
-      const sourceUrls = this.item.sourceUrlString
-        ? this.item.sourceUrlString.split(',').map(el => el.trim())
-        : []
-      item.sources = sourceTitles
-        ? sourceTitles.map((title, i) => ({ title, url: sourceUrls[i] }))
-        : []
-
-      item.tags = this.item.tagString
-        ? this.item.tagString.split(',').map(el => el.trim())
-        : []
-
-      item.timeperiod = this.item.timeperiodString
-        ? {
-            yeartype: this.item.timeperiodType,
-            yearmin: this.item.timeperiodString.split('-')[0],
-            yearmax: this.item.timeperiodString.split('-')[1]
-          }
+      item.tags = item.tagString ? this.stringToArray(item.tagString) : []
+      item.timeperiod = item.timeperiodString
+        ? this.parseTimeperiod(item.timeperiodType, item.timeperiodString)
         : null
-
-      item.variables = this.item.variableString
-        ? this.item.variableString.split(/[\r\n]+/).map(row => {
-            const rowArr = row.split('|').map(el => el.trim())
-            return {
-              name: rowArr[0],
-              type: rowArr[1],
-              definition: rowArr[2],
-              values: rowArr[3]
-            }
-          })
+      item.variables = item.variableString
+        ? this.parseVariables(item.variableString)
         : []
 
-      delete item.noteString
-      delete item.sourceTitleString
-      delete item.sourceUrlString
-      delete item.tagString
-      delete item.timeperiodString
-      delete item.timeperiodType
-      delete item.variableString
+      this.removeEmptyFields(item)
+      this.removeTemporaryFields(item)
+      await this.addDropzoneFiles(item, this.contentType, this.dropzoneList)
 
       return item
     },
-    removeEmptyProperties(obj) {
-      Object.keys(obj).forEach(key => {
-        if (obj[key] === undefined || obj[key] === null) {
-          delete obj[key]
-        } else if (Array.isArray(obj[key])) {
-          obj[key].forEach((val, i, arr) => {
+    parseNotes(string) {
+      return string
+        .split(/[\r\n]+/)
+        .map(el => el.trim())
+        .filter(el => el)
+    },
+    parseSources(title, url) {
+      const sourceTitles = this.stringToArray(title)
+      const sourceUrls = this.stringToArray(url)
+      return sourceTitles.map((title, i) => ({ title, url: sourceUrls[i] }))
+    },
+    parseTimeperiod(type, string) {
+      return {
+        yeartype: type,
+        yearmin: string.split('-')[0],
+        yearmax: string.split('-')[1]
+      }
+    },
+    parseVariables(string) {
+      return string.split(/[\r\n]+/).map(row => {
+        const rowArr = this.stringToArray(row, '|')
+        return {
+          name: rowArr[0],
+          type: rowArr[1],
+          definition: rowArr[2],
+          values: rowArr[3]
+        }
+      })
+    },
+    prepareItem(content) {
+      const item = content
+      item.date = item.date.slice(0, 10)
+      item.tagString = item.tags ? item.tags.join(', ') : ''
+      if (this.contentType === 'datasets') this.prepareDataset(item)
+
+      return item
+    },
+    prepareDataset(item) {
+      if (item.hasOwnProperty('timeperiod')) {
+        item.timeperiodString =
+          item.timeperiod.yearmin + '-' + item.timeperiod.yearmax
+        item.timeperiodType = item.timeperiod.yeartype
+      }
+
+      if (item.hasOwnProperty('sources')) {
+        item.sourceTitleString = item.sources.map(el => el.title).join(', ')
+        item.sourceUrlString = item.sources.map(el => el.url).join(', ')
+      }
+
+      if (item.hasOwnProperty('notes')) {
+        item.noteString = item.notes.join('\n')
+      }
+
+      if (item.hasOwnProperty('variables')) {
+        item.variableString = ''
+        item.variables.forEach((el, i, arr) => {
+          item.variableString +=
+            `${el.name} | ${el.type} ` + `| ${el.definition} | ${el.values}`
+          if (i < arr.length - 1) item.variableString += '\n'
+        })
+      }
+    },
+    removeEmptyFields(item) {
+      Object.keys(item).forEach(field => {
+        if (item[field] === undefined || item[field] === null) {
+          delete item[field]
+        } else if (Array.isArray(item[field])) {
+          item[field].forEach((val, i, arr) => {
             if (val === undefined) arr.splice(i, 1)
           })
         }
       })
+    },
+    removeTemporaryFields(item) {
+      temporaryFields.forEach(field => delete item[field])
     },
     rerenderPreview() {
       this.previewKey += 1
@@ -564,23 +405,24 @@ export default {
         this.item = { ...emptyItem }
       }
 
-      if (this.dropzoneList) this.removeDropzoneFiles(this.dropzoneList)
+      this.removeDropzoneFiles(this.dropzoneList)
       this.saved = false
       this.valid = false
     },
+    saveFiles() {
+      if (this.$refs.form.validate()) {
+        const filelist = this.getDropzoneFilelist(this.dropzoneList)
+        this.$store.dispatch('content/setFilelist', filelist)
+      }
+    },
     async saveItem() {
       if (this.$refs.form.validate()) {
-        let item = this.parseItem()
-
-        this.removeEmptyProperties(item)
-        await this.addDropzoneFiles(item, this.contentType, this.dropzoneList)
-
+        const item = await this.parseItem()
         this.$store.dispatch('content/setItem', item)
-        this.saved = true
-        this.rerenderPreview()
-
-        alert('Changes saved. Try preview.')
       }
+    },
+    stringToArray(str, sep = ',') {
+      return str.split(sep).map(el => el.trim())
     },
     titleToSlug() {
       if (!this.update) {

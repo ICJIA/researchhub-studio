@@ -12,7 +12,7 @@ async function fetchItemById(id) {
   const query = buildQuery('app', params, fields)
   const [data, HTTPstatus] = await fetchData(query)
   return {
-    data: data ? data.app : null,
+    data: data ? data.app : {},
     status: HTTPstatus
   }
 }
@@ -27,7 +27,7 @@ async function fetchItemsList(status) {
   const query = buildQuery('apps', params, fields)
   const [data, HTTPstatus] = await fetchData(query)
   return {
-    data: data ? data.apps : null,
+    data: data ? data.apps : [],
     status: HTTPstatus
   }
 }

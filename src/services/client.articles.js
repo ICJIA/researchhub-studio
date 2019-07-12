@@ -12,7 +12,7 @@ async function fetchItemById(id) {
   const query = buildQuery('article', params, fields)
   const [data, HTTPstatus] = await fetchData(query)
   return {
-    data: data ? data.article : null,
+    data: data ? data.article : {},
     status: HTTPstatus
   }
 }
@@ -27,7 +27,7 @@ async function fetchItemsList(status) {
   const query = buildQuery('articles', params, fields)
   const [data, HTTPstatus] = await fetchData(query)
   return {
-    data: data ? data.articles : null,
+    data: data ? data.articles : [],
     status: HTTPstatus
   }
 }
@@ -47,23 +47,27 @@ function getArticleFields(isList) {
     fields = `
       ${fields}
       external
-      type
       categories
       tags
       splash
       thumbnail
       abstract
+      authors
       images
       markdown
       citation
       doi
       funding
-      apps (sort: "date:desc", where: { status: "published" }) {
-        _id
-        title
-        slug
+      mainfiletype
+      mainfile {
+        name
+        url
       }
-      authors {
+      extrafile {
+        name
+        url
+      }
+      apps (sort: "date:desc", where: { status: "published" }) {
         _id
         title
         slug

@@ -43,6 +43,7 @@
         <PostForm
           v-if="type === 'post'"
           :contentType="contentType"
+          :status="status"
           :update="true"
         />
       </v-flex>
@@ -76,27 +77,25 @@ export default {
           : this.$store.state.content.types,
       contentType: 'apps',
       status: 'submitted',
+      statusOptions: ['published', 'submitted', 'created'],
       stepHeader1: 'Select content type',
       stepHeader2: 'Select item',
       stepHeader3: 'Update'
     }
   },
-  computed: {
-    statusOptions() {
-      return ['published', 'submitted', 'created']
-    }
-  },
   watch: {
     contentType() {
       this.status = 'submitted'
+      this.resetItem()
     }
   },
   methods: {
     navigateBefore(step) {
-      if (step.to === 2) {
-        this.$store.dispatch('content/setItem', {})
-        this.$store.dispatch('content/setItemId', '')
-      }
+      if (step.to === 2) this.resetItem()
+    },
+    resetItem() {
+      this.$store.dispatch('content/setItem', {})
+      this.$store.dispatch('content/setItemId', '')
     }
   }
 }

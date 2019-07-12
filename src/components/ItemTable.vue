@@ -34,6 +34,7 @@
 
         <td class="justify-end layout px-3">
           <PreviewDialog
+            v-if="contentType !== 'authors'"
             :contentType="contentType"
             :icon="true"
             :id="props.item._id"
@@ -188,7 +189,6 @@ export default {
     },
     async editItem({ _id: id, title }) {
       const res = await this.dispatchAction('fetchItem', { id })
-
       if (res && res.status === 200) {
         alert('Item is selected. Proceed to edit.')
       } else {

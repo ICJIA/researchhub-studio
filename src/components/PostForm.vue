@@ -9,7 +9,7 @@
       <v-layout class="pl-3" row wrap>
         <v-flex v-if="contentType !== 'authors'" class="px-3" xs12>
           <p class="greycolor">Status</p>
-          <v-radio-group v-model="status" row>
+          <v-radio-group v-model="statusLocal" row>
             <v-radio
               v-for="status in statusOptions"
               :key="status"
@@ -20,84 +20,83 @@
         </v-flex>
 
         <v-flex class="px-3 pt-3" xs12>
-          <BaseDropzoneTitle :update="update">JSON file</BaseDropzoneTitle>
-
           <MyDropzone
             key="DropzoneJson"
             ref="DropzoneJson"
             fileTypes=".json"
             :maxOne="true"
             :limitFilesize="false"
+            :update="update"
           >
-            <template>{{ msgDropzoneJson }}</template>
+            <template v-slot:title>{{ 'JSON file' }}</template>
+            <template v-slot:message>{{ dropzoneMsgJson }}</template>
           </MyDropzone>
         </v-flex>
 
         <template v-if="contentType === 'apps'">
           <v-flex class="px-3 pt-3" xs12>
-            <BaseDropzoneTitle :update="update">Image</BaseDropzoneTitle>
-
             <MyDropzone
               ref="DropzoneImage"
               fileTypes=".jpg, .jpeg, .png"
               :maxOne="true"
             >
-              <template>{{ msgDropzoneImage }}</template>
+              <template v-slot:title>{{ 'Image' }}</template>
+              <template v-slot:message>{{ dropzoneMsgImage }}</template>
             </MyDropzone>
           </v-flex>
         </template>
 
         <template v-if="contentType === 'articles'">
           <v-flex class="px-3 pt-3" xs12>
-            <BaseDropzoneTitle :update="update">Splash image</BaseDropzoneTitle>
-
             <MyDropzone
               ref="DropzoneSplash"
               fileTypes=".jpg, .jpeg, .png"
               :maxOne="true"
+              :update="update"
             >
-              <template>{{ msgDropzoneImage }}</template>
+              <template v-slot:title>{{ 'Splash image' }}</template>
+              <template v-slot:message>{{ dropzoneMsgImage }}</template>
             </MyDropzone>
           </v-flex>
 
           <v-flex class="px-3 pt-3" xs12>
-            <BaseDropzoneTitle :update="update">Figures</BaseDropzoneTitle>
-
             <MyDropzone
               key="DropzoneImages"
               ref="DropzoneImages"
               fileTypes=".jpg, .jpeg, .png"
+              :update="update"
             >
-              <template>{{ msgDropzoneImages }}</template>
+              <template>{{ 'Figures' }}</template>
+              <template>{{ dropzoneMsgImages }}</template>
             </MyDropzone>
           </v-flex>
 
           <v-flex class="px-3 pt-3" xs12>
-            <BaseDropzoneTitle :update="update">Article body</BaseDropzoneTitle>
-
             <MyDropzone
               key="DropzoneMarkdown"
               ref="DropzoneMarkdown"
               fileTypes=".md"
               :maxOne="true"
+              :update="update"
             >
-              <template>{{ msgDropzoneMarkdown }}</template>
+              <template v-slot:title>{{ 'Article body' }}</template>
+              <template v-slot:message>{{ dropzoneMsgMarkdown }}</template>
             </MyDropzone>
           </v-flex>
         </template>
 
         <template v-if="contentType === 'datasets'">
           <v-flex class="px-3 pt-3" xs12>
-            <BaseDropzoneTitle :update="update">Data file</BaseDropzoneTitle>
-
             <MyDropzone
               key="DropzoneData"
               ref="DropzoneData"
               fileTypes=".csv"
               :maxOne="true"
               :limitFilesize="false"
+              :update="update"
             >
-              <template>{{ msgDropzoneCsv }}</template>
+              <tempalte v-slot:title>{{ 'Data file' }}</tempalte>
+              <template v-slot:message>{{ dropzoneMsgCsv }}</template>
             </MyDropzone>
           </v-flex>
         </template>
@@ -105,9 +104,10 @@
 
       <div style="height: 50px;"></div>
 
-      <v-btn outline @click="saveItem">Save</v-btn>
+      <v-btn outline @click="onSave">Save</v-btn>
       <PreviewDialog
-        v-if="saved"
+        v-if="saved && contentType !== 'authors'"
+        :key="previewKey"
         :contentType="contentType"
         :icon="false"
         :local="true"
@@ -122,7 +122,6 @@ import { mapState } from 'vuex'
 import dropzoneMixin from '@/mixins/dropzoneMixin'
 import formMixin from '@/mixins/formMixin'
 
-const BaseDropzoneTitle = () => import('@/components/BaseDropzoneTitle')
 const BaseForm = () => import('@/components/BaseForm')
 const MyDropzone = () => import('@/components/MyDropzone')
 const PreviewDialog = () => import('@/components/PreviewDialog')
@@ -131,20 +130,21 @@ export default {
   name: 'postform',
   mixins: [dropzoneMixin, formMixin],
   components: {
-    BaseDropzoneTitle,
     BaseForm,
     MyDropzone,
     PreviewDialog
   },
   props: {
     contentType: String,
+    status: String,
     update: Boolean
   },
   data() {
     return {
       dropzoneList: {},
       item: {},
-      status: 'published',
+      previewKey: 0,
+      statusLocal: this.status,
       statusOptions: ['published', 'submitted', 'created'],
       saved: false
     }
@@ -156,50 +156,41 @@ export default {
     })
   },
   watch: {
-    contentType() {
-      this.resetItem(false)
-    },
-    content() {
-      if (this.update) {
-        this.item = this.content
+    content(newContent, _) {
+      if (this.update && newContent && Object.keys(newContent).length) {
+        this.item = newContent
         this.saved = true
       }
+    },
+    status(newStatus, _) {
+      if (this.update && newStatus) this.statusLocal = newStatus
     }
   },
   mounted() {
-    this.dropzoneList.json = this.$refs.DropzoneJson.$refs.MyDropzone
-    switch (this.contentType) {
-      case 'apps':
-        this.dropzoneList.image = this.$refs.DropzoneImage.$refs.MyDropzone
-        break
-      case 'articles':
-        this.dropzoneList.images = this.$refs.DropzoneImages.$refs.MyDropzone
-        this.dropzoneList.markdown = this.$refs.DropzoneMarkdown.$refs.MyDropzone
-        this.dropzoneList.splash = this.$refs.DropzoneSplash.$refs.MyDropzone
-        break
-      case 'datasets':
-        this.dropzoneList.data = this.$refs.DropzoneData.$refs.MyDropzone
-    }
+    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs, true)
   },
   updated() {
-    this.dropzoneList = {}
-    this.dropzoneList.json = this.$refs.DropzoneJson.$refs.MyDropzone
-    switch (this.contentType) {
-      case 'apps':
-        this.dropzoneList.image = this.$refs.DropzoneImage.$refs.MyDropzone
-        break
-      case 'articles':
-        this.dropzoneList.images = this.$refs.DropzoneImages.$refs.MyDropzone
-        this.dropzoneList.markdown = this.$refs.DropzoneMarkdown.$refs.MyDropzone
-        this.dropzoneList.splash = this.$refs.DropzoneSplash.$refs.MyDropzone
-        break
-      case 'datasets':
-        this.dropzoneList.data = this.$refs.DropzoneData.$refs.MyDropzone
-    }
+    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs, true)
   },
   methods: {
-    async resetItem(update) {
-      if (update) {
+    async parseItem() {
+      const item = { ...this.item }
+      if (!this.update) item.status = this.statusLocal
+
+      await this.addDropzoneFiles(
+        item,
+        this.contentType,
+        this.dropzoneList,
+        true
+      )
+
+      return item
+    },
+    rerenderPreview() {
+      this.previewKey += 1
+    },
+    async resetItem() {
+      if (this.update) {
         await this.$store.dispatch('content/fetchItem', {
           contentType: this.contentType,
           id: this.contentId
@@ -211,16 +202,13 @@ export default {
       if (this.dropzoneList) this.removeDropzoneFiles(this.dropzoneList)
       this.saved = false
     },
+    saveFiles() {
+      const filelist = this.getDropzoneFilelist(this.dropzoneList)
+      this.$store.dispatch('content/setFilelist', filelist)
+    },
     async saveItem() {
-      let item = { ...this.item }
-      if (!this.update) item.status = this.status
-
-      await this.addDropzoneFiles(item, this.contentType, this.dropzoneList)
-
+      const item = await this.parseItem()
       this.$store.dispatch('content/setItem', item)
-      this.saved = true
-
-      alert('Changes saved. Try preview.')
     }
   }
 }

@@ -1,10 +1,10 @@
 <template>
   <v-container>
-    <RHArticleView v-if="view" :item="item" :key="1" />
+    <RHArticleView v-if="view" :item="item" :downloader="nodownloader" />
 
     <v-layout v-else justify-center>
       <v-flex xs12 sm10 xl8>
-        <RHArticleCard :item="item" :key="2" />
+        <RHArticleCard :item="item" />
       </v-flex>
     </v-layout>
   </v-container>
@@ -24,6 +24,11 @@ export default {
   props: {
     item: Object,
     view: Boolean
+  },
+  methods: {
+    nodownloader() {
+      alert('Cannot download files in preview!')
+    }
   }
 }
 </script>

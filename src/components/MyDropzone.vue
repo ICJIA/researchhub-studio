@@ -1,5 +1,10 @@
 <template>
   <div>
+    <p class="greycolor">
+      <slot name="title"></slot>
+      <span v-if="update"> (No change if not provided)</span>
+    </p>
+
     <BaseDropzone
       ref="MyDropzone"
       id="dropzone"
@@ -12,7 +17,7 @@
       :options="dropzoneOptions"
       :duplicateCheck="true"
     >
-      <slot></slot>
+      <slot name="message"></slot>
     </BaseDropzone>
   </div>
 </template>
@@ -33,7 +38,8 @@ export default {
     maxOne: {
       type: Boolean,
       default: false
-    }
+    },
+    update: Boolean
   },
   data() {
     return {
