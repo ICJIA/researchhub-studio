@@ -2,9 +2,15 @@
   <BaseViewLayout>
     <template v-slot:title>{{ 'Create contents' }}</template>
 
-    <template v-slot:description>{{
-      'You can fill out the following form, preview the result, and create a new item.'
-    }}</template>
+    <template v-slot:description>
+      <template>{{
+        'Fill out the form, preview the result, and create a new item.'
+      }}</template>
+      <v-icon class="pl-3" color="warning">warning</v-icon>
+      <span class="greycolor">{{
+        'Uploading files is available only in the update page.'
+      }}</span>
+    </template>
 
     <CreateStepper />
   </BaseViewLayout>

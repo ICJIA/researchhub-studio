@@ -99,10 +99,7 @@
 
     <v-flex class="px-3 pt-3" xs12>
       <p class="pt-2 greycolor">Article body</p>
-      <MarkdownEditor
-        :markdown.sync="item.markdown"
-        :rules="[rules.required]"
-      />
+      <slot name="articlebody"></slot>
     </v-flex>
   </v-layout>
 </template>
@@ -111,8 +108,6 @@
 import { fetchItemsList as fetchAppsList } from '@/services/client.apps.js'
 import { fetchItemsList as fetchAuthorsList } from '@/services/client.authors.js'
 import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets.js'
-
-const MarkdownEditor = () => import('@/components/MarkdownEditor')
 
 export default {
   props: {
@@ -124,9 +119,6 @@ export default {
     prop: 'item',
     event: 'change'
   },
-  components: {
-    MarkdownEditor
-  },
   data() {
     return {
       abstract: null,
@@ -136,8 +128,7 @@ export default {
       authorOptions: [],
       datasets: null,
       datasetOptions: [],
-      hasFiles: false,
-      markdown: null,
+      hasFiles: this.mainfiletype !== null,
       mainfiletype: null,
       mainfiletypeOptions: ['full report', 'pdf version']
     }

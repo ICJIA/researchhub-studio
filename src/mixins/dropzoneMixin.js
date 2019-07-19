@@ -100,7 +100,7 @@ const getDropzonelist = (contentType, refs, isPost = false) => {
       dropzoneList.mainfile = getDropzone(refs.DropzoneMainfile)
       dropzoneList.extrafile = getDropzone(refs.DropzoneExtrafile)
       dropzoneList.splash = getDropzone(refs.DropzoneSplash)
-      dropzoneList.figures = getDropzone(refs.DropzoneFigures)
+      dropzoneList.images = getDropzone(refs.DropzoneImages)
       if (isPost) dropzoneList.markdown = getDropzone(refs.DropzoneMarkdown)
       break
     case 'datasets':

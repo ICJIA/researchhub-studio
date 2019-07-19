@@ -1,13 +1,15 @@
 <template>
-  <v-container>
+  <div>
     <RHArticleView v-if="view" :item="item" :downloader="nodownloader" />
 
-    <v-layout v-else justify-center>
-      <v-flex xs12 sm10 xl8>
-        <RHArticleCard :item="item" />
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <v-container v-else>
+      <v-layout justify-center>
+        <v-flex xs12 sm10 xl8>
+          <RHArticleCard :item="item" />
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -27,7 +29,7 @@ export default {
   },
   methods: {
     nodownloader() {
-      alert('Cannot download files in preview!')
+      alert('⚠️Cannot download files in preview!')
     }
   }
 }

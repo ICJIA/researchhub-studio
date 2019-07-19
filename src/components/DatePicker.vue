@@ -12,13 +12,13 @@
   >
     <v-text-field
       slot="activator"
-      v-model="date"
+      v-model="dateLocal"
       label="Date"
       append-icon="event"
       readonly
     />
 
-    <v-date-picker v-model="date" no-title scrollable @input="onInput" />
+    <v-date-picker v-model="dateLocal" no-title scrollable @input="onInput" />
   </v-menu>
 </template>
 
@@ -29,8 +29,15 @@ export default {
   },
   data() {
     return {
+      dateLocal: null,
       menu: false
     }
+  },
+  mounted() {
+    this.dateLocal = this.date
+  },
+  updated() {
+    this.dateLocal = this.date
   },
   methods: {
     onInput(e) {

@@ -46,8 +46,8 @@
 
 <script>
 export default {
-  mounted() {
-    this.$nextTick(this.$refs.username.focus)
+  async mounted() {
+    await this.$nextTick(this.$refs.username.focus)
   },
   data() {
     return {

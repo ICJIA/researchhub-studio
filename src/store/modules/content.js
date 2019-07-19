@@ -41,7 +41,7 @@ const getters = {
     if (Object.keys(item).length) item.external = false
 
     Object.keys(item)
-      .filter(key => key.includes('file'))
+      .filter(key => /file$/.test(key))
       .forEach(key => delete item[key])
 
     if (item.apps) item.apps = item.apps.map(el => el._id)
@@ -143,7 +143,6 @@ const actions = {
     await createItem(contentType, getters.itemToPost, state.item)
   },
   async updateItem({ state, getters }, contentType) {
-    console.log(getters.itemToPost)
     return await updateItem(contentType, getters.itemToPost, state.itemId)
   },
   async uploadFiles({ state }, contentType) {

@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     nodownloader() {
-      alert('Cannot download files in preview!')
+      alert('⚠️Cannot download files in preview!')
     }
   }
 }

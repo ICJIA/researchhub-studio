@@ -181,26 +181,28 @@ export default {
     },
     handleUpdate(res, msgSuccess, msgFailure) {
       if (res && res.status === 200) {
-        alert(msgSuccess)
+        alert(`✔️${msgSuccess}`)
         this.loadItemList()
       } else {
-        alert(msgFailure)
+        alert(`⚠️${msgFailure}`)
       }
     },
     async editItem({ _id: id, title }) {
       const res = await this.dispatchAction('fetchItem', { id })
       if (res && res.status === 200) {
-        alert('Item is selected. Proceed to edit.')
+        alert('✔️Item is selected. Proceed to edit.')
       } else {
-        alert(`Failed to select: ${title}`)
+        alert(`⚠️Failed to select: ${title}`)
       }
     },
     async deleteItem({ _id: id, title }) {
-      const res = await this.dispatchAction('deleteItem', { id })
-      const msgSuccess = 'Item is deleted.'
-      const msgFailure = `Failed to delete: ${title}`
+      if (confirm('Deleting an item cannot be undone. Are you sure?')) {
+        const res = await this.dispatchAction('deleteItem', { id })
+        const msgSuccess = 'Item is deleted.'
+        const msgFailure = `Failed to delete: ${title}`
 
-      this.handleUpdate(res, msgSuccess, msgFailure)
+        this.handleUpdate(res, msgSuccess, msgFailure)
+      }
     },
     async updateToCreated({ _id: id, title }) {
       const res = await this.dispatchAction('updateItemToCreated', { id })

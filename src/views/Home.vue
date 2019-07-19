@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout row wrap align-center justify-center fill-height>
-      <v-flex xs12 sm10 lg8>
+      <v-flex xs12 sm10 md8>
         <div class="text-xs-center font-lato">
           <h1 class="uppercase font-lato">Choose your task</h1>
           <p>Permission level: {{ role }}</p>
@@ -9,7 +9,7 @@
 
         <v-layout row wrap justify-center>
           <template v-for="(task, i) in tasks">
-            <v-flex :key="i" v-if="checkPermission(task)" xs12 sm6 lg4>
+            <v-flex :key="i" v-if="checkPermission(task)" xs12 md6 xl4>
               <HomeTaskCard :task="task" />
             </v-flex>
           </template>

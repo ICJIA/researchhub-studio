@@ -23,11 +23,11 @@
           <template>{{ msgTitle }}</template>
         </v-toolbar-title>
 
-        <template v-if="status">
+        <template v-if="status !== 'created'">
           <v-spacer />
 
           <v-btn color="primary" flat :href="link" target="_blank">
-            {{ published ? 'public link' : 'preview link' }}
+            {{ status === 'published' ? 'public link' : 'preview link' }}
           </v-btn>
         </template>
       </v-toolbar>
@@ -99,7 +99,7 @@ export default {
       if (status !== 'created' && this.item) {
         return (
           `${process.env.VUE_APP_MAIN_BASE_URL}/` +
-          (this.published ? '' : 'preview/') +
+          (this.status === 'published' ? '' : 'preview/') +
           `${this.contentType}/${this.item.slug}`
         )
       } else {

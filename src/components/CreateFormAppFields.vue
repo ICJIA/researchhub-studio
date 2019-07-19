@@ -1,12 +1,7 @@
 <template>
   <v-layout row wrap>
     <v-flex class="px-3" xs12 md6 lg4>
-      <v-text-field
-        :value="item.url"
-        @input="$emit('input', $event.target.value)"
-        label="URL"
-        :rules="[rules.required]"
-      />
+      <v-text-field v-model="item.url" label="URL" :rules="[rules.required]" />
     </v-flex>
 
     <v-flex xs12>
@@ -45,8 +40,7 @@
 
     <v-flex class="px-3" xs12 md10 lg6>
       <v-textarea
-        :value="item.description"
-        @input="$emit('input', $event.target.value)"
+        v-model="item.description"
         label="Description"
         :rules="[rules.required]"
       />

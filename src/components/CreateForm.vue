@@ -1,14 +1,15 @@
 <template>
   <BaseForm
     :contentType="contentType"
-    formType="create"
+    :key="formKey"
+    :formType="update ? 'update' : 'create'"
     @form-main="onMain"
     @form-reset="onReset"
   >
     <v-form ref="form" v-model="valid" lazy-validation>
       <!-- common fields input 1 -->
       <v-layout row wrap>
-        <v-flex class="px-3" xs12 md6 lg4>
+        <v-flex class="px-3" xs12 sm10 md6 lg4>
           <v-text-field
             v-model="item.title"
             label="Title"
@@ -18,7 +19,7 @@
           />
         </v-flex>
 
-        <v-flex class="px-3" xs12 md6 lg4>
+        <v-flex class="px-3" xs12 sm10 md6 lg4>
           <v-text-field
             v-model="item.slug"
             label="Slug"
@@ -32,13 +33,13 @@
       </v-layout>
 
       <v-layout row>
-        <v-flex class="px-3" xs12 md6 lg4>
+        <v-flex class="px-3" xs12 sm10 md6 lg4>
           <DatePicker :date.sync="item.date" />
         </v-flex>
       </v-layout>
 
       <v-layout row wrap>
-        <v-flex class="px-3" xs12 md6 lg4>
+        <v-flex class="px-3" xs12 sm10 md6 lg4>
           <v-select
             v-model="item.categories"
             label="Categories"
@@ -49,12 +50,15 @@
           />
         </v-flex>
 
-        <v-flex class="px-3" xs12 md6 lg4>
-          <v-text-field
-            v-model="item.tagString"
-            label="Tags"
-            hint="Separate tags with commas"
-          />
+        <v-flex class="px-3" xs12 sm10 md6 lg4>
+          <v-layout row wrap>
+            <CreateFormExistingTags @useExistingTags="useExistingTags" />
+            <v-text-field
+              v-model="item.tagString"
+              label="Tags"
+              hint="Separate tags with commas"
+            />
+          </v-layout>
         </v-flex>
       </v-layout>
 
@@ -116,7 +120,7 @@
 
         <template v-slot:figures>
           <MyDropzone
-            ref="DropzoneFigures"
+            ref="DropzoneImages"
             fileTypes=".jpg, .jpeg, .png"
             :maxOne="false"
             :update="update"
@@ -124,6 +128,13 @@
             <template v-slot:title>{{ 'Figures' }}</template>
             <template v-slot:message>{{ dropzoneMsgImages }}</template>
           </MyDropzone>
+        </template>
+
+        <template v-slot:articlebody>
+          <MarkdownEditor
+            :markdown.sync="item.markdown"
+            :rules="[rules.required]"
+          />
         </template>
       </CreateFormArticleFields>
 
@@ -167,6 +178,7 @@
         :contentType="contentType"
         :icon="false"
         :local="true"
+        status="created"
       />
       <v-btn v-else outline disabled>Preview</v-btn>
     </v-form>
@@ -184,7 +196,10 @@ const CreateFormArticleFields = () =>
   import('@/components/CreateFormArticleFields')
 const CreateFormDatasetFields = () =>
   import('@/components/CreateFormDatasetFields')
+const CreateFormExistingTags = () =>
+  import('@/components/CreateFormExistingTags')
 const DatePicker = () => import('@/components/DatePicker')
+const MarkdownEditor = () => import('@/components/MarkdownEditor')
 const MyDropzone = () => import('@/components/MyDropzone')
 const PreviewDialog = () => import('@/components/PreviewDialog')
 
@@ -238,7 +253,9 @@ export default {
     CreateFormAppFields,
     CreateFormArticleFields,
     CreateFormDatasetFields,
+    CreateFormExistingTags,
     DatePicker,
+    MarkdownEditor,
     MyDropzone,
     PreviewDialog
   },
@@ -257,6 +274,7 @@ export default {
         'other'
       ],
       dropzoneList: {},
+      formKey: 0,
       item: { ...emptyItem },
       previewKey: 0,
       rules: {
@@ -391,6 +409,9 @@ export default {
     removeTemporaryFields(item) {
       temporaryFields.forEach(field => delete item[field])
     },
+    rerenderForm() {
+      this.formKey += 1
+    },
     rerenderPreview() {
       this.previewKey += 1
     },
@@ -406,8 +427,8 @@ export default {
       }
 
       this.removeDropzoneFiles(this.dropzoneList)
+      this.rerenderForm()
       this.saved = false
-      this.valid = false
     },
     saveFiles() {
       if (this.$refs.form.validate()) {
@@ -419,6 +440,9 @@ export default {
       if (this.$refs.form.validate()) {
         const item = await this.parseItem()
         this.$store.dispatch('content/setItem', item)
+        await this.$nextTick()
+        this.saved = true
+        this.rerenderPreview()
       }
     },
     stringToArray(str, sep = ',') {
@@ -431,6 +455,10 @@ export default {
           .replace(/\s/gi, '-')
           .toLowerCase()
       }
+    },
+    useExistingTags(e) {
+      const add = this.item.tagString ? `, ${e}` : e
+      this.item.tagString += add
     }
   }
 }

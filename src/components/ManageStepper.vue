@@ -45,13 +45,9 @@ export default {
       contentTypes: this.$store.state.content.types,
       contentType: 'apps',
       status: 'submitted',
+      statusOptions: ['published', 'submitted', 'created'],
       stepHeader1: 'Select content type',
       stepHeader2: 'Manage'
-    }
-  },
-  computed: {
-    statusOptions() {
-      return ['published', 'submitted', 'created']
     }
   },
   watch: {
