@@ -2,32 +2,35 @@ import client from './client'
 
 export { login, loginUsingToken, logout }
 
-function login(user) {
-  return new Promise((resolve, reject) => {
+/**
+ * Log in with id and password.
+ * @param {String} identifier
+ * @param {String} password
+ */
+const login = ({ identifier, password }) =>
+  new Promise((resolve, reject) => {
     client
       .post(`${process.env.VUE_APP_API_BASE_URL}/auth/local`, {
-        identifier: user.identifier,
-        password: user.password
+        identifier,
+        password
       })
       .then(
         res => {
-          const token = res.data.jwt
-          commonHeaders['Authorization'] = `Bearer ${token}`
+          loginUsingToken(res.data.jwt)
           resolve(res)
         },
-        error => {
-          reject(error)
-        }
+        error => reject(error)
       )
   })
-}
 
-function loginUsingToken(token) {
-  commonHeaders['Authorization'] = `Bearer ${token}`
-}
+/**
+ * Log in by using JWT for authorization.
+ * @param {String} token
+ */
+const loginUsingToken = token =>
+  (client.defaults.headers.common['Authorization'] = `Bearer ${token}`)
 
-function logout() {
-  delete commonHeaders['Authorization']
-}
-
-const commonHeaders = client.defaults.headers.common
+/**
+ * Log out by removing authorization.
+ */
+const logout = () => delete client.defaults.headers.common['Authorization']

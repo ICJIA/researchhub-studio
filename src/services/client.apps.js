@@ -1,71 +1,18 @@
-import { fetchData, buildQuery } from './client'
+import { fetchOneById, fetchListByStatus } from './client.utils'
+import { appFields } from '@/consts/queryFields'
 
 export { fetchItemById, fetchItemsList }
 
 /**
- * Fetch an app using id.
+ * Fetch a dataset using id.
  * @param {String} id
  */
-async function fetchItemById(id) {
-  const params = `id: "${id}"`
-  const fields = getAppFields(false)
-  const query = buildQuery('app', params, fields)
-  const [data, HTTPstatus] = await fetchData(query)
-  return {
-    data: data ? data.app : {},
-    status: HTTPstatus
-  }
-}
+const fetchItemById = async id =>
+  await fetchOneById({ contentType: 'app', id, fields: appFields })
 
 /**
- * Fetch a list of apps of status.
+ * Fetch a list of datasets of status.
  * @param {String} status
  */
-async function fetchItemsList(status) {
-  const params = `sort: "date:desc", where: { status: "${status}" }`
-  const fields = getAppFields(true)
-  const query = buildQuery('apps', params, fields)
-  const [data, HTTPstatus] = await fetchData(query)
-  return {
-    data: data ? data.apps : [],
-    status: HTTPstatus
-  }
-}
-
-/**
- * Get app fields for building a query string.
- * @param {Boolean} isList
- */
-function getAppFields(isList) {
-  let fields = `
-    _id
-    title
-    slug
-    date`
-
-  if (!isList) {
-    fields = `
-      ${fields}
-      external
-      categories
-      tags
-      image
-      contributors
-      description
-      url
-      citation
-      funding
-      articles (sort: "date:desc", where: { status: "published" }) {
-        _id
-        title
-        slug
-      }
-      datasets (sort: "date:desc", where: { status: "published" }) {
-        _id
-        title
-        slug
-      }`
-  }
-
-  return fields
-}
+const fetchItemsList = async status =>
+  await fetchListByStatus({ contentType: 'apps', status })
