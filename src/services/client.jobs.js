@@ -1,86 +1,146 @@
-import client, { fetchData, buildQuery } from './client'
+import client from './client'
+import { fetchData } from './client.utils'
 
 export { createItem, deleteItem, updateItem, updateItemStatus, uploadFile }
 
-async function createItem(contentType, item) {
-  item.status = item.status || 'created'
-
-  return await client
-    .post(`/${contentType}`, item)
+/**
+ * Create an item of the given content type with the payload.
+ * @param {String} contentType
+ * @param {Object} item
+ */
+const createItem = async (contentType, item) =>
+  await client
+    .post(`/${contentType}`, { ...item, status: item.status || 'created' })
     .catch(err => console.error(err))
-}
 
-async function deleteItem(contentType, id) {
-  return await client
-    .delete(`/${contentType}/${id}`)
-    .catch(err => console.error(err))
-}
+/**
+ * Delete an item of the given content type and id.
+ * @param {String} contentType
+ * @param {String} id
+ */
+const deleteItem = async (contentType, id) =>
+  await client.delete(`/${contentType}/${id}`).catch(err => console.error(err))
 
-async function deleteFile(id) {
-  return await client
-    .delete(`/upload/files/${id}`)
-    .catch(err => console.error(err))
-}
-
-async function getFileId(contentType, field, id) {
-  const params = `id: "${id}"`
-  const fields = `${field} { id }`
-  const query = buildQuery(contentType.slice(0, -1), params, fields)
-
-  return fetchData(query)
-}
-
-async function postFile(contentType, field, file, id) {
-  const form = new FormData()
-
-  form.append('files', file)
-  form.append('refId', id)
-  form.append('ref', contentType.slice(0, -1))
-  form.append('field', field)
-
-  return await client.post('/upload', form).catch(err => console.error(err))
-}
-
-async function updateItem(contentType, item, id) {
-  return await client
+/**
+ * Update an item of the given content type and id with the payload.
+ * @param {String} contentType
+ * @param {String} id
+ * @param {Object} item
+ */
+const updateItem = async (contentType, id, item) =>
+  await client
     .put(`/${contentType}/${id}`, item)
     .catch(err => console.error(err))
-}
 
-async function updateItemStatus(contentType, id, status) {
-  const type = contentType.slice(0, contentType.length - 1)
-  const updateType = `update${type[0].toUpperCase()}${type.slice(1)}`
-
-  return await client
+/**
+ * Update an item status.
+ * @param {String} contentType
+ * @param {String} id
+ * @param {String} status
+ */
+const updateItemStatus = async (contentType, id, status) =>
+  await client
     .post('/graphql', {
-      query: `mutation {
-        ${updateType}(input: {
-          where: {
-            id: "${id}"
-          },
-          data: {
-            status: "${status}"
-          }
-        }) {
-          ${type} {
-            status
-          }
-        }
-      }`
+      query: buildUpdateQuery({
+        contentType: contentType.slice(0, -1),
+        params: `where: { id: "${id}" }`,
+        key: 'status',
+        value: status
+      })
     })
-    .catch(err => {
-      console.error(err)
-    })
+    .catch(err => console.error(err))
+
+/**
+ * Uploads a file to the given content type item field.
+ * @param {String} contentType
+ * @param {String} field
+ * @param {FormData} file
+ * @param {String} id
+ */
+const uploadFile = async (contentType, field, file, id) => {
+  const typeSingular = contentType.slice(0, -1)
+  const { data, status } = await getFileId({ type: typeSingular, field, id })
+
+  if (status === 200) {
+    const fileField = data[typeSingular][field]
+    if (fileField) await deleteFile(fileField.id)
+    await postFile({ file, refId: id, ref: typeSingular, field })
+  }
 }
 
-async function uploadFile(contentType, field, file, id) {
-  const [data, HTTPstatus] = await getFileId(contentType, field, id)
-
-  if (HTTPstatus === 200) {
-    const fileField = data[contentType.slice(0, -1)][field]
-    if (fileField) {
-      await deleteFile(fileField.id)
+/**
+ * Generate a graphql mutation update string.
+ * @param {Object} args Mutate query information
+ * @param {String} args.contentType
+ * @param {String} args.params
+ * @param {String} args.key
+ * @param {String} args.value
+ */
+const buildUpdateQuery = ({ contentType, params, key, value }) =>
+  `mutation {
+    update${capitalize(contentType)} (input: {
+      ${params},
+      data: {
+        ${key}: "${value}"
+      }
+    }) {
+      ${contentType} {
+        ${key}
+      }
     }
-    await postFile(contentType, field, file, id)
-  }
+  }`
+
+/**
+ * @param {String} str
+ */
+const capitalize = str => `${str[0].toUpperCase()}${str.slice(1)}`
+
+/**
+ * Delete an uploads file by id.
+ * @param {String} id
+ */
+const deleteFile = async id =>
+  await client.delete(`/upload/files/${id}`).catch(err => console.error(err))
+
+/**
+ * Get a related uploads file id for the given content type item field.
+ * @param {Object} args
+ * @param {String} args.contentType
+ * @param {String} args.field
+ * @param {String} args.type
+ */
+const getFileId = async ({ contentType, field, id }) =>
+  await fetchData(contentType)({
+    params: `id: "${id}"`,
+    fields: [`${field} { id }`]
+  })
+
+/**
+ * Post a uploads file for the given content type item field.
+ * @param {Object} args Uploads file and information
+ * @param {FormData} args.file FormData object to upload
+ * @param {String} args.refId Content item id
+ * @param {String} args.ref Content type
+ * @param {String} args.field Field for the uploads file
+ */
+const postFile = async ({ file, refId, ref, field }) =>
+  await client
+    .post('/upload', prepareForm({ file, refId, ref, field }))
+    .catch(err => console.error(err))
+
+/**
+ * Prepare a uploads file for the given content type item field.
+ * @param {Object} args Uploads file and information
+ * @param {FormData} args.file FormData object to upload
+ * @param {String} args.refId Content item id
+ * @param {String} args.ref Content type
+ * @param {String} args.field Field for the uploads file
+ */
+const prepareForm = ({ file, refId, ref, field }) => {
+  const form = new FormData()
+  form.append('files', file)
+  form.append('refId', refId)
+  form.append('ref', ref)
+  form.append('field', field)
+  return form
 }

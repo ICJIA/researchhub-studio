@@ -8,8 +8,7 @@
       <v-layout row wrap>
         <v-flex class="px-3" xs12 md6 lg4>
           <v-select
-            :value="item.articles"
-            @input="$emit('input', $event.target.value)"
+            v-model="item.articles"
             item-text="title"
             label="Related articles"
             clearable
@@ -21,8 +20,7 @@
 
         <v-flex class="px-3" xs12 md6 lg4>
           <v-select
-            :value="item.datasets"
-            @input="$emit('input', $event.target.value)"
+            v-model="item.datasets"
             item-text="title"
             label="Related datasets"
             clearable

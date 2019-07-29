@@ -1,28 +1,18 @@
-import { fetchData, buildQuery } from './client'
+import { fetchData, fetchOneById } from './client.utils'
 
 export { fetchItemById, fetchItemsList }
 
-const fields = `
-  _id
-  title
-  slug`
+const fields = ['_id', 'title', 'slug']
 
-async function fetchItemById(id) {
-  const params = `id: "${id}"`
-  const query = buildQuery('author', params, fields)
-  const [data, HTTPstatus] = await fetchData(query)
-  return {
-    data: data ? data.author : {},
-    status: HTTPstatus
-  }
-}
+/**
+ * Fetch an author using id.
+ * @param {String} id
+ */
+const fetchItemById = async id =>
+  await fetchOneById({ contentType: 'author', id, fields })
 
-async function fetchItemsList() {
-  const params = `sort: "title"`
-  const query = buildQuery('authors', params, fields)
-  const [data, HTTPstatus] = await fetchData(query)
-  return {
-    data: data ? data.authors : [],
-    status: HTTPstatus
-  }
-}
+/**
+ * Fetch a list of authors.
+ */
+const fetchItemsList = async () =>
+  await fetchData('authors')({ params: `sort: "title"`, fields })
