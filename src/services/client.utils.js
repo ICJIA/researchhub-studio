@@ -1,7 +1,13 @@
 import client from './client'
 import { baseFields } from '@/consts/queryFields'
 
-export { fetchData, fetchListByStatus, fetchOneById, fetchQueryResult }
+export {
+  fetchData,
+  fetchListByStatus,
+  fetchOneById,
+  fetchQueryResult,
+  healthCheck
+}
 
 /**
  * @param {Object} args
@@ -48,3 +54,12 @@ const fetchQueryResult = (contentType = '') => async query =>
       status
     }))
     .catch(err => console.error(err))
+
+/**
+ * Check API server health.
+ */
+const healthCheck = async (timeout = 2000) =>
+  await client
+    .head(`/`, { timeout })
+    .then(res => res.status === 200)
+    .catch(() => false)
