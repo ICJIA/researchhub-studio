@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       dialog: false,
-      view: false,
+      view: true,
       item: this.local ? this.$store.state.content.item : null,
       published: this.status === 'published'
     }
