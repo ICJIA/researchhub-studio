@@ -77,7 +77,7 @@ export default {
           : this.$store.state.content.types,
       contentType: 'apps',
       status: 'submitted',
-      statusOptions: ['published', 'submitted', 'created'],
+      statusOptions: ['created', 'submitted', 'published'],
       stepHeader1: 'Select content type',
       stepHeader2: 'Select item',
       stepHeader3: 'Update'

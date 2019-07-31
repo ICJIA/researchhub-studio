@@ -145,7 +145,7 @@ export default {
       item: {},
       previewKey: 0,
       statusLocal: this.status,
-      statusOptions: ['published', 'submitted', 'created'],
+      statusOptions: ['created', 'submitted', 'published'],
       saved: false
     }
   },
