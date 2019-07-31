@@ -2,11 +2,15 @@
   <v-container>
     <v-layout justify-center>
       <v-flex v-if="view" xs12 sm10 md8>
-        <RHDatasetView :item="item" :downloader="nodownloader" />
+        <RHDatasetView
+          :item="item"
+          :downloader="nodownloader"
+          :preview="true"
+        />
       </v-flex>
 
       <v-flex v-else xs12 sm6 md4>
-        <RHDatasetCard :item="item" />
+        <RHDatasetCard :item="item" :preview="true" />
       </v-flex>
     </v-layout>
   </v-container>

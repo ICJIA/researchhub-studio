@@ -1,11 +1,16 @@
 <template>
   <div>
-    <RHArticleView v-if="view" :item="item" :downloader="nodownloader" />
+    <RHArticleView
+      v-if="view"
+      :item="item"
+      :downloader="nodownloader"
+      :preview="true"
+    />
 
     <v-container v-else>
       <v-layout justify-center>
         <v-flex xs12 sm10 xl8>
-          <RHArticleCard :item="item" />
+          <RHArticleCard :item="item" :preview="true" />
         </v-flex>
       </v-layout>
     </v-container>
