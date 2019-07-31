@@ -190,7 +190,7 @@ export default {
     async editItem({ _id: id, title }) {
       const res = await this.dispatchAction('fetchItem', { id })
       if (res && res.status === 200) {
-        alert('✔️Item is selected. Proceed to edit.')
+        alert('✔️Item is selected. Click the next button (>) to edit.')
       } else {
         alert(`⚠️Failed to select: ${title}`)
       }
