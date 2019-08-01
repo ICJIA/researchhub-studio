@@ -16,6 +16,7 @@
     "markdown-it": "^8.4.2",
     "markdown-it-anchor": "^5.0.2",
     "markdown-it-footnote": "^3.0.2",
+    "markdown-it-texmath": "^0.5.5",
     "nprogress": "^0.2.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.7",

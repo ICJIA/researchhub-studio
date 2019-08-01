@@ -35,11 +35,16 @@
 </template>
 
 <script>
-const md = require('markdown-it')({
+const mdOpts = {
   html: true,
   linkify: true,
   typographer: true
-}).use(require('markdown-it-footnote'))
+}
+
+const md = require('markdown-it')(mdOpts)
+  .use(require('markdown-it-footnote'))
+  // eslint-disable-next-line no-undef
+  .use(require('markdown-it-texmath').use(katex))
 
 function syncScroll(from, to) {
   let sf = from.scrollHeight - from.clientHeight
@@ -173,5 +178,9 @@ export default {
 
 #preview >>> table tr:nth-child(2n) {
   background-color: #f6f8fa;
+}
+
+#preview >>> .katex {
+  font-size: 1em;
 }
 </style>
