@@ -34,8 +34,6 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Gentium+Book+Basic');
-
 .application {
   color: #333;
   font-family: 'Gentium Book Basic', serif;
