@@ -23,6 +23,7 @@
 </template>
 
 <script>
+/* eslint no-unused-vars: "off" */
 const BaseDropzone = () => import('@/components/BaseDropzone')
 
 export default {

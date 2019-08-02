@@ -301,6 +301,7 @@ export default {
     })
   },
   watch: {
+    // eslint-disable-next-line no-unused-vars
     content(newContent, _) {
       if (this.update && newContent && Object.keys(newContent).length) {
         this.item = this.prepareItem(newContent)

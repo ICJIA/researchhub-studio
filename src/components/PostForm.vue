@@ -156,12 +156,14 @@ export default {
     })
   },
   watch: {
+    // eslint-disable-next-line no-unused-vars
     content(newContent, _) {
       if (this.update && newContent && Object.keys(newContent).length) {
         this.item = newContent
         this.saved = true
       }
     },
+    // eslint-disable-next-line no-unused-vars
     status(newStatus, _) {
       if (this.update && newStatus) this.statusLocal = newStatus
     }
