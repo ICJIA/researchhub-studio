@@ -40,6 +40,7 @@
       <v-textarea
         v-model="item.description"
         label="Description"
+        no-resize
         :rules="[rules.required]"
       />
     </v-flex>

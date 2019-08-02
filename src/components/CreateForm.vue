@@ -161,11 +161,19 @@
       <!-- common fields input 2 -->
       <v-layout row wrap>
         <v-flex class="px-3" xs12 md10 lg6>
-          <v-textarea v-model="item.citation" label="Suggested citation" />
+          <v-textarea
+            v-model="item.citation"
+            label="Suggested citation"
+            no-resize
+          />
         </v-flex>
 
         <v-flex class="px-3" xs12 md10 lg6>
-          <v-textarea v-model="item.funding" label="Funding acknowledgement" />
+          <v-textarea
+            v-model="item.funding"
+            label="Funding acknowledgement"
+            no-resize
+          />
         </v-flex>
       </v-layout>
 

@@ -16,6 +16,7 @@
         height="400"
         v-model="markdownLocal"
         box
+        no-resize
         @scroll="syncScrollEditor"
         @input="onInput"
       >

@@ -46,6 +46,7 @@
         <v-textarea
           v-model="item.abstract"
           label="Abstract"
+          no-resize
           :rules="[rules.required]"
         />
       </v-flex>
