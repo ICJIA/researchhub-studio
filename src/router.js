@@ -31,7 +31,7 @@ const router = new Router({
     },
     {
       path: '/post-new',
-      name: 'post-new',
+      name: 'post new',
       component: () => import('./views/PostNew.vue'),
       meta: {
         auth: true,
@@ -40,7 +40,7 @@ const router = new Router({
     },
     {
       path: '/post-update',
-      name: 'post-update',
+      name: 'post update',
       component: () => import('./views/PostUpdate.vue'),
       meta: {
         auth: true,
