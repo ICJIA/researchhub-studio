@@ -49,7 +49,7 @@
           </PreviewDialog>
 
           <template v-if="type === 'manage'">
-            <template v-if="isStatusPublished">
+            <template v-if="isStatusPublished && isAdmin">
               <v-btn icon @click="updateToSubmitted(props.item)">
                 <v-icon class="greyicon">close</v-icon>
               </v-btn>
@@ -135,6 +135,9 @@ export default {
   computed: {
     items() {
       return this.$store.state.content.itemlist
+    },
+    isAdmin() {
+      return this.$store.state.auth.role === 'Administrator'
     },
     isStatusCreated() {
       return this.status === 'created'
