@@ -1,29 +1,27 @@
 <template>
-  <v-container>
-    <v-layout row wrap align-center justify-center fill-height>
-      <v-flex xs12 sm10 md8>
-        <div class="text-xs-center font-lato">
-          <h1 class="uppercase font-lato">Choose your task</h1>
-          <p>Permission level: {{ role }}</p>
-        </div>
+  <BaseViewLayout>
+    <div class="text-xs-center py-3">
+      <h1 class="uppercase font-lato bold">Choose your task</h1>
+      <p class="font-lato">Permission level: {{ role }}</p>
+    </div>
 
-        <v-layout row wrap justify-center>
-          <template v-for="(task, i) in tasks">
-            <v-flex :key="i" v-if="checkPermission(task)" xs12 md6 xl4>
-              <HomeTaskCard :task="task" />
-            </v-flex>
-          </template>
-        </v-layout>
-      </v-flex>
+    <v-layout row wrap justify-center mb-5>
+      <template v-for="(task, i) in tasks">
+        <v-flex :key="i" v-if="checkPermission(task)" xs12 sm6 lg4>
+          <HomeTaskCard :task="task" />
+        </v-flex>
+      </template>
     </v-layout>
-  </v-container>
+  </BaseViewLayout>
 </template>
 
 <script>
+const BaseViewLayout = () => import('@/components/BaseViewLayout')
 const HomeTaskCard = () => import('@/components/HomeTaskCard')
 
 export default {
   components: {
+    BaseViewLayout,
     HomeTaskCard
   },
   computed: {
