@@ -1,18 +1,5 @@
 <template>
   <v-layout row wrap>
-    <v-flex class="px-3" xs12 md6 lg4>
-      <v-select
-        v-model="item.authors"
-        item-text="title"
-        label="Authors"
-        clearable
-        multiple
-        return-object
-        :items="authorOptions"
-        :rules="[rules.required]"
-      />
-    </v-flex>
-
     <v-flex xs12>
       <v-layout row wrap>
         <v-flex class="px-3" xs12 md6 lg4>
@@ -41,15 +28,26 @@
       </v-layout>
     </v-flex>
 
-    <v-flex xs12>
-      <v-flex class="px-3" xs12 md10 lg6>
+    <v-flex class="px-3" xs12 md10 lg6>
+      <v-layout row wrap>
+        <CreateFormExistingAuthors @useExistingAuthors="useExistingAuthors" />
         <v-textarea
-          v-model="item.abstract"
-          label="Abstract"
+          v-model="item.authorString"
+          label="Authors"
           no-resize
+          hint="Format: full name | brief description; add new authors with new lines"
           :rules="[rules.required]"
         />
-      </v-flex>
+      </v-layout>
+    </v-flex>
+
+    <v-flex class="px-3" xs12 md10 lg6>
+      <v-textarea
+        v-model="item.abstract"
+        label="Abstract"
+        no-resize
+        :rules="[rules.required]"
+      />
     </v-flex>
 
     <template v-if="update">
@@ -107,10 +105,15 @@
 
 <script>
 import { fetchItemsList as fetchAppsList } from '@/services/client.apps.js'
-import { fetchItemsList as fetchAuthorsList } from '@/services/client.authors.js'
 import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets.js'
 
+const CreateFormExistingAuthors = () =>
+  import('@/components/CreateFormExistingAuthors')
+
 export default {
+  components: {
+    CreateFormExistingAuthors
+  },
   props: {
     item: Object,
     rules: Object,
@@ -126,7 +129,7 @@ export default {
       apps: null,
       appOptions: [],
       authors: null,
-      authorOptions: [],
+      authorString: null,
       datasets: null,
       datasetOptions: [],
       hasFiles: this.mainfiletype !== null,
@@ -136,11 +139,12 @@ export default {
   },
   async created() {
     this.appOptions = (await fetchAppsList('published')).data
-    this.authorOptions = (await fetchAuthorsList()).data.map(el => ({
-      slug: el.slug,
-      title: el.title
-    }))
     this.datasetOptions = (await fetchDatasetsList('published')).data
+  },
+  methods: {
+    useExistingAuthors(e) {
+      this.$emit('useExistingAuthors', e)
+    }
   }
 }
 </script>

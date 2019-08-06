@@ -86,6 +86,7 @@
         v-model="item"
         :rules="rules"
         :update="update"
+        @useExistingAuthors="useExistingAuthors"
       >
         <template v-slot:mainfile>
           <MyDropzone
@@ -222,6 +223,7 @@ const emptyItem = {
   markdown: '',
   abstract: null,
   authors: null,
+  authorString: null,
   citation: null,
   description: null,
   funding: null,
@@ -244,6 +246,7 @@ const emptyItem = {
   datasets: null
 }
 const temporaryFields = [
+  'authorString',
   'noteString',
   'sourceTitleString',
   'sourceUrlString',
@@ -320,10 +323,9 @@ export default {
       const item = { ...this.item }
 
       item.markdown = this.contentType === 'articles' ? item.markdown : null
-      item.authors =
-        this.contentType === 'articles'
-          ? item.authors.map(el => ({ title: el.title, slug: el.slug }))
-          : null
+      item.authors = item.authorString
+        ? this.parseAuthors(item.authorString)
+        : []
       item.notes = item.noteString ? this.parseNotes(item.noteString) : []
       item.sources = item.sourceTitleString
         ? this.parseSources(item.sourceTitleString, item.sourceUrlString)
@@ -341,6 +343,12 @@ export default {
       await this.addDropzoneFiles(item, this.contentType, this.dropzoneList)
 
       return item
+    },
+    parseAuthors(string) {
+      return string.split(/[\r\n]+/).map(author => {
+        const [title, description] = author.split('|').map(el => el.trim())
+        return { title, description }
+      })
     },
     parseNotes(string) {
       return string
@@ -375,9 +383,18 @@ export default {
       const item = content
       item.date = item.date.slice(0, 10)
       item.tagString = item.tags ? item.tags.join(', ') : ''
+
+      if (this.contentType === 'articles') this.prepareArticle(item)
       if (this.contentType === 'datasets') this.prepareDataset(item)
 
       return item
+    },
+    prepareArticle(item) {
+      if (item.hasOwnProperty('authors')) {
+        item.authorString = item.authors
+          .map(({ title, description }) => `${title} | ${description}`)
+          .join('\n')
+      }
     },
     prepareDataset(item) {
       if (item.hasOwnProperty('timeperiod')) {
@@ -468,6 +485,10 @@ export default {
     useExistingTags(e) {
       const add = this.item.tagString ? `, ${e}` : e
       this.item.tagString += add
+    },
+    useExistingAuthors(e) {
+      const add = this.item.authorString ? `\n${e}` : e
+      this.item.authorString += add
     }
   }
 }

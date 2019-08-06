@@ -71,10 +71,7 @@ export default {
   },
   data() {
     return {
-      contentTypes:
-        this.type === 'post'
-          ? this.$store.state.content.typesAll
-          : this.$store.state.content.types,
+      contentTypes: this.$store.state.content.types,
       contentType: 'apps',
       status: 'submitted',
       statusOptions: ['created', 'submitted', 'published'],
