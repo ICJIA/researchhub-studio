@@ -58,13 +58,12 @@ const updateItemStatus = async (contentType, id, status) =>
  * @param {String} id
  */
 const uploadFile = async (contentType, field, file, id) => {
-  const typeSingular = contentType.slice(0, -1)
-  const { data, status } = await getFileId({ type: typeSingular, field, id })
+  const ref = contentType.slice(0, -1)
+  const { data, status } = await getFileId({ contentType: ref, field, id })
 
   if (status === 200) {
-    const fileField = data[typeSingular][field]
-    if (fileField) await deleteFile(fileField.id)
-    await postFile({ file, refId: id, ref: typeSingular, field })
+    if (data[field]) await deleteFile(data[field].id)
+    await postFile({ file, refId: id, ref, field })
   }
 }
 
