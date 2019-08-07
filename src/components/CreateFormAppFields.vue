@@ -1,14 +1,14 @@
 <template>
   <v-layout row wrap>
-    <v-flex class="px-3" xs12 md6 lg4>
+    <v-flex class="px-3" xs10 sm8 lg4>
       <v-text-field v-model="item.url" label="URL" :rules="[rules.required]" />
     </v-flex>
 
-    <v-flex class="px-3 pt-3" xs12>
+    <v-flex class="px-3 pt-3" xs10>
       <slot name="image"></slot>
     </v-flex>
 
-    <v-flex class="px-3" xs12 md10 lg6>
+    <v-flex class="px-3" xs10 sm8 lg5>
       <v-textarea
         v-model="item.description"
         label="Description"

@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs6>
+    <v-flex xs12 lg6>
       <span>
         <template>{{ 'Markdown' }}</template>
         <template>{{ ' (Use ' }}</template>
@@ -23,7 +23,7 @@
       </v-textarea>
     </v-flex>
 
-    <v-flex xs6>
+    <v-flex lg6 hidden-md-and-down>
       <span>Result :</span>
       <div
         id="preview"

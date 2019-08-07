@@ -7,7 +7,7 @@
   >
     <v-form>
       <v-layout class="pl-3" row wrap>
-        <v-flex v-if="contentType !== 'authors'" class="px-3" xs12>
+        <v-flex v-if="contentType !== 'authors'" class="px-3" xs10>
           <p class="greycolor">Status</p>
           <v-radio-group v-model="statusLocal" row>
             <v-radio
@@ -19,7 +19,7 @@
           </v-radio-group>
         </v-flex>
 
-        <v-flex class="px-3 pt-3" xs12>
+        <v-flex class="px-3 pt-3" xs10>
           <MyDropzone
             key="DropzoneJson"
             ref="DropzoneJson"
@@ -34,7 +34,7 @@
         </v-flex>
 
         <template v-if="contentType === 'apps'">
-          <v-flex class="px-3 pt-3" xs12>
+          <v-flex class="px-3 pt-3" xs10>
             <MyDropzone
               ref="DropzoneImage"
               fileTypes=".jpg, .jpeg, .png"
@@ -47,7 +47,7 @@
         </template>
 
         <template v-if="contentType === 'articles'">
-          <v-flex class="px-3 pt-3" xs12>
+          <v-flex class="px-3 pt-3" xs10>
             <MyDropzone
               ref="DropzoneSplash"
               fileTypes=".jpg, .jpeg, .png"
@@ -59,7 +59,7 @@
             </MyDropzone>
           </v-flex>
 
-          <v-flex class="px-3 pt-3" xs12>
+          <v-flex class="px-3 pt-3" xs10>
             <MyDropzone
               key="DropzoneImages"
               ref="DropzoneImages"
@@ -71,7 +71,7 @@
             </MyDropzone>
           </v-flex>
 
-          <v-flex class="px-3 pt-3" xs12>
+          <v-flex class="px-3 pt-3" xs10>
             <MyDropzone
               key="DropzoneMarkdown"
               ref="DropzoneMarkdown"
@@ -86,7 +86,7 @@
         </template>
 
         <template v-if="contentType === 'datasets'">
-          <v-flex class="px-3 pt-3" xs12>
+          <v-flex class="px-3 pt-3" xs10>
             <MyDropzone
               key="DropzoneData"
               ref="DropzoneData"

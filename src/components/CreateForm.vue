@@ -9,7 +9,7 @@
     <v-form ref="form" v-model="valid" lazy-validation>
       <!-- common fields input 1 -->
       <v-layout row wrap>
-        <v-flex class="px-3" xs12 sm10 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <v-text-field
             v-model="item.title"
             label="Title"
@@ -19,7 +19,7 @@
           />
         </v-flex>
 
-        <v-flex class="px-3" xs12 sm10 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <v-text-field
             v-model="item.slug"
             label="Slug"
@@ -33,13 +33,13 @@
       </v-layout>
 
       <v-layout row>
-        <v-flex class="px-3" xs12 sm10 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <DatePicker :date.sync="item.date" />
         </v-flex>
       </v-layout>
 
       <v-layout row wrap>
-        <v-flex class="px-3" xs12 sm10 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <v-select
             v-model="item.categories"
             label="Categories"
@@ -50,7 +50,7 @@
           />
         </v-flex>
 
-        <v-flex class="px-3" xs12 sm10 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <v-layout row wrap>
             <CreateFormExistingTags @useExistingTags="useExistingTags" />
             <v-text-field
@@ -161,7 +161,7 @@
 
       <!-- common fields input 2 -->
       <v-layout row wrap>
-        <v-flex class="px-3" xs12 md10 lg6>
+        <v-flex class="px-3" xs10 sm8 lg5>
           <v-textarea
             v-model="item.citation"
             label="Suggested citation"
@@ -169,7 +169,7 @@
           />
         </v-flex>
 
-        <v-flex class="px-3" xs12 md10 lg6>
+        <v-flex class="px-3" xs10 sm8 lg5>
           <v-textarea
             v-model="item.funding"
             label="Funding acknowledgement"
@@ -178,7 +178,7 @@
         </v-flex>
 
         <v-flex v-if="contentType !== 'apps'" class="px-3" xs12>
-          <v-flex xs12 md6 lg4>
+          <v-flex xs10 sm8 lg4>
             <v-select
               v-model="item.apps"
               item-text="title"
@@ -192,7 +192,7 @@
         </v-flex>
 
         <v-flex v-if="contentType !== 'articles'" class="px-3" xs12>
-          <v-flex xs12 md6 lg4>
+          <v-flex xs10 sm8 lg4>
             <v-select
               v-model="item.articles"
               item-text="title"
@@ -206,7 +206,7 @@
         </v-flex>
 
         <v-flex v-if="contentType !== 'datasets'" class="px-3" xs12>
-          <v-flex xs12 md6 lg4>
+          <v-flex xs10 sm8 lg4>
             <v-select
               v-model="item.datasets"
               item-text="title"

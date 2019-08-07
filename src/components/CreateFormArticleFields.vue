@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex class="px-3" xs12 md10 lg6>
+    <v-flex class="px-3" xs10 sm8 lg5>
       <v-layout row wrap>
         <CreateFormExistingAuthors @useExistingAuthors="useExistingAuthors" />
         <v-textarea
@@ -13,7 +13,7 @@
       </v-layout>
     </v-flex>
 
-    <v-flex class="px-3" xs12 md10 lg6>
+    <v-flex class="px-3" xs10 sm8 lg5>
       <v-textarea
         v-model="item.abstract"
         label="Abstract"
@@ -23,7 +23,7 @@
     </v-flex>
 
     <template v-if="update">
-      <v-flex class="px-3" xs2>
+      <v-flex class="px-3" xs5>
         <p class="pt-2 greycolor">Attach files?</p>
         <v-checkbox
           v-model="hasFiles"
@@ -31,7 +31,7 @@
         ></v-checkbox>
       </v-flex>
 
-      <v-flex v-show="hasFiles" class="px-3" xs12 md10>
+      <v-flex v-show="hasFiles" class="px-3" xs10 sm8 lg5>
         <p class="pt-2 greycolor">Main file type</p>
         <v-radio-group v-model="item.mainfiletype" row>
           <v-radio
@@ -45,11 +45,11 @@
 
       <v-flex v-show="hasFiles" xs12>
         <v-layout row wrap>
-          <v-flex class="px-3 pt-3" xs12 md6>
+          <v-flex class="px-3 pt-3" xs10 sm8 lg5>
             <slot name="mainfile"></slot>
           </v-flex>
 
-          <v-flex class="px-3 pt-3" xs12 md6>
+          <v-flex class="px-3 pt-3" xs10 sm8 lg5>
             <slot name="extrafile"></slot>
           </v-flex>
         </v-layout>
@@ -58,17 +58,17 @@
 
     <v-flex xs12>
       <v-layout row wrap>
-        <v-flex class="px-3 pt-3" xs12 md6>
+        <v-flex class="px-3 pt-3" xs10 sm8 lg5>
           <slot name="splash"></slot>
         </v-flex>
 
-        <v-flex class="px-3 pt-3" xs12 md6>
+        <v-flex class="px-3 pt-3" xs10 sm8 lg5>
           <slot name="figures"></slot>
         </v-flex>
       </v-layout>
     </v-flex>
 
-    <v-flex class="px-3 pt-3" xs12>
+    <v-flex class="px-3 pt-3" xs10 sm8 lg10>
       <p class="pt-2 greycolor">Article body</p>
       <slot name="articlebody"></slot>
     </v-flex>

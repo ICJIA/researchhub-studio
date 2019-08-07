@@ -2,7 +2,7 @@
   <v-layout row wrap>
     <v-flex xs12>
       <v-layout row wrap>
-        <v-flex class="px-3" xs12 md6 lg4>
+        <v-flex class="px-3" xs12 sm8 lg4>
           <v-text-field
             v-model="item.sourceTitleString"
             label="Sources"
@@ -10,7 +10,7 @@
           />
         </v-flex>
 
-        <v-flex class="px-3" xs12 md6 lg4>
+        <v-flex class="px-3" xs12 sm8 lg4>
           <v-text-field
             v-model="item.sourceUrlString"
             label="Source URLs"
@@ -22,7 +22,7 @@
 
     <v-flex xs12>
       <v-layout row wrap>
-        <v-flex class="px-3" xs12 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <v-text-field
             v-model="item.timeperiodString"
             label="Time period"
@@ -31,7 +31,7 @@
           />
         </v-flex>
 
-        <v-flex class="px-3" xs12 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <v-select
             v-model="item.timeperiodType"
             label="Time period type"
@@ -43,7 +43,7 @@
     </v-flex>
 
     <v-flex xs12>
-      <v-flex class="px-3" xs12 md6 lg4>
+      <v-flex class="px-3" xs10 sm8 lg4>
         <v-select
           v-model="item.unit"
           label="Unit"
@@ -53,11 +53,11 @@
       </v-flex>
     </v-flex>
 
-    <v-flex v-if="update" class="px-3 pt-3" xs12>
+    <v-flex v-if="update" class="px-3 pt-3" xs10 sm8>
       <slot name="datafile"></slot>
     </v-flex>
 
-    <v-flex class="px-3" xs12 md10 lg6>
+    <v-flex class="px-3" xs10 sm8 lg5>
       <v-textarea
         v-model="item.description"
         label="Description"
@@ -66,7 +66,7 @@
       />
     </v-flex>
 
-    <v-flex class="px-3" xs12 md10 lg6>
+    <v-flex class="px-3" xs10 sm8 lg5>
       <v-textarea
         v-model="item.noteString"
         label="Notes"
@@ -75,7 +75,7 @@
       />
     </v-flex>
 
-    <v-flex class="px-3" xs12 md10 lg6>
+    <v-flex class="px-3" xs10 sm8 lg5>
       <v-textarea
         v-model="item.variableString"
         label="Variables"
