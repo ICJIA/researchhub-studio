@@ -196,8 +196,13 @@
 
 <script>
 import { mapState } from 'vuex'
-import dropzoneMixin from '@/mixins/dropzoneMixin'
 import formMixin from '@/mixins/formMixin'
+
+import dropzoneMsgs from '@/consts/dropzoneMsgs'
+import addDropzoneFiles from '@/utils/addDropzoneFiles'
+import getDropzoneFilelist from '@/utils/getDropzoneFilelist'
+import getDropzoneList from '@/utils/getDropzoneList'
+import removeDropzoneFiles from '@/utils/removeDropzoneFiles'
 
 const BaseForm = () => import('@/components/BaseForm')
 const CreateFormAppFields = () => import('@/components/CreateFormAppFields')
@@ -258,7 +263,7 @@ const temporaryFields = [
 
 export default {
   name: 'createform',
-  mixins: [dropzoneMixin, formMixin],
+  mixins: [formMixin],
   components: {
     BaseForm,
     CreateFormAppFields,
@@ -285,6 +290,7 @@ export default {
         'other'
       ],
       dropzoneList: {},
+      ...dropzoneMsgs,
       formKey: 0,
       item: { ...emptyItem },
       previewKey: 0,
@@ -313,10 +319,10 @@ export default {
     }
   },
   mounted() {
-    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs)
+    this.dropzoneList = getDropzoneList(this.$refs)
   },
   updated() {
-    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs)
+    this.dropzoneList = getDropzoneList(this.$refs)
   },
   methods: {
     async parseItem() {
@@ -340,9 +346,11 @@ export default {
 
       this.removeEmptyFields(item)
       this.removeTemporaryFields(item)
-      await this.addDropzoneFiles(item, this.contentType, this.dropzoneList)
 
-      return item
+      return {
+        ...item,
+        ...(await addDropzoneFiles(this.dropzoneList))
+      }
     },
     parseAuthors(string) {
       return string.split(/[\r\n]+/).map(author => {
@@ -452,13 +460,13 @@ export default {
         this.item = { ...emptyItem }
       }
 
-      this.removeDropzoneFiles(this.dropzoneList)
+      removeDropzoneFiles(this.dropzoneList)
       this.rerenderForm()
       this.saved = false
     },
     saveFiles() {
       if (this.$refs.form.validate()) {
-        const filelist = this.getDropzoneFilelist(this.dropzoneList)
+        const filelist = getDropzoneFilelist(this.dropzoneList)
         this.$store.dispatch('content/setFilelist', filelist)
       }
     },

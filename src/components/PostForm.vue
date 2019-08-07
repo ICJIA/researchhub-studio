@@ -119,8 +119,13 @@
 
 <script>
 import { mapState } from 'vuex'
-import dropzoneMixin from '@/mixins/dropzoneMixin'
 import formMixin from '@/mixins/formMixin'
+
+import dropzoneMsgs from '@/consts/dropzoneMsgs'
+import addDropzoneFiles from '@/utils/addDropzoneFiles'
+import getDropzoneFilelist from '@/utils/getDropzoneFilelist'
+import getDropzoneList from '@/utils/getDropzoneList'
+import removeDropzoneFiles from '@/utils/removeDropzoneFiles'
 
 const BaseForm = () => import('@/components/BaseForm')
 const MyDropzone = () => import('@/components/MyDropzone')
@@ -128,7 +133,7 @@ const PreviewDialog = () => import('@/components/PreviewDialog')
 
 export default {
   name: 'postform',
-  mixins: [dropzoneMixin, formMixin],
+  mixins: [formMixin],
   components: {
     BaseForm,
     MyDropzone,
@@ -142,6 +147,7 @@ export default {
   data() {
     return {
       dropzoneList: {},
+      ...dropzoneMsgs,
       item: {},
       previewKey: 0,
       statusLocal: this.status,
@@ -169,24 +175,18 @@ export default {
     }
   },
   mounted() {
-    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs, true)
+    this.dropzoneList = getDropzoneList(this.$refs)
   },
   updated() {
-    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs, true)
+    this.dropzoneList = getDropzoneList(this.$refs)
   },
   methods: {
     async parseItem() {
-      const item = { ...this.item }
-      if (!this.update) item.status = this.statusLocal
-
-      await this.addDropzoneFiles(
-        item,
-        this.contentType,
-        this.dropzoneList,
-        true
-      )
-
-      return item
+      return {
+        ...this.item,
+        ...(await addDropzoneFiles(this.dropzoneList)),
+        ...(this.update ? { status: this.statusLocal } : {})
+      }
     },
     rerenderPreview() {
       this.previewKey += 1
@@ -201,11 +201,11 @@ export default {
         this.$store.dispatch('content/setItem', {})
         this.item = { status: 'publisehd' }
       }
-      if (this.dropzoneList) this.removeDropzoneFiles(this.dropzoneList)
+      if (this.dropzoneList) removeDropzoneFiles(this.dropzoneList)
       this.saved = false
     },
     saveFiles() {
-      const filelist = this.getDropzoneFilelist(this.dropzoneList)
+      const filelist = getDropzoneFilelist(this.dropzoneList)
       this.$store.dispatch('content/setFilelist', filelist)
     },
     async saveItem() {
