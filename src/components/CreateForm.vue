@@ -199,9 +199,12 @@ import { mapState } from 'vuex'
 import formMixin from '@/mixins/formMixin'
 
 import dropzoneMsgs from '@/consts/dropzoneMsgs'
+
 import addDropzoneFiles from '@/utils/addDropzoneFiles'
 import getDropzoneFilelist from '@/utils/getDropzoneFilelist'
 import getDropzoneList from '@/utils/getDropzoneList'
+import parseItem from '@/utils/parseItem'
+import prepareItem from '@/utils/prepareItem'
 import removeDropzoneFiles from '@/utils/removeDropzoneFiles'
 
 const BaseForm = () => import('@/components/BaseForm')
@@ -250,16 +253,6 @@ const emptyItem = {
   articles: null,
   datasets: null
 }
-const temporaryFields = [
-  'authorString',
-  'noteString',
-  'sourceTitleString',
-  'sourceUrlString',
-  'tagString',
-  'timeperiodString',
-  'timeperiodType',
-  'variableString'
-]
 
 export default {
   name: 'createform',
@@ -313,7 +306,7 @@ export default {
     // eslint-disable-next-line no-unused-vars
     content(newContent, _) {
       if (this.update && newContent && Object.keys(newContent).length) {
-        this.item = this.prepareItem(newContent)
+        this.item = prepareItem(newContent)
         this.saved = true
       }
     }
@@ -326,122 +319,10 @@ export default {
   },
   methods: {
     async parseItem() {
-      const item = { ...this.item }
-
-      item.markdown = this.contentType === 'articles' ? item.markdown : null
-      item.authors = item.authorString
-        ? this.parseAuthors(item.authorString)
-        : []
-      item.notes = item.noteString ? this.parseNotes(item.noteString) : []
-      item.sources = item.sourceTitleString
-        ? this.parseSources(item.sourceTitleString, item.sourceUrlString)
-        : []
-      item.tags = item.tagString ? this.stringToArray(item.tagString) : []
-      item.timeperiod = item.timeperiodString
-        ? this.parseTimeperiod(item.timeperiodType, item.timeperiodString)
-        : null
-      item.variables = item.variableString
-        ? this.parseVariables(item.variableString)
-        : []
-
-      this.removeEmptyFields(item)
-      this.removeTemporaryFields(item)
-
       return {
-        ...item,
+        ...parseItem(this.item),
         ...(await addDropzoneFiles(this.dropzoneList))
       }
-    },
-    parseAuthors(string) {
-      return string.split(/[\r\n]+/).map(author => {
-        const [title, description] = author.split('|').map(el => el.trim())
-        return { title, description }
-      })
-    },
-    parseNotes(string) {
-      return string
-        .split(/[\r\n]+/)
-        .map(el => el.trim())
-        .filter(el => el)
-    },
-    parseSources(title, url) {
-      const sourceTitles = this.stringToArray(title)
-      const sourceUrls = this.stringToArray(url)
-      return sourceTitles.map((title, i) => ({ title, url: sourceUrls[i] }))
-    },
-    parseTimeperiod(type, string) {
-      return {
-        yeartype: type,
-        yearmin: string.split('-')[0],
-        yearmax: string.split('-')[1]
-      }
-    },
-    parseVariables(string) {
-      return string.split(/[\r\n]+/).map(row => {
-        const rowArr = this.stringToArray(row, '|')
-        return {
-          name: rowArr[0],
-          type: rowArr[1],
-          definition: rowArr[2],
-          values: rowArr[3]
-        }
-      })
-    },
-    prepareItem(content) {
-      const item = content
-      item.date = item.date.slice(0, 10)
-      item.tagString = item.tags ? item.tags.join(', ') : ''
-
-      if (this.contentType === 'articles') this.prepareArticle(item)
-      if (this.contentType === 'datasets') this.prepareDataset(item)
-
-      return item
-    },
-    prepareArticle(item) {
-      if (item.hasOwnProperty('authors')) {
-        item.authorString = item.authors
-          .map(({ title, description }) => `${title} | ${description}`)
-          .join('\n')
-      }
-    },
-    prepareDataset(item) {
-      if (item.hasOwnProperty('timeperiod')) {
-        item.timeperiodString =
-          item.timeperiod.yearmin + '-' + item.timeperiod.yearmax
-        item.timeperiodType = item.timeperiod.yeartype
-      }
-
-      if (item.hasOwnProperty('sources')) {
-        item.sourceTitleString = item.sources.map(el => el.title).join(', ')
-        item.sourceUrlString = item.sources.map(el => el.url).join(', ')
-      }
-
-      if (item.hasOwnProperty('notes')) {
-        item.noteString = item.notes.join('\n')
-      }
-
-      if (item.hasOwnProperty('variables')) {
-        item.variableString = ''
-        item.variables.forEach((el, i, arr) => {
-          item.variableString +=
-            `${el.name} | ${el.type} ` + `| ${el.definition} | ${el.values}`
-          if (i < arr.length - 1) item.variableString += '\n'
-        })
-      }
-    },
-    removeEmptyFields(item) {
-      Object.keys(item).forEach(field => {
-        if (item[field] === undefined || item[field] === null) {
-          delete item[field]
-        } else if (Array.isArray(item[field])) {
-          item[field].forEach((val, i, arr) => {
-            if (val === undefined) arr.splice(i, 1)
-          })
-        }
-      })
-    },
-    removeTemporaryFields(item) {
-      temporaryFields.forEach(field => delete item[field])
     },
     rerenderForm() {
       this.formKey += 1
@@ -478,9 +359,6 @@ export default {
         this.saved = true
         this.rerenderPreview()
       }
-    },
-    stringToArray(str, sep = ',') {
-      return str.split(sep).map(el => el.trim())
     },
     titleToSlug() {
       if (!this.update) {
