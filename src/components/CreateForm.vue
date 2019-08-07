@@ -199,6 +199,7 @@ import { mapState } from 'vuex'
 import formMixin from '@/mixins/formMixin'
 
 import dropzoneMsgs from '@/consts/dropzoneMsgs'
+import emptyItem from '@/consts/emptyItem'
 import { categoryOptions } from '@/consts/fieldOptions'
 
 import addDropzoneFiles from '@/utils/addDropzoneFiles'
@@ -221,39 +222,7 @@ const MarkdownEditor = () => import('@/components/MarkdownEditor')
 const MyDropzone = () => import('@/components/MyDropzone')
 const PreviewDialog = () => import('@/components/PreviewDialog')
 
-const today = new Date().toISOString().substr(0, 10)
-const emptyItem = {
-  title: '',
-  slug: '',
-  date: today,
-  categories: [],
-  tags: [],
-  tagString: '',
-  markdown: '',
-  abstract: null,
-  authors: null,
-  authorString: null,
-  citation: null,
-  description: null,
-  funding: null,
-  mainfiletype: '',
-  notes: null,
-  noteString: null,
-  sources: null,
-  sourceTitleString: null,
-  sourceUrlString: null,
-  timeperiod: null,
-  timeperiodString: null,
-  timeperiodType: null,
-  thumbnail: null,
-  variables: null,
-  variableString: null,
-  unit: null,
-  url: null,
-  apps: null,
-  articles: null,
-  datasets: null
-}
+const initItem = { ...emptyItem }
 
 export default {
   name: 'createform',
@@ -279,7 +248,7 @@ export default {
       dropzoneList: {},
       ...dropzoneMsgs,
       formKey: 0,
-      item: { ...emptyItem },
+      item: { ...initItem },
       previewKey: 0,
       rules: {
         required: value => !!value || 'Required.',
