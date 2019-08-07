@@ -39,13 +39,13 @@ const parseNotes = ({ noteString }) =>
       }
     : {}
 
-const parseSources = ({ sourceTitleString, sourceUrlString }) =>
-  sourceTitleString
+const parseSources = ({ sourceString }) =>
+  sourceString
     ? {
-        sources: strToArr(sourceTitleString).map((title, i) => ({
-          title,
-          url: strToArr(sourceUrlString)[i]
-        }))
+        sources: sourceString.split(/[\r\n]+/).map(row => {
+          const [title, url] = strToArr(row, '|')
+          return { title, url }
+        })
       }
     : {}
 

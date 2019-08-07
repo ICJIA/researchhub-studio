@@ -8,7 +8,7 @@ export default content => ({
 
   // datasets
   ...getNoteString(content),
-  ...getSourceStrings(content),
+  ...getSourceString(content),
   ...getTimeperiodStrings(content),
   ...getVariableSTring(content)
 })
@@ -35,11 +35,10 @@ const getTimeperiodStrings = ({ timeperiod }) =>
       }
     : {}
 
-const getSourceStrings = ({ sources }) =>
+const getSourceString = ({ sources }) =>
   sources
     ? {
-        sourceTitleString: sources.map(el => el.title).join(', '),
-        sourceUrlString: sources.map(el => el.url).join(', ')
+        sourceString: sources.map(el => `${el.title} | ${el.url}`).join('\n')
       }
     : {}
 

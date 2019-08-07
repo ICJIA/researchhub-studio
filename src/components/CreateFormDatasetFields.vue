@@ -1,23 +1,14 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12>
-      <v-layout row wrap>
-        <v-flex class="px-3" xs12 sm8 lg4>
-          <v-text-field
-            v-model="item.sourceTitleString"
-            label="Sources"
-            hint="Separate sources with commas"
-          />
-        </v-flex>
-
-        <v-flex class="px-3" xs12 sm8 lg4>
-          <v-text-field
-            v-model="item.sourceUrlString"
-            label="Source URLs"
-            hint="Separate URLs with commas"
-          />
-        </v-flex>
-      </v-layout>
+    <v-flex class="px-3" xs10 sm8 lg4>
+      <v-textarea
+        v-model="item.sourceString"
+        label="Sources"
+        hint="Format: title | url; separate sources with new lines"
+        rows="3"
+        auto-grow
+        :rules="[rules.required]"
+      />
     </v-flex>
 
     <v-flex xs12>
@@ -104,9 +95,8 @@ export default {
     return {
       abstract: null,
       description: null,
-      sourceTitleString: null,
-      sourceUrlString: null,
       noteString: null,
+      sourceString: null,
       timeperiodOptions,
       timeperiodString: null,
       timeperiodType: null,

@@ -1,8 +1,7 @@
 export default [
   'authorString',
   'noteString',
-  'sourceTitleString',
-  'sourceUrlString',
+  'sourceString',
   'tagString',
   'timeperiodString',
   'timeperiodType',
