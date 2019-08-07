@@ -4,34 +4,6 @@
       <v-text-field v-model="item.url" label="URL" :rules="[rules.required]" />
     </v-flex>
 
-    <v-flex xs12>
-      <v-layout row wrap>
-        <v-flex class="px-3" xs12 md6 lg4>
-          <v-select
-            v-model="item.articles"
-            item-text="title"
-            label="Related articles"
-            clearable
-            multiple
-            return-object
-            :items="articleOptions"
-          />
-        </v-flex>
-
-        <v-flex class="px-3" xs12 md6 lg4>
-          <v-select
-            v-model="item.datasets"
-            item-text="title"
-            label="Related datasets"
-            clearable
-            multiple
-            return-object
-            :items="datasetOptions"
-          />
-        </v-flex>
-      </v-layout>
-    </v-flex>
-
     <v-flex class="px-3 pt-3" xs12>
       <slot name="image"></slot>
     </v-flex>
@@ -48,9 +20,6 @@
 </template>
 
 <script>
-import { fetchItemsList as fetchArticlesList } from '@/services/client.articles'
-import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets'
-
 export default {
   props: {
     item: Object,
@@ -63,16 +32,8 @@ export default {
   data() {
     return {
       description: null,
-      url: null,
-      articles: null,
-      articleOptions: [],
-      datasets: null,
-      datasetOptions: []
+      url: null
     }
-  },
-  async created() {
-    this.articleOptions = (await fetchArticlesList('published')).data
-    this.datasetOptions = (await fetchDatasetsList('published')).data
   }
 }
 </script>

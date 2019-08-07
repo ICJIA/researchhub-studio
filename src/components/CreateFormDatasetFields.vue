@@ -42,41 +42,15 @@
       </v-layout>
     </v-flex>
 
-    <v-flex class="px-3" xs12 md6 lg4>
-      <v-select
-        v-model="item.unit"
-        label="Unit"
-        clearable
-        :items="unitOptions"
-      />
-    </v-flex>
-
     <v-flex xs12>
-      <v-layout row wrap>
-        <v-flex class="px-3" xs12 md6 lg4>
-          <v-select
-            v-model="item.apps"
-            item-text="title"
-            label="Related apps"
-            clearable
-            multiple
-            return-object
-            :items="appOptions"
-          />
-        </v-flex>
-
-        <v-flex class="px-3" xs12 md6 lg4>
-          <v-select
-            v-model="item.articles"
-            item-text="title"
-            label="Related articles"
-            clearable
-            multiple
-            return-object
-            :items="articleOptions"
-          />
-        </v-flex>
-      </v-layout>
+      <v-flex class="px-3" xs12 md6 lg4>
+        <v-select
+          v-model="item.unit"
+          label="Unit"
+          clearable
+          :items="unitOptions"
+        />
+      </v-flex>
     </v-flex>
 
     <v-flex v-if="update" class="px-3 pt-3" xs12>
@@ -115,8 +89,6 @@
 
 <script>
 import { timeperiodOptions, unitOptions } from '@/consts/fieldOptions'
-import { fetchItemsList as fetchAppsList } from '@/services/client.apps'
-import { fetchItemsList as fetchArticlesList } from '@/services/client.articles'
 
 export default {
   props: {
@@ -131,10 +103,6 @@ export default {
   data() {
     return {
       abstract: null,
-      apps: null,
-      appOptions: [],
-      articles: null,
-      articleOptions: [],
       description: null,
       sourceTitleString: null,
       sourceUrlString: null,
@@ -146,10 +114,6 @@ export default {
       unit: null,
       unitOptions
     }
-  },
-  async created() {
-    this.appOptions = (await fetchAppsList('published')).data
-    this.articleOptions = (await fetchArticlesList('published')).data
   }
 }
 </script>

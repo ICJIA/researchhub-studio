@@ -1,33 +1,5 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12>
-      <v-layout row wrap>
-        <v-flex class="px-3" xs12 md6 lg4>
-          <v-select
-            v-model="item.apps"
-            item-text="title"
-            label="Related apps"
-            clearable
-            multiple
-            return-object
-            :items="appOptions"
-          />
-        </v-flex>
-
-        <v-flex class="px-3" xs12 md6 lg4>
-          <v-select
-            v-model="item.datasets"
-            item-text="title"
-            label="Related datasets"
-            clearable
-            multiple
-            return-object
-            :items="datasetOptions"
-          />
-        </v-flex>
-      </v-layout>
-    </v-flex>
-
     <v-flex class="px-3" xs12 md10 lg6>
       <v-layout row wrap>
         <CreateFormExistingAuthors @useExistingAuthors="useExistingAuthors" />
@@ -105,8 +77,6 @@
 
 <script>
 import { mainfiletypeOptions } from '@/consts/fieldOptions'
-import { fetchItemsList as fetchAppsList } from '@/services/client.apps'
-import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets'
 
 const CreateFormExistingAuthors = () =>
   import('@/components/CreateFormExistingAuthors')
@@ -127,20 +97,12 @@ export default {
   data() {
     return {
       abstract: null,
-      apps: null,
-      appOptions: [],
       authors: null,
       authorString: null,
-      datasets: null,
-      datasetOptions: [],
       hasFiles: this.mainfiletype !== null,
       mainfiletype: null,
       mainfiletypeOptions
     }
-  },
-  async created() {
-    this.appOptions = (await fetchAppsList('published')).data
-    this.datasetOptions = (await fetchDatasetsList('published')).data
   },
   methods: {
     useExistingAuthors(e) {

@@ -176,6 +176,48 @@
             auto-grow
           />
         </v-flex>
+
+        <v-flex v-if="contentType !== 'apps'" class="px-3" xs12>
+          <v-flex xs12 md6 lg4>
+            <v-select
+              v-model="item.apps"
+              item-text="title"
+              label="Related apps"
+              clearable
+              multiple
+              return-object
+              :items="appOptions"
+            />
+          </v-flex>
+        </v-flex>
+
+        <v-flex v-if="contentType !== 'articles'" class="px-3" xs12>
+          <v-flex xs12 md6 lg4>
+            <v-select
+              v-model="item.articles"
+              item-text="title"
+              label="Related articles"
+              clearable
+              multiple
+              return-object
+              :items="articleOptions"
+            />
+          </v-flex>
+        </v-flex>
+
+        <v-flex v-if="contentType !== 'datasets'" class="px-3" xs12>
+          <v-flex xs12 md6 lg4>
+            <v-select
+              v-model="item.datasets"
+              item-text="title"
+              label="Related datasets"
+              clearable
+              multiple
+              return-object
+              :items="datasetOptions"
+            />
+          </v-flex>
+        </v-flex>
       </v-layout>
 
       <div style="height: 50px;"></div>
@@ -201,6 +243,10 @@ import formMixin from '@/mixins/formMixin'
 import dropzoneMsgs from '@/consts/dropzoneMsgs'
 import emptyItem from '@/consts/emptyItem'
 import { categoryOptions } from '@/consts/fieldOptions'
+
+import { fetchItemsList as fetchAppsList } from '@/services/client.apps'
+import { fetchItemsList as fetchArticlesList } from '@/services/client.articles'
+import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets'
 
 import addDropzoneFiles from '@/utils/addDropzoneFiles'
 import getDropzoneFilelist from '@/utils/getDropzoneFilelist'
@@ -244,7 +290,10 @@ export default {
   },
   data() {
     return {
+      appOptions: [],
+      articleOptions: [],
       categoryOptions,
+      datasetOptions: [],
       dropzoneList: {},
       ...dropzoneMsgs,
       formKey: 0,
@@ -273,6 +322,11 @@ export default {
         this.saved = true
       }
     }
+  },
+  async created() {
+    this.appOptions = (await fetchAppsList('published')).data
+    this.articleOptions = (await fetchArticlesList('published')).data
+    this.datasetOptions = (await fetchDatasetsList('published')).data
   },
   mounted() {
     this.dropzoneList = getDropzoneList(this.$refs)
