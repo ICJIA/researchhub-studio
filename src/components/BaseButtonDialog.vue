@@ -5,7 +5,7 @@
     </v-btn>
 
     <v-card>
-      <v-card-title class="headline grey lighten-2">
+      <v-card-title>
         <slot name="title"></slot>
       </v-card-title>
 
