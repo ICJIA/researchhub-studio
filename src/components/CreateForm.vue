@@ -491,12 +491,10 @@ export default {
       }
     },
     useExistingTags(e) {
-      const add = this.item.tagString ? `, ${e}` : e
-      this.item.tagString += add
+      this.item.tagString += this.item.tagString ? `, ${e}` : e
     },
     useExistingAuthors(e) {
-      const add = this.item.authorString ? `\n${e}` : e
-      this.item.authorString += add
+      this.item.authorString += this.item.authorString ? `\n${e}` : e
     }
   }
 }
