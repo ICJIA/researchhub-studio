@@ -301,7 +301,7 @@ export default {
         })
       } else {
         this.$store.dispatch('content/setItem', {})
-        this.item = { ...emptyItem }
+        this.item = { ...initItem }
       }
 
       removeDropzoneFiles(this.dropzoneList)
