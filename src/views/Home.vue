@@ -2,7 +2,7 @@
   <BaseViewLayout>
     <div class="text-xs-center py-3">
       <h1 class="uppercase font-lato bold">Choose your task</h1>
-      <p class="font-lato">Permission level: {{ role }}</p>
+      <p>Permission level: {{ role }}</p>
     </div>
 
     <v-layout row wrap justify-center mb-5>

@@ -34,21 +34,19 @@ export default {
 </script>
 
 <style>
-.application {
-  color: #333;
-  font-family: 'Gentium Book Basic', serif;
+#app {
+  font-family: 'Lato', sans-serif;
   font-size: 16px;
 }
 
 .error-page {
   font-size: 1.25rem;
-  font-family: 'Lato';
   text-align: center;
   margin-top: 5%;
 }
 
 .error-page h1 {
-  font-family: 'Lato';
+  font-family: 'Lato', sans-serif;
   text-transform: uppercase;
   font-weight: bold;
 }

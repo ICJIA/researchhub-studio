@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <p class="font-lato bold large">
+      <p class="bold large">
         <template>{{ 'Content type: ' }}</template>
         <span class="capitalize">{{ contentType }}</span>
       </p>

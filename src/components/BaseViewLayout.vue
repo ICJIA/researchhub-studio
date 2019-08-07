@@ -1,5 +1,5 @@
 <template>
-  <div class="font-lato">
+  <div>
     <div class="view-title">
       <v-container class="py-3">
         <v-layout justify-center>

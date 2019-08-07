@@ -1,6 +1,7 @@
 <template>
   <div>
     <RHArticleView
+      id="article-view"
       v-if="view"
       :item="item"
       :downloader="nodownloader"
@@ -39,3 +40,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#article-view {
+  font-family: 'Gentium Book Basic', serif;
+}
+</style>

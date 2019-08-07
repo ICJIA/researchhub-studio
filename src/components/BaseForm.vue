@@ -2,7 +2,7 @@
   <v-layout row wrap>
     <v-flex xs12 class="mb-3">
       <v-layout>
-        <p class="font-lato bold large">
+        <p class="bold large">
           <template>{{ 'Content type: ' }}</template>
           <span class="capitalize">{{ contentType }}</span>
         </p>
