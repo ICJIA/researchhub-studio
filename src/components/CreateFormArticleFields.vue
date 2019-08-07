@@ -105,8 +105,8 @@
 
 <script>
 import { mainfiletypeOptions } from '@/consts/fieldOptions'
-import { fetchItemsList as fetchAppsList } from '@/services/client.apps.js'
-import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets.js'
+import { fetchItemsList as fetchAppsList } from '@/services/client.apps'
+import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets'
 
 const CreateFormExistingAuthors = () =>
   import('@/components/CreateFormExistingAuthors')

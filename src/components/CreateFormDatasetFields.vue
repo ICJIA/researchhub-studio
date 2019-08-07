@@ -115,8 +115,8 @@
 
 <script>
 import { timeperiodOptions, unitOptions } from '@/consts/fieldOptions'
-import { fetchItemsList as fetchAppsList } from '@/services/client.apps.js'
-import { fetchItemsList as fetchArticlesList } from '@/services/client.articles.js'
+import { fetchItemsList as fetchAppsList } from '@/services/client.apps'
+import { fetchItemsList as fetchArticlesList } from '@/services/client.articles'
 
 export default {
   props: {

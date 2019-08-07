@@ -56,9 +56,9 @@
 </template>
 
 <script>
-import { fetchItemById as fetchAppById } from '@/services/client.apps.js'
-import { fetchItemById as fetchArticleById } from '@/services/client.articles.js'
-import { fetchItemById as fetchDatasetById } from '@/services/client.datasets.js'
+import { fetchItemById as fetchAppById } from '@/services/client.apps'
+import { fetchItemById as fetchArticleById } from '@/services/client.articles'
+import { fetchItemById as fetchDatasetById } from '@/services/client.datasets'
 
 const PreviewDialogApp = () => import('@/components/PreviewDialogApp')
 const PreviewDialogArticle = () => import('@/components/PreviewDialogArticle')

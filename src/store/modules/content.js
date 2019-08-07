@@ -1,22 +1,22 @@
 import {
   fetchItemById as fetchAppById,
   fetchItemsList as fetchAppsList
-} from '@/services/client.apps.js'
+} from '@/services/client.apps'
 import {
   fetchItemById as fetchArticleById,
   fetchItemsList as fetchArticlesList
-} from '@/services/client.articles.js'
+} from '@/services/client.articles'
 import {
   fetchItemById as fetchDatasetById,
   fetchItemsList as fetchDatasetsList
-} from '@/services/client.datasets.js'
+} from '@/services/client.datasets'
 import {
   createItem,
   deleteItem,
   updateItem,
   updateItemStatus,
   uploadFile
-} from '@/services/client.jobs.js'
+} from '@/services/client.jobs'
 
 export { namespaced, state, getters, mutations, actions }
 

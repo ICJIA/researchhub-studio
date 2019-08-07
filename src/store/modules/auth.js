@@ -1,4 +1,4 @@
-import { login, loginUsingToken, logout } from '@/services/client.auth.js'
+import { login, loginUsingToken, logout } from '@/services/client.auth'
 
 export { namespaced, state, mutations, actions }
 

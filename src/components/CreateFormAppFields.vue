@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import { fetchItemsList as fetchArticlesList } from '@/services/client.articles.js'
-import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets.js'
+import { fetchItemsList as fetchArticlesList } from '@/services/client.articles'
+import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets'
 
 export default {
   props: {
