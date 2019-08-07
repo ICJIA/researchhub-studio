@@ -165,7 +165,7 @@
           <v-textarea
             v-model="item.citation"
             label="Suggested citation"
-            no-resize
+            auto-grow
           />
         </v-flex>
 
@@ -173,7 +173,7 @@
           <v-textarea
             v-model="item.funding"
             label="Funding acknowledgement"
-            no-resize
+            auto-grow
           />
         </v-flex>
       </v-layout>

@@ -34,7 +34,7 @@
         <v-textarea
           v-model="item.authorString"
           label="Authors"
-          no-resize
+          auto-grow
           hint="Format: full name | brief description; add new authors with new lines"
           :rules="[rules.required]"
         />
@@ -45,7 +45,7 @@
       <v-textarea
         v-model="item.abstract"
         label="Abstract"
-        no-resize
+        auto-grow
         :rules="[rules.required]"
       />
     </v-flex>

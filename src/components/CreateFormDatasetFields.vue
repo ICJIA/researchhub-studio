@@ -87,7 +87,7 @@
       <v-textarea
         v-model="item.description"
         label="Description"
-        no-resize
+        auto-grow
         :rules="[rules.required]"
       />
     </v-flex>
@@ -97,7 +97,7 @@
         v-model="item.noteString"
         label="Notes"
         hint="Separate notes with new lines"
-        no-resize
+        auto-grow
       />
     </v-flex>
 
@@ -106,7 +106,7 @@
         v-model="item.variableString"
         label="Variables"
         hint="Format: name | type | definition | values; separate rows with new lines"
-        no-resize
+        auto-grow
         :rules="[rules.required]"
       />
     </v-flex>
