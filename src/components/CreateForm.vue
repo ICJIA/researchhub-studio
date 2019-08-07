@@ -199,6 +199,7 @@ import { mapState } from 'vuex'
 import formMixin from '@/mixins/formMixin'
 
 import dropzoneMsgs from '@/consts/dropzoneMsgs'
+import { categoryOptions } from '@/consts/fieldOptions'
 
 import addDropzoneFiles from '@/utils/addDropzoneFiles'
 import getDropzoneFilelist from '@/utils/getDropzoneFilelist'
@@ -274,14 +275,7 @@ export default {
   },
   data() {
     return {
-      categoryOptions: [
-        'corrections',
-        'courts',
-        'crimes',
-        'law enforcement',
-        'victimization',
-        'other'
-      ],
+      categoryOptions,
       dropzoneList: {},
       ...dropzoneMsgs,
       formKey: 0,

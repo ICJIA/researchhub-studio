@@ -122,6 +122,8 @@ import { mapState } from 'vuex'
 import formMixin from '@/mixins/formMixin'
 
 import dropzoneMsgs from '@/consts/dropzoneMsgs'
+import { statusOptions } from '@/consts/fieldOptions'
+
 import addDropzoneFiles from '@/utils/addDropzoneFiles'
 import getDropzoneFilelist from '@/utils/getDropzoneFilelist'
 import getDropzoneList from '@/utils/getDropzoneList'
@@ -151,7 +153,7 @@ export default {
       item: {},
       previewKey: 0,
       statusLocal: this.status,
-      statusOptions: ['created', 'submitted', 'published'],
+      statusOptions,
       saved: false
     }
   },

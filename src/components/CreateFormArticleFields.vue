@@ -104,6 +104,7 @@
 </template>
 
 <script>
+import { mainfiletypeOptions } from '@/consts/fieldOptions'
 import { fetchItemsList as fetchAppsList } from '@/services/client.apps.js'
 import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets.js'
 
@@ -134,7 +135,7 @@ export default {
       datasetOptions: [],
       hasFiles: this.mainfiletype !== null,
       mainfiletype: null,
-      mainfiletypeOptions: ['full report', 'pdf version']
+      mainfiletypeOptions
     }
   },
   async created() {

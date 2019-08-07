@@ -114,6 +114,7 @@
 </template>
 
 <script>
+import { timeperiodOptions, unitOptions } from '@/consts/fieldOptions'
 import { fetchItemsList as fetchAppsList } from '@/services/client.apps.js'
 import { fetchItemsList as fetchArticlesList } from '@/services/client.articles.js'
 
@@ -138,17 +139,12 @@ export default {
       sourceTitleString: null,
       sourceUrlString: null,
       noteString: null,
-      timeperiodOptions: [
-        'calendar',
-        'fiscal-Federal',
-        'fiscal-Illinois',
-        'other'
-      ],
+      timeperiodOptions,
       timeperiodString: null,
       timeperiodType: null,
       variableString: null,
       unit: null,
-      unitOptions: ['national', 'state', 'county', 'municipal', 'other']
+      unitOptions
     }
   },
   async created() {

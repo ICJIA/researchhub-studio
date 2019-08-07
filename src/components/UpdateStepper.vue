@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import { statusOptions } from '@/consts/fieldOptions'
+
 const BaseStepper = () => import('@/components/BaseStepper')
 const ContentTypeSelector = () => import('@/components/ContentTypeSelector')
 const CreateForm = () => import('@/components/CreateForm')
@@ -74,7 +76,7 @@ export default {
       contentTypes: this.$store.state.content.types,
       contentType: 'apps',
       status: 'submitted',
-      statusOptions: ['created', 'submitted', 'published'],
+      statusOptions,
       stepHeader1: 'Select content type',
       stepHeader2: 'Select item',
       stepHeader3: 'Update'
