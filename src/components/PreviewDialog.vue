@@ -32,7 +32,7 @@
         </template>
       </v-toolbar>
 
-      <template v-if="item">
+      <template v-if="dialog && item">
         <PreviewDialogApp
           v-if="contentType === 'apps'"
           :item="item"
