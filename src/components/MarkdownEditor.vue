@@ -189,6 +189,29 @@ export default {
   padding: 1.2em 0.6em;
 }
 
+#preview >>> blockquote {
+  background-color: #ebf6ff;
+  border-left: 0.25em solid #466c8c;
+  font-family: 'Lato', sans-serif;
+  color: #466c8c;
+  padding: 1em 2em;
+  margin: 2em 0;
+}
+
+#preview >>> blockquote p,
+#preview >>> blockquote ol,
+#preview >>> blockquote ul {
+  text-indent: 0;
+}
+
+#preview >>> blockquote > :first-child {
+  margin-top: 0;
+}
+
+#preview >>> blockquote > :last-child {
+  margin-bottom: 0;
+}
+
 #preview >>> table {
   border-collapse: collapse;
   border-spacing: 0;
