@@ -34,11 +34,6 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Lato', sans-serif;
-  font-size: 16px;
-}
-
 .error-page {
   font-size: 1.25rem;
   text-align: center;

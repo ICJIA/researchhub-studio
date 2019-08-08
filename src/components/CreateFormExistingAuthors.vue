@@ -7,11 +7,13 @@
             <v-icon v-on="onTooltip">zoom_in</v-icon>
           </v-btn>
         </template>
-        <span>Use existing authors</span>
+        <span class="font-lato">Use existing authors</span>
       </v-tooltip>
     </template>
-    <v-card>
-      <v-card-title>Select from existing authors</v-card-title>
+    <v-card class="font-lato">
+      <v-card-title>
+        <h4>Select from existing authors</h4>
+      </v-card-title>
       <v-divider></v-divider>
       <v-card-text style="height: 300px;">
         <v-checkbox

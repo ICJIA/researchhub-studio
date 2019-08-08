@@ -1,9 +1,9 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form ref="form" class="font-lato" v-model="valid" lazy-validation>
     <v-card :class="loginError ? 'login-error' : ''" width="300px">
       <v-card-text class="text-xs-center">
         <h3>Log in</h3>
-        <h3 style="font-weight:300;">with a valid account</h3>
+        <h3 class="light">with a valid account</h3>
       </v-card-text>
 
       <v-container>

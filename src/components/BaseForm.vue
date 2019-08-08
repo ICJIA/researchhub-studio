@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap>
+  <v-layout class="font-lato" row wrap>
     <v-flex xs12 class="mb-3">
       <v-layout>
         <p class="bold large">
@@ -18,7 +18,9 @@
             <h3>Are you sure?</h3>
           </template>
 
-          <template v-slot:main>{{ msgWarning }}</template>
+          <template v-slot:main>
+            <div class="font-lato">{{ msgWarning }}</div>
+          </template>
         </BaseButtonDialog>
 
         <BaseButtonDialog

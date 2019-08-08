@@ -132,6 +132,7 @@ export default {
 
 <style scoped>
 #preview {
+  font-family: 'Gentium Book Basic', serif;
   height: 400px;
   overflow: auto;
   vertical-align: top;
