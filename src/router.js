@@ -75,12 +75,17 @@ const router = new Router({
       }
     },
     {
-      path: '*',
+      path: '/page-not-found',
+      name: '404',
       component: () => import('@/views/404.vue'),
       meta: {
         auth: true,
         adminOnly: false
       }
+    },
+    {
+      path: '*',
+      redirect: { name: '404' }
     }
   ]
 })
