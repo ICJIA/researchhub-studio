@@ -7,7 +7,7 @@
   >
     <v-form>
       <v-layout class="pl-3" row wrap>
-        <v-flex v-if="contentType !== 'authors'" class="px-3" xs12>
+        <v-flex v-if="contentType !== 'authors'" class="px-3" xs10>
           <p class="greycolor">Status</p>
           <v-radio-group v-model="statusLocal" row>
             <v-radio
@@ -19,7 +19,7 @@
           </v-radio-group>
         </v-flex>
 
-        <v-flex class="px-3 pt-3" xs12>
+        <v-flex class="px-3 pt-3" xs10>
           <MyDropzone
             key="DropzoneJson"
             ref="DropzoneJson"
@@ -34,7 +34,7 @@
         </v-flex>
 
         <template v-if="contentType === 'apps'">
-          <v-flex class="px-3 pt-3" xs12>
+          <v-flex class="px-3 pt-3" xs10>
             <MyDropzone
               ref="DropzoneImage"
               fileTypes=".jpg, .jpeg, .png"
@@ -47,7 +47,7 @@
         </template>
 
         <template v-if="contentType === 'articles'">
-          <v-flex class="px-3 pt-3" xs12>
+          <v-flex class="px-3 pt-3" xs10>
             <MyDropzone
               ref="DropzoneSplash"
               fileTypes=".jpg, .jpeg, .png"
@@ -59,7 +59,7 @@
             </MyDropzone>
           </v-flex>
 
-          <v-flex class="px-3 pt-3" xs12>
+          <v-flex class="px-3 pt-3" xs10>
             <MyDropzone
               key="DropzoneImages"
               ref="DropzoneImages"
@@ -71,7 +71,7 @@
             </MyDropzone>
           </v-flex>
 
-          <v-flex class="px-3 pt-3" xs12>
+          <v-flex class="px-3 pt-3" xs10>
             <MyDropzone
               key="DropzoneMarkdown"
               ref="DropzoneMarkdown"
@@ -86,7 +86,7 @@
         </template>
 
         <template v-if="contentType === 'datasets'">
-          <v-flex class="px-3 pt-3" xs12>
+          <v-flex class="px-3 pt-3" xs10>
             <MyDropzone
               key="DropzoneData"
               ref="DropzoneData"
@@ -119,8 +119,15 @@
 
 <script>
 import { mapState } from 'vuex'
-import dropzoneMixin from '@/mixins/dropzoneMixin'
 import formMixin from '@/mixins/formMixin'
+
+import dropzoneMsgs from '@/consts/dropzoneMsgs'
+import { statusOptions } from '@/consts/fieldOptions'
+
+import addDropzoneFiles from '@/utils/addDropzoneFiles'
+import getDropzoneFilelist from '@/utils/getDropzoneFilelist'
+import getDropzoneList from '@/utils/getDropzoneList'
+import removeDropzoneFiles from '@/utils/removeDropzoneFiles'
 
 const BaseForm = () => import('@/components/BaseForm')
 const MyDropzone = () => import('@/components/MyDropzone')
@@ -128,7 +135,7 @@ const PreviewDialog = () => import('@/components/PreviewDialog')
 
 export default {
   name: 'postform',
-  mixins: [dropzoneMixin, formMixin],
+  mixins: [formMixin],
   components: {
     BaseForm,
     MyDropzone,
@@ -142,10 +149,11 @@ export default {
   data() {
     return {
       dropzoneList: {},
+      ...dropzoneMsgs,
       item: {},
       previewKey: 0,
       statusLocal: this.status,
-      statusOptions: ['published', 'submitted', 'created'],
+      statusOptions,
       saved: false
     }
   },
@@ -156,35 +164,31 @@ export default {
     })
   },
   watch: {
+    // eslint-disable-next-line no-unused-vars
     content(newContent, _) {
       if (this.update && newContent && Object.keys(newContent).length) {
         this.item = newContent
         this.saved = true
       }
     },
+    // eslint-disable-next-line no-unused-vars
     status(newStatus, _) {
       if (this.update && newStatus) this.statusLocal = newStatus
     }
   },
   mounted() {
-    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs, true)
+    this.dropzoneList = getDropzoneList(this.$refs)
   },
   updated() {
-    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs, true)
+    this.dropzoneList = getDropzoneList(this.$refs)
   },
   methods: {
     async parseItem() {
-      const item = { ...this.item }
-      if (!this.update) item.status = this.statusLocal
-
-      await this.addDropzoneFiles(
-        item,
-        this.contentType,
-        this.dropzoneList,
-        true
-      )
-
-      return item
+      return {
+        ...this.item,
+        ...(await addDropzoneFiles(this.dropzoneList)),
+        ...(this.update ? { status: this.statusLocal } : {})
+      }
     },
     rerenderPreview() {
       this.previewKey += 1
@@ -199,11 +203,11 @@ export default {
         this.$store.dispatch('content/setItem', {})
         this.item = { status: 'publisehd' }
       }
-      if (this.dropzoneList) this.removeDropzoneFiles(this.dropzoneList)
+      if (this.dropzoneList) removeDropzoneFiles(this.dropzoneList)
       this.saved = false
     },
     saveFiles() {
-      const filelist = this.getDropzoneFilelist(this.dropzoneList)
+      const filelist = getDropzoneFilelist(this.dropzoneList)
       this.$store.dispatch('content/setFilelist', filelist)
     },
     async saveItem() {

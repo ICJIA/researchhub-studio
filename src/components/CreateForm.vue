@@ -9,7 +9,7 @@
     <v-form ref="form" v-model="valid" lazy-validation>
       <!-- common fields input 1 -->
       <v-layout row wrap>
-        <v-flex class="px-3" xs12 sm10 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <v-text-field
             v-model="item.title"
             label="Title"
@@ -19,7 +19,7 @@
           />
         </v-flex>
 
-        <v-flex class="px-3" xs12 sm10 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <v-text-field
             v-model="item.slug"
             label="Slug"
@@ -33,13 +33,13 @@
       </v-layout>
 
       <v-layout row>
-        <v-flex class="px-3" xs12 sm10 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <DatePicker :date.sync="item.date" />
         </v-flex>
       </v-layout>
 
       <v-layout row wrap>
-        <v-flex class="px-3" xs12 sm10 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <v-select
             v-model="item.categories"
             label="Categories"
@@ -50,7 +50,7 @@
           />
         </v-flex>
 
-        <v-flex class="px-3" xs12 sm10 md6 lg4>
+        <v-flex class="px-3" xs10 sm8 lg4>
           <v-layout row wrap>
             <CreateFormExistingTags @useExistingTags="useExistingTags" />
             <v-text-field
@@ -86,6 +86,7 @@
         v-model="item"
         :rules="rules"
         :update="update"
+        @useExistingAuthors="useExistingAuthors"
       >
         <template v-slot:mainfile>
           <MyDropzone
@@ -160,12 +161,62 @@
 
       <!-- common fields input 2 -->
       <v-layout row wrap>
-        <v-flex class="px-3" xs12 md10 lg6>
-          <v-textarea v-model="item.citation" label="Suggested citation" />
+        <v-flex class="px-3" xs10 sm8 lg5>
+          <v-textarea
+            v-model="item.citation"
+            label="Suggested citation"
+            auto-grow
+          />
         </v-flex>
 
-        <v-flex class="px-3" xs12 md10 lg6>
-          <v-textarea v-model="item.funding" label="Funding acknowledgement" />
+        <v-flex class="px-3" xs10 sm8 lg5>
+          <v-textarea
+            v-model="item.funding"
+            label="Funding acknowledgement"
+            auto-grow
+          />
+        </v-flex>
+
+        <v-flex v-if="contentType !== 'apps'" class="px-3" xs12>
+          <v-flex xs10 sm8 lg4>
+            <v-select
+              v-model="item.apps"
+              item-text="title"
+              label="Related apps"
+              clearable
+              multiple
+              return-object
+              :items="appOptions"
+            />
+          </v-flex>
+        </v-flex>
+
+        <v-flex v-if="contentType !== 'articles'" class="px-3" xs12>
+          <v-flex xs10 sm8 lg4>
+            <v-select
+              v-model="item.articles"
+              item-text="title"
+              label="Related articles"
+              clearable
+              multiple
+              return-object
+              :items="articleOptions"
+            />
+          </v-flex>
+        </v-flex>
+
+        <v-flex v-if="contentType !== 'datasets'" class="px-3" xs12>
+          <v-flex xs10 sm8 lg4>
+            <v-select
+              v-model="item.datasets"
+              item-text="title"
+              label="Related datasets"
+              clearable
+              multiple
+              return-object
+              :items="datasetOptions"
+            />
+          </v-flex>
         </v-flex>
       </v-layout>
 
@@ -187,8 +238,22 @@
 
 <script>
 import { mapState } from 'vuex'
-import dropzoneMixin from '@/mixins/dropzoneMixin'
 import formMixin from '@/mixins/formMixin'
+
+import dropzoneMsgs from '@/consts/dropzoneMsgs'
+import emptyItem from '@/consts/emptyItem'
+import { categoryOptions } from '@/consts/fieldOptions'
+
+import { fetchItemsList as fetchAppsList } from '@/services/client.apps'
+import { fetchItemsList as fetchArticlesList } from '@/services/client.articles'
+import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets'
+
+import addDropzoneFiles from '@/utils/addDropzoneFiles'
+import getDropzoneFilelist from '@/utils/getDropzoneFilelist'
+import getDropzoneList from '@/utils/getDropzoneList'
+import parseItem from '@/utils/parseItem'
+import prepareItem from '@/utils/prepareItem'
+import removeDropzoneFiles from '@/utils/removeDropzoneFiles'
 
 const BaseForm = () => import('@/components/BaseForm')
 const CreateFormAppFields = () => import('@/components/CreateFormAppFields')
@@ -203,51 +268,11 @@ const MarkdownEditor = () => import('@/components/MarkdownEditor')
 const MyDropzone = () => import('@/components/MyDropzone')
 const PreviewDialog = () => import('@/components/PreviewDialog')
 
-const today = new Date().toISOString().substr(0, 10)
-const emptyItem = {
-  title: '',
-  slug: '',
-  date: today,
-  categories: [],
-  tags: [],
-  tagString: '',
-  markdown: '',
-  abstract: null,
-  authors: null,
-  citation: null,
-  description: null,
-  funding: null,
-  mainfiletype: '',
-  notes: null,
-  noteString: null,
-  sources: null,
-  sourceTitleString: null,
-  sourceUrlString: null,
-  timeperiod: null,
-  timeperiodString: null,
-  timeperiodType: null,
-  thumbnail: null,
-  variables: null,
-  variableString: null,
-  unit: null,
-  url: null,
-  apps: null,
-  articles: null,
-  datasets: null
-}
-const temporaryFields = [
-  'noteString',
-  'sourceTitleString',
-  'sourceUrlString',
-  'tagString',
-  'timeperiodString',
-  'timeperiodType',
-  'variableString'
-]
+const initItem = { ...emptyItem }
 
 export default {
   name: 'createform',
-  mixins: [dropzoneMixin, formMixin],
+  mixins: [formMixin],
   components: {
     BaseForm,
     CreateFormAppFields,
@@ -265,17 +290,14 @@ export default {
   },
   data() {
     return {
-      categoryOptions: [
-        'corrections',
-        'courts',
-        'crimes',
-        'law enforcement',
-        'victimization',
-        'other'
-      ],
+      appOptions: [],
+      articleOptions: [],
+      categoryOptions,
+      datasetOptions: [],
       dropzoneList: {},
+      ...dropzoneMsgs,
       formKey: 0,
-      item: { ...emptyItem },
+      item: { ...initItem },
       previewKey: 0,
       rules: {
         required: value => !!value || 'Required.',
@@ -293,121 +315,31 @@ export default {
     })
   },
   watch: {
+    // eslint-disable-next-line no-unused-vars
     content(newContent, _) {
       if (this.update && newContent && Object.keys(newContent).length) {
-        this.item = this.prepareItem(newContent)
+        this.item = prepareItem(newContent)
         this.saved = true
       }
     }
   },
+  async created() {
+    this.appOptions = (await fetchAppsList('published')).data
+    this.articleOptions = (await fetchArticlesList('published')).data
+    this.datasetOptions = (await fetchDatasetsList('published')).data
+  },
   mounted() {
-    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs)
+    this.dropzoneList = getDropzoneList(this.$refs)
   },
   updated() {
-    this.dropzoneList = this.getDropzonelist(this.contentType, this.$refs)
+    this.dropzoneList = getDropzoneList(this.$refs)
   },
   methods: {
     async parseItem() {
-      const item = { ...this.item }
-
-      item.markdown = this.contentType === 'articles' ? item.markdown : null
-      item.authors =
-        this.contentType === 'articles'
-          ? item.authors.map(el => ({ title: el.title, slug: el.slug }))
-          : null
-      item.notes = item.noteString ? this.parseNotes(item.noteString) : []
-      item.sources = item.sourceTitleString
-        ? this.parseSources(item.sourceTitleString, item.sourceUrlString)
-        : []
-      item.tags = item.tagString ? this.stringToArray(item.tagString) : []
-      item.timeperiod = item.timeperiodString
-        ? this.parseTimeperiod(item.timeperiodType, item.timeperiodString)
-        : null
-      item.variables = item.variableString
-        ? this.parseVariables(item.variableString)
-        : []
-
-      this.removeEmptyFields(item)
-      this.removeTemporaryFields(item)
-      await this.addDropzoneFiles(item, this.contentType, this.dropzoneList)
-
-      return item
-    },
-    parseNotes(string) {
-      return string
-        .split(/[\r\n]+/)
-        .map(el => el.trim())
-        .filter(el => el)
-    },
-    parseSources(title, url) {
-      const sourceTitles = this.stringToArray(title)
-      const sourceUrls = this.stringToArray(url)
-      return sourceTitles.map((title, i) => ({ title, url: sourceUrls[i] }))
-    },
-    parseTimeperiod(type, string) {
       return {
-        yeartype: type,
-        yearmin: string.split('-')[0],
-        yearmax: string.split('-')[1]
+        ...parseItem(this.item),
+        ...(await addDropzoneFiles(this.dropzoneList))
       }
-    },
-    parseVariables(string) {
-      return string.split(/[\r\n]+/).map(row => {
-        const rowArr = this.stringToArray(row, '|')
-        return {
-          name: rowArr[0],
-          type: rowArr[1],
-          definition: rowArr[2],
-          values: rowArr[3]
-        }
-      })
-    },
-    prepareItem(content) {
-      const item = content
-      item.date = item.date.slice(0, 10)
-      item.tagString = item.tags ? item.tags.join(', ') : ''
-      if (this.contentType === 'datasets') this.prepareDataset(item)
-
-      return item
-    },
-    prepareDataset(item) {
-      if (item.hasOwnProperty('timeperiod')) {
-        item.timeperiodString =
-          item.timeperiod.yearmin + '-' + item.timeperiod.yearmax
-        item.timeperiodType = item.timeperiod.yeartype
-      }
-
-      if (item.hasOwnProperty('sources')) {
-        item.sourceTitleString = item.sources.map(el => el.title).join(', ')
-        item.sourceUrlString = item.sources.map(el => el.url).join(', ')
-      }
-
-      if (item.hasOwnProperty('notes')) {
-        item.noteString = item.notes.join('\n')
-      }
-
-      if (item.hasOwnProperty('variables')) {
-        item.variableString = ''
-        item.variables.forEach((el, i, arr) => {
-          item.variableString +=
-            `${el.name} | ${el.type} ` + `| ${el.definition} | ${el.values}`
-          if (i < arr.length - 1) item.variableString += '\n'
-        })
-      }
-    },
-    removeEmptyFields(item) {
-      Object.keys(item).forEach(field => {
-        if (item[field] === undefined || item[field] === null) {
-          delete item[field]
-        } else if (Array.isArray(item[field])) {
-          item[field].forEach((val, i, arr) => {
-            if (val === undefined) arr.splice(i, 1)
-          })
-        }
-      })
-    },
-    removeTemporaryFields(item) {
-      temporaryFields.forEach(field => delete item[field])
     },
     rerenderForm() {
       this.formKey += 1
@@ -423,16 +355,16 @@ export default {
         })
       } else {
         this.$store.dispatch('content/setItem', {})
-        this.item = { ...emptyItem }
+        this.item = { ...initItem }
       }
 
-      this.removeDropzoneFiles(this.dropzoneList)
+      removeDropzoneFiles(this.dropzoneList)
       this.rerenderForm()
       this.saved = false
     },
     saveFiles() {
       if (this.$refs.form.validate()) {
-        const filelist = this.getDropzoneFilelist(this.dropzoneList)
+        const filelist = getDropzoneFilelist(this.dropzoneList)
         this.$store.dispatch('content/setFilelist', filelist)
       }
     },
@@ -445,9 +377,6 @@ export default {
         this.rerenderPreview()
       }
     },
-    stringToArray(str, sep = ',') {
-      return str.split(sep).map(el => el.trim())
-    },
     titleToSlug() {
       if (!this.update) {
         this.item.slug = this.item.title
@@ -457,8 +386,10 @@ export default {
       }
     },
     useExistingTags(e) {
-      const add = this.item.tagString ? `, ${e}` : e
-      this.item.tagString += add
+      this.item.tagString += this.item.tagString ? `, ${e}` : e
+    },
+    useExistingAuthors(e) {
+      this.item.authorString += this.item.authorString ? `\n${e}` : e
     }
   }
 }

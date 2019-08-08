@@ -32,7 +32,7 @@
         </template>
       </v-toolbar>
 
-      <template v-if="item">
+      <template v-if="dialog && item">
         <PreviewDialogApp
           v-if="contentType === 'apps'"
           :item="item"
@@ -56,9 +56,9 @@
 </template>
 
 <script>
-import { fetchItemById as fetchAppById } from '@/services/client.apps.js'
-import { fetchItemById as fetchArticleById } from '@/services/client.articles.js'
-import { fetchItemById as fetchDatasetById } from '@/services/client.datasets.js'
+import { fetchItemById as fetchAppById } from '@/services/client.apps'
+import { fetchItemById as fetchArticleById } from '@/services/client.articles'
+import { fetchItemById as fetchDatasetById } from '@/services/client.datasets'
 
 const PreviewDialogApp = () => import('@/components/PreviewDialogApp')
 const PreviewDialogArticle = () => import('@/components/PreviewDialogArticle')
@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       dialog: false,
-      view: false,
+      view: true,
       item: this.local ? this.$store.state.content.item : null,
       published: this.status === 'published'
     }

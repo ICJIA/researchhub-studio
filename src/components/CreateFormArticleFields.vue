@@ -1,58 +1,29 @@
 <template>
   <v-layout row wrap>
-    <v-flex class="px-3" xs12 md6 lg4>
-      <v-select
-        v-model="item.authors"
-        item-text="title"
-        label="Authors"
-        clearable
-        multiple
-        return-object
-        :items="authorOptions"
+    <v-flex class="px-3" xs10 sm8 lg5>
+      <v-layout row wrap>
+        <CreateFormExistingAuthors @useExistingAuthors="useExistingAuthors" />
+        <v-textarea
+          v-model="item.authorString"
+          label="Authors"
+          auto-grow
+          hint="Format: full name | brief description; add new authors with new lines"
+          :rules="[rules.required]"
+        />
+      </v-layout>
+    </v-flex>
+
+    <v-flex class="px-3" xs10 sm8 lg5>
+      <v-textarea
+        v-model="item.abstract"
+        label="Abstract"
+        auto-grow
         :rules="[rules.required]"
       />
     </v-flex>
 
-    <v-flex xs12>
-      <v-layout row wrap>
-        <v-flex class="px-3" xs12 md6 lg4>
-          <v-select
-            v-model="item.apps"
-            item-text="title"
-            label="Related apps"
-            clearable
-            multiple
-            return-object
-            :items="appOptions"
-          />
-        </v-flex>
-
-        <v-flex class="px-3" xs12 md6 lg4>
-          <v-select
-            v-model="item.datasets"
-            item-text="title"
-            label="Related datasets"
-            clearable
-            multiple
-            return-object
-            :items="datasetOptions"
-          />
-        </v-flex>
-      </v-layout>
-    </v-flex>
-
-    <v-flex xs12>
-      <v-flex class="px-3" xs12 md10 lg6>
-        <v-textarea
-          v-model="item.abstract"
-          label="Abstract"
-          :rules="[rules.required]"
-        />
-      </v-flex>
-    </v-flex>
-
     <template v-if="update">
-      <v-flex class="px-3" xs2>
+      <v-flex class="px-3" xs5>
         <p class="pt-2 greycolor">Attach files?</p>
         <v-checkbox
           v-model="hasFiles"
@@ -60,7 +31,7 @@
         ></v-checkbox>
       </v-flex>
 
-      <v-flex v-show="hasFiles" class="px-3" xs12 md10>
+      <v-flex v-show="hasFiles" class="px-3" xs10 sm8 lg5>
         <p class="pt-2 greycolor">Main file type</p>
         <v-radio-group v-model="item.mainfiletype" row>
           <v-radio
@@ -74,11 +45,11 @@
 
       <v-flex v-show="hasFiles" xs12>
         <v-layout row wrap>
-          <v-flex class="px-3 pt-3" xs12 md6>
+          <v-flex class="px-3 pt-3" xs10 sm8 lg5>
             <slot name="mainfile"></slot>
           </v-flex>
 
-          <v-flex class="px-3 pt-3" xs12 md6>
+          <v-flex class="px-3 pt-3" xs10 sm8 lg5>
             <slot name="extrafile"></slot>
           </v-flex>
         </v-layout>
@@ -87,17 +58,17 @@
 
     <v-flex xs12>
       <v-layout row wrap>
-        <v-flex class="px-3 pt-3" xs12 md6>
+        <v-flex class="px-3 pt-3" xs10 sm8 lg5>
           <slot name="splash"></slot>
         </v-flex>
 
-        <v-flex class="px-3 pt-3" xs12 md6>
+        <v-flex class="px-3 pt-3" xs10 sm8 lg5>
           <slot name="figures"></slot>
         </v-flex>
       </v-layout>
     </v-flex>
 
-    <v-flex class="px-3 pt-3" xs12>
+    <v-flex class="px-3 pt-3" xs10 sm8 lg10>
       <p class="pt-2 greycolor">Article body</p>
       <slot name="articlebody"></slot>
     </v-flex>
@@ -105,11 +76,15 @@
 </template>
 
 <script>
-import { fetchItemsList as fetchAppsList } from '@/services/client.apps.js'
-import { fetchItemsList as fetchAuthorsList } from '@/services/client.authors.js'
-import { fetchItemsList as fetchDatasetsList } from '@/services/client.datasets.js'
+import { mainfiletypeOptions } from '@/consts/fieldOptions'
+
+const CreateFormExistingAuthors = () =>
+  import('@/components/CreateFormExistingAuthors')
 
 export default {
+  components: {
+    CreateFormExistingAuthors
+  },
   props: {
     item: Object,
     rules: Object,
@@ -122,24 +97,17 @@ export default {
   data() {
     return {
       abstract: null,
-      apps: null,
-      appOptions: [],
       authors: null,
-      authorOptions: [],
-      datasets: null,
-      datasetOptions: [],
+      authorString: null,
       hasFiles: this.mainfiletype !== null,
       mainfiletype: null,
-      mainfiletypeOptions: ['full report', 'pdf version']
+      mainfiletypeOptions
     }
   },
-  async created() {
-    this.appOptions = (await fetchAppsList('published')).data
-    this.authorOptions = (await fetchAuthorsList()).data.map(el => ({
-      slug: el.slug,
-      title: el.title
-    }))
-    this.datasetOptions = (await fetchDatasetsList('published')).data
+  methods: {
+    useExistingAuthors(e) {
+      this.$emit('useExistingAuthors', e)
+    }
   }
 }
 </script>

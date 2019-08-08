@@ -1,11 +1,9 @@
 <template>
-  <v-container my-5 text-xs-center>
-    <h1>404 - Page not found</h1>
+  <div class="error-page">
+    <v-icon x-large color="error">cancel</v-icon>
+    <h1 class="pb-3">Page not found</h1>
 
-    <v-container>
-      <p>Sorry. The page you are looking for does not exist.</p>
-    </v-container>
-
-    <v-btn flat to="/">return to home</v-btn>
-  </v-container>
+    <p>Sorry. The page you are looking for does not exist.</p>
+    <v-btn flat to="/">return to home <v-icon>replay</v-icon></v-btn>
+  </div>
 </template>

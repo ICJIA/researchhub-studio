@@ -2,30 +2,47 @@
   <v-app>
     <TheToolbar />
 
-    <router-view></router-view>
+    <router-view v-if="alive" />
+
+    <ServerError v-else />
 
     <TheFooter />
   </v-app>
 </template>
 
 <script>
+import { healthCheck } from '@/services/client.utils'
+const ServerError = () => import('./components/ServerError')
 const TheToolbar = () => import('./components/TheToolbar')
 const TheFooter = () => import('./components/TheFooter')
 
 export default {
   components: {
+    ServerError,
     TheToolbar,
     TheFooter
+  },
+  data() {
+    return {
+      alive: true
+    }
+  },
+  async created() {
+    this.alive = await healthCheck()
   }
 }
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Gentium+Book+Basic');
+.error-page {
+  font-size: 1.25rem;
+  text-align: center;
+  margin-top: 5%;
+}
 
-.application {
-  color: #333;
-  font-family: 'Gentium Book Basic', serif;
-  font-size: 16px;
+.error-page h1 {
+  font-family: 'Lato', sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 </style>

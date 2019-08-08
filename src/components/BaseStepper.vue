@@ -1,5 +1,5 @@
 <template>
-  <v-stepper v-model="stepNum" class="mb-5">
+  <v-stepper v-model="stepNum" class="font-lato mb-5">
     <v-stepper-header>
       <template v-for="step in stepNumTotal">
         <v-stepper-step

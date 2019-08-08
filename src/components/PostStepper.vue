@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       contentType: 'apps',
-      contentTypes: this.$store.state.content.typesAll,
+      contentTypes: this.$store.state.content.types,
       stepHeader1: 'Select content type',
       stepHeader2: 'Post'
     }

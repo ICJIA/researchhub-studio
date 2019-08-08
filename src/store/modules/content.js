@@ -1,26 +1,22 @@
 import {
   fetchItemById as fetchAppById,
   fetchItemsList as fetchAppsList
-} from '@/services/client.apps.js'
+} from '@/services/client.apps'
 import {
   fetchItemById as fetchArticleById,
   fetchItemsList as fetchArticlesList
-} from '@/services/client.articles.js'
-import {
-  fetchItemById as fetchAuthorById,
-  fetchItemsList as fetchAuthorsList
-} from '@/services/client.authors.js'
+} from '@/services/client.articles'
 import {
   fetchItemById as fetchDatasetById,
   fetchItemsList as fetchDatasetsList
-} from '@/services/client.datasets.js'
+} from '@/services/client.datasets'
 import {
   createItem,
   deleteItem,
   updateItem,
   updateItemStatus,
   uploadFile
-} from '@/services/client.jobs.js'
+} from '@/services/client.jobs'
 
 export { namespaced, state, getters, mutations, actions }
 
@@ -31,8 +27,7 @@ const state = {
   item: {},
   itemId: '',
   itemlist: [],
-  types: ['apps', 'articles', 'datasets'],
-  typesAll: ['apps', 'authors', 'articles', 'datasets']
+  types: ['apps', 'articles', 'datasets']
 }
 
 const getters = {
@@ -92,9 +87,6 @@ const actions = {
       case 'articles':
         res = await fetchArticleById(id)
         break
-      case 'authors':
-        res = await fetchAuthorById(id)
-        break
       case 'datasets':
         res = await fetchDatasetById(id)
     }
@@ -112,9 +104,6 @@ const actions = {
         break
       case 'articles':
         res = await fetchArticlesList(status)
-        break
-      case 'authors':
-        res = await fetchAuthorsList()
         break
       case 'datasets':
         res = await fetchDatasetsList(status)
@@ -136,14 +125,14 @@ const actions = {
   async deleteItem(_, { contentType, id }) {
     return await deleteItem(contentType, id)
   },
-  async createItem({ state, getters }, contentType) {
+  async createItem({ getters }, contentType) {
     const item = getters.itemToPost
     if (contentType === 'apps')
       item.contributors = [{ title: 'ICJIA R&A staff' }]
-    await createItem(contentType, getters.itemToPost, state.item)
+    await createItem(contentType, getters.itemToPost)
   },
   async updateItem({ state, getters }, contentType) {
-    return await updateItem(contentType, getters.itemToPost, state.itemId)
+    return await updateItem(contentType, state.itemId, getters.itemToPost)
   },
   async uploadFiles({ state }, contentType) {
     state.filelist.forEach(async el => {

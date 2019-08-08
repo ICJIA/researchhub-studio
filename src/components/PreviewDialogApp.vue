@@ -2,13 +2,13 @@
   <v-container>
     <v-layout justify-center>
       <v-flex v-if="view" xs12 sm10 md8>
-        <RHAppView :item="item" />
+        <RHAppView :item="item" :preview="true" />
       </v-flex>
 
       <v-flex v-else xs12 sm10 xl8>
         <v-layout justify-center>
           <v-flex xs12 sm6 lg4>
-            <RHAppCard :item="item" />
+            <RHAppCard :item="item" :preview="true" />
           </v-flex>
         </v-layout>
       </v-flex>

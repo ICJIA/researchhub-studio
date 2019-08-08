@@ -1,7 +1,13 @@
 import client from './client'
 import { baseFields } from '@/consts/queryFields'
 
-export { fetchData, fetchListByStatus, fetchOneById, fetchQueryResult }
+export {
+  fetchData,
+  fetchListByStatus,
+  fetchOneById,
+  fetchQueryResult,
+  healthCheck
+}
 
 /**
  * @param {Object} args
@@ -43,8 +49,17 @@ const fetchData = contentType => async ({ params, fields }) =>
 const fetchQueryResult = (contentType = '') => async query =>
   await client
     .post('/graphql', { query })
-    .catch(err => console.error(err))
-    .then(res => ({
-      data: contentType ? res.data.data[contentType] : res.data.data,
-      status: res.status
+    .then(({ data, status }) => ({
+      data: contentType ? data.data[contentType] : data.data,
+      status
     }))
+    .catch(err => console.error(err))
+
+/**
+ * Check API server health.
+ */
+const healthCheck = async (timeout = 2000) =>
+  await client
+    .head(`/`, { timeout })
+    .then(res => res.status === 200)
+    .catch(() => false)

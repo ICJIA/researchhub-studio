@@ -8,17 +8,12 @@
           fill-height
           row
           wrap
-          class="task-card"
+          class="text-xs-center"
         >
-          <v-flex xs12>
-            <div class="font-lato uppercase large">
-              {{ task.title }}
-            </div>
-            <div v-if="task.adminOnly" class="admin-only pt-2">
-              <v-icon color="error">warning</v-icon>
-              <template>{{ 'Admin only' }}</template>
-            </div>
-          </v-flex>
+          <span class="uppercase large">{{ task.title }}</span>
+          <span v-if="task.adminOnly" class="pl-2 admin-only small">
+            <v-icon small color="error">warning</v-icon>{{ 'Admin only' }}
+          </span>
         </v-layout>
       </v-card>
     </router-link>
@@ -34,18 +29,6 @@ export default {
 </script>
 
 <style scoped>
-.task-card {
-  text-align: center;
-}
-
-.task-card:hover {
-  font-weight: 600;
-}
-
-.large {
-  font-size: 1.2em;
-}
-
 .admin-only {
   color: grey;
 }

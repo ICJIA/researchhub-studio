@@ -1,18 +1,32 @@
-import { fetchData, fetchOneById } from './client.utils'
+import { fetchQueryResult } from './client.utils'
 
-export { fetchItemById, fetchItemsList }
+export { fetchItemsList }
 
-const fields = ['_id', 'title', 'slug']
-
+const authorQuery = `{ articles (where: { status: "published" }) { authors } }`
 /**
- * Fetch an author using id.
- * @param {String} id
- */
-const fetchItemById = async id =>
-  await fetchOneById({ contentType: 'author', id, fields })
-
-/**
- * Fetch a list of authors.
+ * Fetch a list of unique tags in published items.
  */
 const fetchItemsList = async () =>
-  await fetchData('authors')({ params: `sort: "title"`, fields })
+  useAuthorsList(await fetchQueryResult()(authorQuery))
+
+/**
+ * Use tags list for data.
+ * @param {Object} args
+ * @param {Object} args.data
+ * @param {Number} args.status
+ */
+const useAuthorsList = ({ data, status }) => ({
+  data: getAuthorsList(data),
+  status
+})
+
+/**
+ * Get a list of unique tags from published items.
+ * @param {Object} args
+ * @param {[Object]} args.articles
+ */
+const getAuthorsList = ({ articles }) => [
+  ...new Set(
+    articles.map(article => article.authors.map(author => author.title)).flat()
+  )
+]

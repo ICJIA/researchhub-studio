@@ -7,21 +7,21 @@
             <v-icon v-on="onTooltip">zoom_in</v-icon>
           </v-btn>
         </template>
-        <span class="font-lato">Use existing tags</span>
+        <span class="font-lato">Use existing authors</span>
       </v-tooltip>
     </template>
     <v-card class="font-lato">
       <v-card-title>
-        <h4>Select from existing tags</h4>
+        <h4>Select from existing authors</h4>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text style="height: 300px;">
         <v-checkbox
-          v-model="tags"
-          v-for="tag in tagOptions"
-          :key="tag"
-          :label="tag"
-          :value="tag"
+          v-model="authors"
+          v-for="author in authorOptions"
+          :key="author"
+          :label="author"
+          :value="author"
           hide-details
         >
         </v-checkbox>
@@ -36,26 +36,30 @@
 </template>
 
 <script>
-import { fetchItemsList as fetchTagsList } from '@/services/client.tags'
+import { fetchItemsList as fetchAuthorsList } from '@/services/client.authors'
 
 export default {
   data() {
     return {
       dialog: false,
-      tagOptions: [],
-      tags: []
+      authorOptions: [],
+      authors: []
     }
   },
   async created() {
-    this.tagOptions = (await fetchTagsList()).data.sort()
+    this.authorOptions = (await fetchAuthorsList()).data.sort()
   },
   methods: {
     closeDialog() {
-      this.tags = []
+      this.authors = []
       this.dialog = false
     },
     onUse() {
-      this.$emit('useExistingTags', this.tags.join(', '))
+      if (this.authors.length)
+        this.$emit(
+          'useExistingAuthors',
+          this.authors.map(el => `${el} | ${el} is ...`).join('\n')
+        )
       this.closeDialog()
     }
   }

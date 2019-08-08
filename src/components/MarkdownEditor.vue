@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs6>
+    <v-flex xs12 lg6>
       <span>
         <template>{{ 'Markdown' }}</template>
         <template>{{ ' (Use ' }}</template>
@@ -16,13 +16,14 @@
         height="400"
         v-model="markdownLocal"
         box
+        no-resize
         @scroll="syncScrollEditor"
         @input="onInput"
       >
       </v-textarea>
     </v-flex>
 
-    <v-flex xs6>
+    <v-flex lg6 hidden-md-and-down>
       <span>Result :</span>
       <div
         id="preview"
@@ -35,11 +36,22 @@
 </template>
 
 <script>
+import MarkdownItTexmath from 'markdown-it-texmath'
+
 const md = require('markdown-it')({
   html: true,
   linkify: true,
   typographer: true
 }).use(require('markdown-it-footnote'))
+
+const loadFromCDN = (tagName, attrs) => {
+  const el = document.createElement(tagName)
+  Object.keys(attrs).forEach(key => el.setAttribute(key, attrs[key]))
+  document.head.appendChild(el)
+
+  // eslint-disable-next-line no-unused-vars
+  return new Promise((resolve, reject) => el.addEventListener('load', resolve))
+}
 
 function syncScroll(from, to) {
   let sf = from.scrollHeight - from.clientHeight
@@ -72,6 +84,29 @@ export default {
       return this.$refs.myPreview
     }
   },
+  async created() {
+    if (!document.head.querySelector('#katexCSS'))
+      await loadFromCDN('link', {
+        id: 'katexCSS',
+        rel: 'stylesheet',
+        href: 'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css',
+        integrity:
+          'sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j',
+        crossorigin: 'anonymous'
+      })
+
+    if (!document.head.querySelector('#katexJS'))
+      await loadFromCDN('script', {
+        id: 'katexJS',
+        src: 'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js',
+        integrity:
+          'sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ',
+        crossorigin: 'anonymous'
+      })
+
+    // eslint-disable-next-line no-undef
+    md.use(MarkdownItTexmath.use(katex))
+  },
   mounted() {
     this.markdownLocal = this.markdown
   },
@@ -97,6 +132,7 @@ export default {
 
 <style scoped>
 #preview {
+  font-family: 'Gentium Book Basic', serif;
   height: 400px;
   overflow: auto;
   vertical-align: top;
@@ -153,6 +189,29 @@ export default {
   padding: 1.2em 0.6em;
 }
 
+#preview >>> blockquote {
+  background-color: #ebf6ff;
+  border-left: 0.25em solid #466c8c;
+  font-family: 'Lato', sans-serif;
+  color: #466c8c;
+  padding: 1em 2em;
+  margin: 2em 0;
+}
+
+#preview >>> blockquote p,
+#preview >>> blockquote ol,
+#preview >>> blockquote ul {
+  text-indent: 0;
+}
+
+#preview >>> blockquote > :first-child {
+  margin-top: 0;
+}
+
+#preview >>> blockquote > :last-child {
+  margin-bottom: 0;
+}
+
 #preview >>> table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -173,5 +232,9 @@ export default {
 
 #preview >>> table tr:nth-child(2n) {
   background-color: #f6f8fa;
+}
+
+#preview >>> .katex {
+  font-size: 1em;
 }
 </style>

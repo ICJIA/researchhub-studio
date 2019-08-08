@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <p class="font-lato bold large">
+      <p class="bold large">
         <template>{{ 'Content type: ' }}</template>
         <span class="capitalize">{{ contentType }}</span>
       </p>
@@ -49,7 +49,7 @@
           </PreviewDialog>
 
           <template v-if="type === 'manage'">
-            <template v-if="isStatusPublished">
+            <template v-if="isStatusPublished && isAdmin">
               <v-btn icon @click="updateToSubmitted(props.item)">
                 <v-icon class="greyicon">close</v-icon>
               </v-btn>
@@ -136,6 +136,9 @@ export default {
     items() {
       return this.$store.state.content.itemlist
     },
+    isAdmin() {
+      return this.$store.state.auth.role === 'Administrator'
+    },
     isStatusCreated() {
       return this.status === 'created'
     },
@@ -190,7 +193,7 @@ export default {
     async editItem({ _id: id, title }) {
       const res = await this.dispatchAction('fetchItem', { id })
       if (res && res.status === 200) {
-        alert('✔️Item is selected. Proceed to edit.')
+        alert('✔️Item is selected. Click the next button (>) to edit.')
       } else {
         alert(`⚠️Failed to select: ${title}`)
       }
