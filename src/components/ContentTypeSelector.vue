@@ -1,17 +1,15 @@
 <template>
-  <v-layout justify-center>
-    <v-flex xs2>
-      <v-radio-group v-model="selected" @change="updateContentType">
-        <v-radio
-          class="capitalize"
-          v-for="contentType in contentTypes"
-          :key="contentType"
-          :label="contentType"
-          :value="contentType"
-        ></v-radio>
-      </v-radio-group>
-    </v-flex>
-  </v-layout>
+  <v-col class="mx-auto pa-0" cols="2">
+    <v-radio-group v-model="selected" @change="updateContentType">
+      <v-radio
+        class="capitalize"
+        v-for="contentType in contentTypes"
+        :key="contentType"
+        :label="contentType"
+        :value="contentType"
+      ></v-radio>
+    </v-radio-group>
+  </v-col>
 </template>
 
 <script>

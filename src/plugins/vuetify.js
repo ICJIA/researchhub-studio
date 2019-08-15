@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
-import './main.styl'
 
-Vue.use(Vuetify, {
-  theme: false
+Vue.use(Vuetify)
+
+export default new Vuetify({
+  theme: { disable: true }
 })

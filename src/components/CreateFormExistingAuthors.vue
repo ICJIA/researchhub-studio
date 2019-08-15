@@ -3,17 +3,15 @@
     <template v-slot:activator="{ on: onDialog }">
       <v-tooltip top>
         <template v-slot:activator="{ on: onTooltip }">
-          <v-btn class="mx-0 mt-3" flat icon v-on="onDialog">
-            <v-icon v-on="onTooltip">zoom_in</v-icon>
+          <v-btn class="mx-0 mt-4" text icon v-on="onDialog">
+            <v-icon v-on="onTooltip">mdi-magnify-plus-outline</v-icon>
           </v-btn>
         </template>
         <span class="font-lato">Use existing authors</span>
       </v-tooltip>
     </template>
     <v-card class="font-lato">
-      <v-card-title>
-        <h4>Select from existing authors</h4>
-      </v-card-title>
+      <div class="py-4 text-center large">Select from existing authors</div>
       <v-divider></v-divider>
       <v-card-text style="height: 300px;">
         <v-checkbox
@@ -28,8 +26,9 @@
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn flat @click="closeDialog">Back</v-btn>
-        <v-btn color="primary" flat @click="onUse">Use</v-btn>
+        <v-spacer></v-spacer>
+        <v-btn text @click="closeDialog">Back</v-btn>
+        <v-btn color="primary" text @click="onUse">Use</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

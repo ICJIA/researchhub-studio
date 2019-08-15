@@ -1,95 +1,79 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <p class="bold large">
-        <template>{{ 'Content type: ' }}</template>
-        <span class="capitalize">{{ contentType }}</span>
-      </p>
-
-      <v-spacer></v-spacer>
-
-      <v-text-field
-        v-model="search"
-        append-icon="search"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-    </v-card-title>
+  <div>
+    <v-row justify="end">
+      <v-col cols="6" lg="4">
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          hide-details
+          single-line
+          width="300"
+        ></v-text-field>
+      </v-col>
+    </v-row>
 
     <v-data-table
       v-if="items"
       class="item-table"
-      :headers="contentType !== 'authors' ? headers : headersAuthor"
+      :headers="headers"
       :items="items"
       :search="search"
-      :pagination.sync="paginationSync"
+      sort-by="date"
+      :sort-desc="true"
     >
-      <template slot="items" slot-scope="props">
-        <td v-if="contentType !== 'authors' && props.item.date">
-          <template>{{ props.item.date.slice(0, 10) }}</template>
-        </td>
+      <template v-slot:item.date="{ item }">{{
+        item.date.slice(0, 10)
+      }}</template>
 
-        <td>{{ props.item.title }}</td>
-
-        <td class="justify-end layout px-3">
-          <PreviewDialog
-            v-if="contentType !== 'authors'"
-            :contentType="contentType"
-            :icon="true"
-            :id="props.item._id"
-            :status="status"
-          >
-            <v-icon
-              class="greyicon"
-              @click="dispatchAction('fetchItem', { id: props.item._id })"
-            >
-              <template>{{ 'visibility' }}</template>
-            </v-icon>
-          </PreviewDialog>
-
-          <template v-if="type === 'manage'">
-            <template v-if="isStatusPublished && isAdmin">
-              <v-btn icon @click="updateToSubmitted(props.item)">
-                <v-icon class="greyicon">close</v-icon>
-              </v-btn>
-            </template>
-
-            <template v-if="isStatusSubmitted">
-              <v-btn icon @click="updateToPublished(props.item)">
-                <v-icon class="greyicon">check</v-icon>
-              </v-btn>
-              <v-btn icon @click="updateToCreated(props.item)">
-                <v-icon class="greyicon">close</v-icon>
-              </v-btn>
-            </template>
-
-            <template v-if="isStatusCreated">
-              <v-btn icon @click="updateToSubmitted(props.item)">
-                <v-icon class="greyicon">check</v-icon>
-              </v-btn>
-
-              <v-btn icon @click="deleteItem(props.item)">
-                <v-icon color="error">delete_forever</v-icon>
-              </v-btn>
-            </template>
+      <template v-slot:item.action="{ item }">
+        <PreviewDialog
+          :contentType="contentType"
+          :icon="true"
+          :id="item._id"
+          :status="status"
+        >
+          <v-btn icon @click="dispatchAction('fetchItem', { id: item._id })">
+            <v-icon class="greyicon">mdi-eye</v-icon>
+          </v-btn>
+        </PreviewDialog>
+        <template v-if="type === 'manage'">
+          <template v-if="isStatusPublished && isAdmin">
+            <v-btn icon @click="updateToSubmitted(item)">
+              <v-icon class="greyicon">mdi-close</v-icon>
+            </v-btn>
           </template>
 
-          <v-btn v-if="type === 'update'" icon @click="editItem(props.item)">
-            <v-icon class="greyicon">edit</v-icon>
-          </v-btn>
-        </td>
+          <template v-if="isStatusSubmitted">
+            <v-btn icon @click="updateToPublished(item)">
+              <v-icon class="greyicon">mdi-check</v-icon>
+            </v-btn>
+            <v-btn icon @click="updateToCreated(item)">
+              <v-icon class="greyicon">mdi-close</v-icon>
+            </v-btn>
+          </template>
+
+          <template v-if="isStatusCreated">
+            <v-btn icon @click="updateToSubmitted(item)">
+              <v-icon class="greyicon">mdi-check</v-icon>
+            </v-btn>
+
+            <v-btn icon @click="deleteItem(item)">
+              <v-icon color="error">mdi-delete-forever</v-icon>
+            </v-btn>
+          </template>
+        </template>
+
+        <v-btn v-if="type === 'update'" icon @click="editItem(item)">
+          <v-icon class="greyicon">mdi-pencil</v-icon>
+        </v-btn>
       </template>
 
-      <div slot="no-results" style="text-align:center;">
-        <template>{{ msgNoResult }}</template>
-      </div>
+      <template v-slot:no-results>{{ msgNoResult }}</template>
 
-      <div v-if="loading" slot="no-data" style="text-align:center;">
-        <template>{{ msgLoading }}</template>
-      </div>
+      <template v-slot:no-data>{{ msgNoData }}</template>
     </v-data-table>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -120,14 +104,10 @@ export default {
         {
           text: 'Actions',
           align: 'right',
-          value: 'title',
+          value: 'action',
           sortable: false
         }
       ],
-      paginationSync: {
-        descending: true,
-        sortBy: 'date'
-      },
       loading: false,
       search: ''
     }
@@ -152,10 +132,13 @@ export default {
       return this.headers.filter(el => el.value !== 'date')
     },
     msgNoResult() {
+      console.log('Your search')
       return `Your search for "${this.search}" found no results.`
     },
-    msgLoading() {
-      return `Loading "${this.status}" items...`
+    msgNoData() {
+      return this.loading
+        ? `Loading "${this.status}" items...`
+        : `No "${this.status}" items.`
     }
   },
   watch: {
@@ -240,7 +223,7 @@ export default {
 
 <style scoped>
 .item-table >>> td {
-  font-size: 1em;
+  font-size: 0.95em;
 }
 
 .greyicon {

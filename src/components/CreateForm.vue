@@ -8,8 +8,8 @@
   >
     <v-form ref="form" v-model="valid" lazy-validation>
       <!-- common fields input 1 -->
-      <v-layout row wrap>
-        <v-flex class="px-3" xs10 sm8 lg4>
+      <v-row>
+        <v-col class="px-4" cols="10" sm="8" lg="4">
           <v-text-field
             v-model="item.title"
             label="Title"
@@ -17,9 +17,9 @@
             :rules="[rules.required]"
             @keyup="titleToSlug"
           />
-        </v-flex>
+        </v-col>
 
-        <v-flex class="px-3" xs10 sm8 lg4>
+        <v-col class="px-4" cols="10" sm="8" lg="4">
           <v-text-field
             v-model="item.slug"
             label="Slug"
@@ -29,17 +29,17 @@
             :disabled="update"
             :rules="[rules.required]"
           />
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
 
-      <v-layout row>
-        <v-flex class="px-3" xs10 sm8 lg4>
+      <v-row>
+        <v-col class="px-4" cols="10" sm="8" lg="4">
           <DatePicker :date.sync="item.date" />
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
 
-      <v-layout row wrap>
-        <v-flex class="px-3" xs10 sm8 lg4>
+      <v-row>
+        <v-col class="px-4" cols="10" sm="8" lg="4">
           <v-select
             v-model="item.categories"
             label="Categories"
@@ -48,19 +48,19 @@
             :items="categoryOptions"
             :rules="[rules.required]"
           />
-        </v-flex>
+        </v-col>
 
-        <v-flex class="px-3" xs10 sm8 lg4>
-          <v-layout row wrap>
+        <v-col class="px-4" cols="10" sm="8" lg="4">
+          <v-row>
             <CreateFormExistingTags @useExistingTags="useExistingTags" />
             <v-text-field
               v-model="item.tagString"
               label="Tags"
               hint="Separate tags with commas"
             />
-          </v-layout>
-        </v-flex>
-      </v-layout>
+          </v-row>
+        </v-col>
+      </v-row>
 
       <!-- content type specific fields input  -->
       <CreateFormAppFields
@@ -160,25 +160,25 @@
       </CreateFormDatasetFields>
 
       <!-- common fields input 2 -->
-      <v-layout row wrap>
-        <v-flex class="px-3" xs10 sm8 lg5>
+      <v-row>
+        <v-col class="px-4" cols="10" sm="8" lg="5">
           <v-textarea
             v-model="item.citation"
             label="Suggested citation"
             auto-grow
           />
-        </v-flex>
+        </v-col>
 
-        <v-flex class="px-3" xs10 sm8 lg5>
+        <v-col class="px-4" cols="10" sm="8" lg="5">
           <v-textarea
             v-model="item.funding"
             label="Funding acknowledgement"
             auto-grow
           />
-        </v-flex>
+        </v-col>
 
-        <v-flex v-if="contentType !== 'apps'" class="px-3" xs12>
-          <v-flex xs10 sm8 lg4>
+        <v-col v-if="contentType !== 'apps'" class="px-4" cols="12">
+          <v-col class="pa-0" cols="10" sm="8" lg="4">
             <v-select
               v-model="item.apps"
               item-text="title"
@@ -188,11 +188,11 @@
               return-object
               :items="appOptions"
             />
-          </v-flex>
-        </v-flex>
+          </v-col>
+        </v-col>
 
-        <v-flex v-if="contentType !== 'articles'" class="px-3" xs12>
-          <v-flex xs10 sm8 lg4>
+        <v-col v-if="contentType !== 'articles'" class="px-4" cols="12">
+          <v-col class="pa-0" cols="10" sm="8" lg="4">
             <v-select
               v-model="item.articles"
               item-text="title"
@@ -202,11 +202,11 @@
               return-object
               :items="articleOptions"
             />
-          </v-flex>
-        </v-flex>
+          </v-col>
+        </v-col>
 
-        <v-flex v-if="contentType !== 'datasets'" class="px-3" xs12>
-          <v-flex xs10 sm8 lg4>
+        <v-col v-if="contentType !== 'datasets'" class="px-4" cols="12">
+          <v-col class="pa-0" cols="10" sm="8" lg="4">
             <v-select
               v-model="item.datasets"
               item-text="title"
@@ -216,13 +216,13 @@
               return-object
               :items="datasetOptions"
             />
-          </v-flex>
-        </v-flex>
-      </v-layout>
+          </v-col>
+        </v-col>
+      </v-row>
 
       <div style="height: 50px;"></div>
 
-      <v-btn outline @click="onSave">Save</v-btn>
+      <v-btn class="mx-2" outlined @click="onSave">Save</v-btn>
       <PreviewDialog
         v-if="saved"
         :key="previewKey"
@@ -231,7 +231,7 @@
         :local="true"
         status="created"
       />
-      <v-btn v-else outline disabled>Preview</v-btn>
+      <v-btn v-else class="mx-2" outlined disabled>Preview</v-btn>
     </v-form>
   </BaseForm>
 </template>

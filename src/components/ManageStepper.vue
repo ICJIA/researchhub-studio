@@ -12,7 +12,17 @@
     <template v-slot:stepHeader2>{{ stepHeader2 }}</template>
 
     <template v-slot:stepItem2>
-      <v-radio-group v-model="status" row>
+      <div class="text-center greycolor">
+        <template>{{ 'Content type: ' }}</template>
+        <span class="capitalize">{{ contentType }}</span>
+      </div>
+
+      <v-radio-group
+        v-model="status"
+        label="Status:"
+        class="justify-center mt-2 pt-0"
+        row
+      >
         <v-radio
           v-for="status in statusOptions"
           :key="status"

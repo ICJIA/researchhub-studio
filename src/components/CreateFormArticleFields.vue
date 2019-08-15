@@ -1,37 +1,41 @@
 <template>
-  <v-layout row wrap>
-    <v-flex class="px-3" xs10 sm8 lg5>
-      <v-layout row wrap>
-        <CreateFormExistingAuthors @useExistingAuthors="useExistingAuthors" />
-        <v-textarea
-          v-model="item.authorString"
-          label="Authors"
-          auto-grow
-          hint="Format: full name | brief description; add new authors with new lines"
-          :rules="[rules.required]"
-        />
-      </v-layout>
-    </v-flex>
+  <v-row>
+    <v-col class="px-4" cols="10" sm="8" lg="5">
+      <v-row no-gutters>
+        <v-col class="shrink">
+          <CreateFormExistingAuthors @useExistingAuthors="useExistingAuthors" />
+        </v-col>
+        <v-col>
+          <v-textarea
+            v-model="item.authorString"
+            label="Authors"
+            auto-grow
+            hint="Format: full name | brief description; Separate authors with new lines"
+            :rules="[rules.required]"
+          />
+        </v-col>
+      </v-row>
+    </v-col>
 
-    <v-flex class="px-3" xs10 sm8 lg5>
+    <v-col class="px-4" cols="10" sm="8" lg="5">
       <v-textarea
         v-model="item.abstract"
         label="Abstract"
         auto-grow
         :rules="[rules.required]"
       />
-    </v-flex>
+    </v-col>
 
     <template v-if="update">
-      <v-flex class="px-3" xs5>
+      <v-col class="px-4" cols="5">
         <p class="pt-2 greycolor">Attach files?</p>
         <v-checkbox
           v-model="hasFiles"
           :label="hasFiles ? 'Yes' : 'No'"
         ></v-checkbox>
-      </v-flex>
+      </v-col>
 
-      <v-flex v-show="hasFiles" class="px-3" xs10 sm8 lg5>
+      <v-col v-show="hasFiles" class="px-4" cols="10" sm="8" lg="5">
         <p class="pt-2 greycolor">Main file type</p>
         <v-radio-group v-model="item.mainfiletype" row>
           <v-radio
@@ -41,38 +45,38 @@
             :value="option"
           ></v-radio>
         </v-radio-group>
-      </v-flex>
+      </v-col>
 
-      <v-flex v-show="hasFiles" xs12>
-        <v-layout row wrap>
-          <v-flex class="px-3 pt-3" xs10 sm8 lg5>
+      <v-col v-show="hasFiles" cols="12">
+        <v-row>
+          <v-col class="px-4 pt-4" cols="10" sm="8" lg="5">
             <slot name="mainfile"></slot>
-          </v-flex>
+          </v-col>
 
-          <v-flex class="px-3 pt-3" xs10 sm8 lg5>
+          <v-col class="px-4 pt-4" cols="10" sm="8" lg="5">
             <slot name="extrafile"></slot>
-          </v-flex>
-        </v-layout>
-      </v-flex>
+          </v-col>
+        </v-row>
+      </v-col>
     </template>
 
-    <v-flex xs12>
-      <v-layout row wrap>
-        <v-flex class="px-3 pt-3" xs10 sm8 lg5>
+    <v-col cols="12">
+      <v-row>
+        <v-col class="px-4 pt-4" cols="10" sm="8" lg="5">
           <slot name="splash"></slot>
-        </v-flex>
+        </v-col>
 
-        <v-flex class="px-3 pt-3" xs10 sm8 lg5>
+        <v-col class="px-4 pt-4" cols="10" sm="8" lg="5">
           <slot name="figures"></slot>
-        </v-flex>
-      </v-layout>
-    </v-flex>
+        </v-col>
+      </v-row>
+    </v-col>
 
-    <v-flex class="px-3 pt-3" xs10 sm8 lg10>
+    <v-col class="px-4 pt-4" cols="10" sm="8" lg="10">
       <p class="pt-2 greycolor">Article body</p>
       <slot name="articlebody"></slot>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

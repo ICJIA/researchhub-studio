@@ -1,17 +1,17 @@
 <template>
   <BaseViewLayout>
-    <div class="text-xs-center py-3">
-      <h1 class="uppercase font-lato bold">Choose your task</h1>
+    <div class="text-center py-6">
+      <h1 class="uppercase font-lato bold wide">Choose your task</h1>
       <p>Permission level: {{ role }}</p>
     </div>
 
-    <v-layout row wrap justify-center mb-5>
+    <v-row class="mb-12" justify="center">
       <template v-for="(task, i) in tasks">
-        <v-flex :key="i" v-if="checkPermission(task)" xs12 sm6 lg4>
+        <v-col :key="i" v-if="checkPermission(task)" cols="12" sm="6" lg="4">
           <HomeTaskCard :task="task" />
-        </v-flex>
+        </v-col>
       </template>
-    </v-layout>
+    </v-row>
   </BaseViewLayout>
 </template>
 

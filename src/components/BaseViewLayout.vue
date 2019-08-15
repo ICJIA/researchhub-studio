@@ -1,55 +1,34 @@
 <template>
   <div class="font-lato">
-    <div class="view-title">
-      <v-container class="py-3">
-        <v-layout justify-center>
-          <v-flex xs12 sm10 xl8>
-            <h3 class="light">
-              <template>{{ 'ICJIA Research Hub' }}</template>
-              <v-icon color="white">chevron_right</v-icon>
-              <template>{{ 'Studio' }}</template>
-              <template v-if="task">
-                <v-icon color="white">chevron_right</v-icon>{{ page }}
-              </template>
-            </h3>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </div>
+    <BaseViewTitle :page="page" />
 
-    <v-container>
-      <v-layout justify-center>
-        <v-flex xs12 sm10 xl8>
-          <template v-if="task">
-            <h2 class="bold"><slot name="title"></slot></h2>
-            <p class="py-2"><slot name="description"></slot></p>
-          </template>
-          <slot></slot>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <v-col class="mx-auto" cols="12" sm="10" lg="8" xl="7">
+      <template v-if="page">
+        <h2 class="bold"><slot name="title"></slot></h2>
+        <p class="py-2"><slot name="description"></slot></p>
+      </template>
+      <slot></slot>
+    </v-col>
   </div>
 </template>
 
 <script>
+const BaseViewTitle = () => import('@/components/BaseViewTitle')
+
 export default {
+  components: {
+    BaseViewTitle
+  },
   computed: {
-    task() {
-      return this.$route.name !== 'home'
-    },
     page() {
-      return this.$route.name
-        .split(' ')
-        .map(el => `${el.charAt(0).toUpperCase()}${el.slice(1)}`)
-        .join(' ')
+      const name = this.$route.name
+      return name === 'home'
+        ? ''
+        : name
+            .split(' ')
+            .map(el => `${el.charAt(0).toUpperCase()}${el.slice(1)}`)
+            .join(' ')
     }
   }
 }
 </script>
-
-<style scoped>
-.view-title {
-  color: white;
-  background-color: #466c8c;
-}
-</style>

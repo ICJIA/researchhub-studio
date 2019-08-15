@@ -1,22 +1,22 @@
 <template>
   <v-menu
     ref="menu"
-    :close-on-content-click="false"
     v-model="menu"
-    :nudge-right="40"
-    lazy
+    :close-on-content-click="false"
     transition="scale-transition"
     offset-y
     full-width
     min-width="290px"
   >
-    <v-text-field
-      slot="activator"
-      v-model="dateLocal"
-      label="Date"
-      append-icon="event"
-      readonly
-    />
+    <template v-slot:activator="{ on }">
+      <v-text-field
+        v-on="on"
+        v-model="dateLocal"
+        label="Date"
+        append-icon="mdi-calendar"
+        readonly
+      />
+    </template>
 
     <v-date-picker v-model="dateLocal" no-title scrollable @input="onInput" />
   </v-menu>
