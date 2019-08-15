@@ -2,11 +2,13 @@
   <v-app>
     <TheToolbar />
 
-    <router-view v-if="alive" />
+    <v-content>
+      <router-view v-if="alive" />
 
-    <ServerError v-else />
+      <ServerError v-else />
+    </v-content>
 
-    <TheFooter />
+    <TheFooter v-if="loggedIn" />
   </v-app>
 </template>
 
@@ -17,6 +19,7 @@ const TheToolbar = () => import('./components/TheToolbar')
 const TheFooter = () => import('./components/TheFooter')
 
 export default {
+  name: 'App',
   components: {
     ServerError,
     TheToolbar,
@@ -25,6 +28,11 @@ export default {
   data() {
     return {
       alive: true
+    }
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.isLoggedIn
     }
   },
   async created() {
@@ -44,5 +52,9 @@ export default {
   font-family: 'Lato', sans-serif;
   text-transform: uppercase;
   font-weight: bold;
+}
+
+.wide {
+  letter-spacing: 0.05em;
 }
 </style>

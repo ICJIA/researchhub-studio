@@ -1,15 +1,23 @@
 <template>
   <v-dialog v-model="dialog" width="500" :disabled="!btnCondition">
-    <v-btn outline slot="activator" :color="btnType" :disabled="!btnCondition">
-      <template>{{ btnName }}</template>
-    </v-btn>
+    <template v-slot:activator="{ on }">
+      <v-btn
+        outlined
+        class="mx-2"
+        :color="btnType"
+        :disabled="!btnCondition"
+        v-on="on"
+      >
+        <template>{{ btnName }}</template>
+      </v-btn>
+    </template>
 
-    <v-card>
+    <v-card class="font-lato">
       <v-card-title>
         <slot name="title"></slot>
       </v-card-title>
 
-      <v-card-text>
+      <v-card-text style="font-size: 1em;">
         <slot name="main"></slot>
       </v-card-text>
 
@@ -17,8 +25,8 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn flat @click="dialog = false">back</v-btn>
-        <v-btn :color="btnType" flat @click="onClick">{{ btnName }}</v-btn>
+        <v-btn text @click="dialog = false">back</v-btn>
+        <v-btn :color="btnType" text @click="onClick">{{ btnName }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -47,5 +55,3 @@ export default {
   }
 }
 </script>
-
-<style></style>

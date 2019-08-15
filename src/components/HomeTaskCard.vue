@@ -1,23 +1,15 @@
 <template>
-  <v-container>
-    <router-link :to="`/${task.path}`">
-      <v-card hover height="150">
-        <v-layout
-          align-center
-          justify-center
-          fill-height
-          row
-          wrap
-          class="text-xs-center"
-        >
-          <span class="uppercase large">{{ task.title }}</span>
-          <span v-if="task.adminOnly" class="pl-2 admin-only small">
-            <v-icon small color="error">warning</v-icon>{{ 'Admin only' }}
-          </span>
-        </v-layout>
-      </v-card>
-    </router-link>
-  </v-container>
+  <router-link :to="`/${task.path}`">
+    <v-card class="ma-2" hover height="150">
+      <v-row align="center" justify="center" class="fill-height">
+        <span class="uppercase large wide">{{ task.title }}</span>
+        <span v-if="task.adminOnly" class="pl-2">
+          <v-icon small color="error">mdi-alert</v-icon>
+          <span class="small admin-only">Admin only</span>
+        </span>
+      </v-row>
+    </v-card>
+  </router-link>
 </template>
 
 <script>

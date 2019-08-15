@@ -1,5 +1,5 @@
 <template>
-  <v-stepper v-model="stepNum" class="font-lato mb-5">
+  <v-stepper v-model="stepNum" class="font-lato mb-12">
     <v-stepper-header>
       <template v-for="step in stepNumTotal">
         <v-stepper-step
@@ -20,14 +20,14 @@
     <v-stepper-items>
       <template v-for="step in stepNumTotal">
         <v-stepper-content :key="`content${step}`" :step="step">
-          <v-layout align-center>
+          <v-row align="center">
             <v-btn v-if="stepNum > 1" icon @click="navigateBefore">
-              <v-icon>navigate_before</v-icon>
+              <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
 
-            <v-flex class="no-shadow mx-3">
+            <v-col class="no-shadow pa-0 mx-12">
               <slot :name="`stepItem${step}`"></slot>
-            </v-flex>
+            </v-col>
 
             <v-btn
               v-if="stepNum < stepNumTotal"
@@ -35,9 +35,9 @@
               @click="navigateNext"
               :disabled="itemNotSelected"
             >
-              <v-icon>navigate_next</v-icon>
+              <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
-          </v-layout>
+          </v-row>
         </v-stepper-content>
       </template>
     </v-stepper-items>

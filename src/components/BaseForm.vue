@@ -1,51 +1,43 @@
 <template>
-  <v-layout class="font-lato" row wrap>
-    <v-flex xs12 class="mb-3">
-      <v-layout>
-        <p class="bold large">
-          <template>{{ 'Content type: ' }}</template>
-          <span class="capitalize">{{ contentType }}</span>
-        </p>
+  <div class="font-lato pa-4">
+    <v-row class="mb-4">
+      <div class="greycolor">
+        <template>{{ 'Content type: ' }}</template>
+        <span class="capitalize">{{ contentType }}</span>
+      </div>
 
-        <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
-        <BaseButtonDialog
-          btnName="reset"
-          btnType="error"
-          @base-event="$emit('form-reset')"
-        >
-          <template v-slot:title>
-            <h3>Are you sure?</h3>
-          </template>
+      <BaseButtonDialog
+        btnName="reset"
+        btnType="error"
+        @base-event="$emit('form-reset')"
+      >
+        <template v-slot:title>{{ 'Are you sure?' }}</template>
 
-          <template v-slot:main>
-            <div class="font-lato">{{ msgWarning }}</div>
-          </template>
-        </BaseButtonDialog>
+        <template v-slot:main>{{ msgWarning }}</template>
+      </BaseButtonDialog>
 
-        <BaseButtonDialog
-          btnType="primary"
-          :btnName="formType"
-          :btnCondition="itemReady"
-          @base-event="$emit('form-main')"
-        >
-          <template v-slot:title>
-            <h3>Ready to {{ formType }}?</h3>
-          </template>
+      <BaseButtonDialog
+        btnType="primary"
+        :btnName="formType"
+        :btnCondition="itemReady"
+        @base-event="$emit('form-main')"
+      >
+        <template v-slot:title>
+          <h3>Ready to {{ formType }}?</h3>
+        </template>
 
-          <template v-slot:main>
-            <template>{{ msgMain }}</template>
-            <br />
-            <template v-if="formType === 'create'">{{ msgCreate }}</template>
-          </template>
-        </BaseButtonDialog>
-      </v-layout>
-    </v-flex>
+        <template v-slot:main>
+          <template>{{ msgMain }}</template>
+          <br />
+          <template v-if="formType === 'create'">{{ msgCreate }}</template>
+        </template>
+      </BaseButtonDialog>
+    </v-row>
 
-    <v-flex xs12>
-      <slot></slot>
-    </v-flex>
-  </v-layout>
+    <slot></slot>
+  </div>
 </template>
 
 <script>

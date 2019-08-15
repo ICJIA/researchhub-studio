@@ -1,19 +1,15 @@
 <template>
   <div class="view-title">
-    <v-container class="py-3">
-      <v-layout justify-center>
-        <v-flex xs12 sm10 xl8>
-          <h3 class="light">
-            <template>{{ 'ICJIA Research Hub' }}</template>
-            <v-icon color="white">chevron_right</v-icon>
-            <template>{{ 'Studio' }}</template>
-            <template v-if="page">
-              <v-icon color="white">chevron_right</v-icon>{{ page }}
-            </template>
-          </h3>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <v-col class="mx-auto py-2" cols="12" sm="10" lg="8" xl="7">
+      <h4 class="light">
+        <template>{{ 'ICJIA Research Hub' }}</template>
+        <v-icon color="white">mdi-chevron-right</v-icon>
+        <template>{{ 'Studio' }}</template>
+        <template v-if="page">
+          <v-icon color="white">mdi-chevron-right</v-icon>{{ page }}
+        </template>
+      </h4>
+    </v-col>
   </div>
 </template>
 

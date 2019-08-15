@@ -4,8 +4,8 @@
 
     <template v-slot:description>
       <template>{{ 'Post new items of any type and status.' }}</template>
-      <span class="greycolor ml-3">
-        <v-icon color="error">warning</v-icon>
+      <span class="greycolor ml-4">
+        <v-icon color="error">mdi-alert</v-icon>
         <template>{{ 'Admin only' }}</template>
       </span>
     </template>

@@ -5,32 +5,34 @@
     hide-overlay
     transition="dialog-bottom-transition"
   >
-    <v-btn slot="activator" :outline="!icon" :icon="icon">
-      <slot>Preview</slot>
-    </v-btn>
+    <template v-slot:activator="{ on }">
+      <v-btn v-on="on" :outlined="!icon" :icon="icon">
+        <slot>Preview</slot>
+      </v-btn>
+    </template>
 
     <v-card>
       <v-toolbar class="toolbar">
-        <v-btn icon @click="closePreview">
-          <v-icon>close</v-icon>
-        </v-btn>
+        <span class="px-4 wide uppercase">{{ msgTitle }}</span>
 
-        <v-btn flat @click="view = !view">
-          <template>{{ view ? 'show card' : 'show view' }}</template>
-        </v-btn>
-
-        <v-toolbar-title style="text-transform: uppercase">
-          <template>{{ msgTitle }}</template>
-        </v-toolbar-title>
+        <v-spacer></v-spacer>
 
         <template v-if="status !== 'created'">
-          <v-spacer />
-
-          <v-btn color="primary" flat :href="link" target="_blank">
+          <v-btn class="mx-1" color="primary" text :href="link" target="_blank">
             {{ status === 'published' ? 'public link' : 'preview link' }}
           </v-btn>
         </template>
+
+        <v-btn class="mx-1" text @click="view = !view">
+          <template>{{ view ? 'show card' : 'show view' }}</template>
+        </v-btn>
+
+        <v-btn class="mx-1" icon @click="closePreview">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
       </v-toolbar>
+
+      <BaseViewTitle page="Item preview" />
 
       <template v-if="dialog && item">
         <PreviewDialogApp
@@ -60,12 +62,14 @@ import { fetchItemById as fetchAppById } from '@/services/client.apps'
 import { fetchItemById as fetchArticleById } from '@/services/client.articles'
 import { fetchItemById as fetchDatasetById } from '@/services/client.datasets'
 
+const BaseViewTitle = () => import('@/components/BaseViewTitle')
 const PreviewDialogApp = () => import('@/components/PreviewDialogApp')
 const PreviewDialogArticle = () => import('@/components/PreviewDialogArticle')
 const PreviewDialogDataset = () => import('@/components/PreviewDialogDataset')
 
 export default {
   components: {
+    BaseViewTitle,
     PreviewDialogApp,
     PreviewDialogArticle,
     PreviewDialogDataset
@@ -93,7 +97,7 @@ export default {
   },
   computed: {
     msgTitle() {
-      return `Preview type: ${this.contentType} ${this.view ? 'view' : ''}`
+      return `Preview type: ${this.contentType} ${this.view ? 'view' : 'card'}`
     },
     link() {
       if (status !== 'created' && this.item) {
@@ -139,6 +143,7 @@ export default {
 <style scoped>
 .toolbar {
   font-family: 'Lato' !important;
-  box-shadow: 0 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px rgba(0, 0, 0, 0.2);
+  height: 60px;
 }
 </style>

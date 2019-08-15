@@ -1,19 +1,11 @@
 <template>
-  <v-container>
-    <v-layout justify-center>
-      <v-flex v-if="view" xs12 sm10 md8>
-        <RHAppView :item="item" :preview="true" />
-      </v-flex>
+  <v-col class="mx-auto mt-6 px-0" cols="12" sm="10" lg="8" xl="7">
+    <RHAppView v-if="view" :item="item" :preview="true" />
 
-      <v-flex v-else xs12 sm10 xl8>
-        <v-layout justify-center>
-          <v-flex xs12 sm6 lg4>
-            <RHAppCard :item="item" :preview="true" />
-          </v-flex>
-        </v-layout>
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <v-col class="mx-auto" v-else cols="12" sm="6" lg="4">
+      <RHAppCard :item="item" :preview="true" />
+    </v-col>
+  </v-col>
 </template>
 
 <script>

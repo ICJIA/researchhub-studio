@@ -5,23 +5,23 @@
     </template>
 
     <template v-slot:toolbarItems v-if="isLoggedIn">
-      <v-btn v-for="(view, i) in views" :key="i" :to="`/${view.path}`" flat>
-        <v-icon v-if="/post/.test(view.name)" color="error">warning</v-icon>
+      <v-btn v-for="(view, i) in views" :key="i" :to="`/${view.path}`" text>
+        <v-icon v-if="/post/.test(view.name)" color="error">mdi-alert</v-icon>
         <template>{{ view.name }}</template>
       </v-btn>
 
-      <v-btn color="primary" flat @click="logout">log out</v-btn>
+      <v-btn color="primary" text @click="logout">log out</v-btn>
     </template>
 
     <template v-slot:toolbarDrawerItems v-if="isLoggedIn">
-      <v-list-tile v-for="(view, i) in views" :key="i" :to="`/${view.path}`">
-        <v-icon v-if="/post/.test(view.name)" color="error">warning</v-icon>
-        <v-list-tile-title>{{ view.name }}</v-list-tile-title>
-      </v-list-tile>
+      <v-list-item v-for="(view, i) in views" :key="i" :to="`/${view.path}`">
+        <v-icon v-if="/post/.test(view.name)" color="error">mdi-alert</v-icon>
+        <v-list-item-title>{{ view.name }}</v-list-item-title>
+      </v-list-item>
 
-      <v-list-tile @click="logout">
-        <v-list-tile-title>log out</v-list-tile-title>
-      </v-list-tile>
+      <v-list-item @click="logout">
+        <v-list-item-title>log out</v-list-item-title>
+      </v-list-item>
     </template>
   </RHBaseToolbar>
 </template>

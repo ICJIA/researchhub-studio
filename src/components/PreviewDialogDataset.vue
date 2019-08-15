@@ -1,19 +1,16 @@
 <template>
-  <v-container>
-    <v-layout justify-center>
-      <v-flex v-if="view" xs12 sm10 md8>
-        <RHDatasetView
-          :item="item"
-          :downloader="nodownloader"
-          :preview="true"
-        />
-      </v-flex>
+  <v-col class="mx-auto mt-6 px-0" cols="12" sm="10" lg="8" xl="7">
+    <RHDatasetView
+      v-if="view"
+      :item="item"
+      :downloader="nodownloader"
+      :preview="true"
+    />
 
-      <v-flex v-else xs12 sm6 md4>
-        <RHDatasetCard :item="item" :preview="true" />
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <v-col v-else cols="12" lg="6">
+      <RHDatasetCard :item="item" :preview="true" />
+    </v-col>
+  </v-col>
 </template>
 
 <script>

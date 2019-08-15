@@ -8,13 +8,9 @@
       :preview="true"
     />
 
-    <v-container v-else>
-      <v-layout justify-center>
-        <v-flex xs12 sm10 xl8>
-          <RHArticleCard :item="item" :preview="true" />
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <v-col v-else class="mx-auto mt-6 px-0" cols="12" sm="10" lg="8" xl="7">
+      <RHArticleCard :item="item" :preview="true" />
+    </v-col>
   </div>
 </template>
 

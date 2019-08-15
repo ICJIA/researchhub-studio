@@ -1,9 +1,9 @@
 <template>
-  <v-container>
-    <v-layout row wrap align-center justify-center fill-height>
+  <div class="fill-height" style="background-color:#466c8c;">
+    <v-row class="fill-height" justify="center" align="center">
       <login-form />
-    </v-layout>
-  </v-container>
+    </v-row>
+  </div>
 </template>
 
 <script>

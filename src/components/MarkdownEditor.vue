@@ -1,12 +1,12 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12 lg6>
-      <span>
+  <v-row no-gutters>
+    <v-col cols="12" lg="6">
+      <span class="greycolor small">
         <template>{{ 'Markdown' }}</template>
         <template>{{ ' (Use ' }}</template>
         <a href="https://markdown.icjia.cloud/" target="_blank">
           <template>{{ 'ICJIA markdown editor' }}</template>
-          <v-icon small>launch</v-icon>
+          <v-icon small>mdi-open-in-new</v-icon>
         </a>
         <template>{{ ') :' }}</template>
       </span>
@@ -15,24 +15,24 @@
         ref="myEditor"
         height="400"
         v-model="markdownLocal"
-        box
+        filled
         no-resize
         @scroll="syncScrollEditor"
         @input="onInput"
       >
       </v-textarea>
-    </v-flex>
+    </v-col>
 
-    <v-flex lg6 hidden-md-and-down>
-      <span>Result :</span>
+    <v-col class="hidden-md-and-down" cols="6">
+      <span class="greycolor small">HTML Preview :</span>
       <div
         id="preview"
         ref="myPreview"
         v-html="compiledMarkdown"
         @scroll="syncScrollPreview"
       ></div>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

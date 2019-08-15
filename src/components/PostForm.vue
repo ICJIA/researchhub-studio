@@ -6,8 +6,8 @@
     @form-reset="onReset"
   >
     <v-form>
-      <v-layout class="pl-3" row wrap>
-        <v-flex v-if="contentType !== 'authors'" class="px-3" xs10>
+      <v-row class="pl-4">
+        <v-col class="px-4" cols="10">
           <p class="greycolor">Status</p>
           <v-radio-group v-model="statusLocal" row>
             <v-radio
@@ -17,9 +17,9 @@
               :value="status"
             ></v-radio>
           </v-radio-group>
-        </v-flex>
+        </v-col>
 
-        <v-flex class="px-3 pt-3" xs10>
+        <v-col class="px-4 pt-4" cols="10">
           <MyDropzone
             key="DropzoneJson"
             ref="DropzoneJson"
@@ -31,10 +31,10 @@
             <template v-slot:title>{{ 'JSON file' }}</template>
             <template v-slot:message>{{ dropzoneMsgJson }}</template>
           </MyDropzone>
-        </v-flex>
+        </v-col>
 
         <template v-if="contentType === 'apps'">
-          <v-flex class="px-3 pt-3" xs10>
+          <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
               ref="DropzoneImage"
               fileTypes=".jpg, .jpeg, .png"
@@ -43,11 +43,11 @@
               <template v-slot:title>{{ 'Image' }}</template>
               <template v-slot:message>{{ dropzoneMsgImage }}</template>
             </MyDropzone>
-          </v-flex>
+          </v-col>
         </template>
 
         <template v-if="contentType === 'articles'">
-          <v-flex class="px-3 pt-3" xs10>
+          <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
               ref="DropzoneSplash"
               fileTypes=".jpg, .jpeg, .png"
@@ -57,9 +57,9 @@
               <template v-slot:title>{{ 'Splash image' }}</template>
               <template v-slot:message>{{ dropzoneMsgImage }}</template>
             </MyDropzone>
-          </v-flex>
+          </v-col>
 
-          <v-flex class="px-3 pt-3" xs10>
+          <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
               key="DropzoneImages"
               ref="DropzoneImages"
@@ -69,9 +69,9 @@
               <template>{{ 'Figures' }}</template>
               <template>{{ dropzoneMsgImages }}</template>
             </MyDropzone>
-          </v-flex>
+          </v-col>
 
-          <v-flex class="px-3 pt-3" xs10>
+          <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
               key="DropzoneMarkdown"
               ref="DropzoneMarkdown"
@@ -82,11 +82,11 @@
               <template v-slot:title>{{ 'Article body' }}</template>
               <template v-slot:message>{{ dropzoneMsgMarkdown }}</template>
             </MyDropzone>
-          </v-flex>
+          </v-col>
         </template>
 
         <template v-if="contentType === 'datasets'">
-          <v-flex class="px-3 pt-3" xs10>
+          <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
               key="DropzoneData"
               ref="DropzoneData"
@@ -95,24 +95,24 @@
               :limitFilesize="false"
               :update="update"
             >
-              <tempalte v-slot:title>{{ 'Data file' }}</tempalte>
+              <template v-slot:title>{{ 'Data file' }}</template>
               <template v-slot:message>{{ dropzoneMsgCsv }}</template>
             </MyDropzone>
-          </v-flex>
+          </v-col>
         </template>
-      </v-layout>
+      </v-row>
 
       <div style="height: 50px;"></div>
 
-      <v-btn outline @click="onSave">Save</v-btn>
+      <v-btn outlined @click="onSave">Save</v-btn>
       <PreviewDialog
-        v-if="saved && contentType !== 'authors'"
+        v-if="saved"
         :key="previewKey"
         :contentType="contentType"
         :icon="false"
         :local="true"
       />
-      <v-btn v-else outline disabled>Preview</v-btn>
+      <v-btn v-else outlined disabled>Preview</v-btn>
     </v-form>
   </BaseForm>
 </template>

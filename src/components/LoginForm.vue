@@ -1,30 +1,34 @@
 <template>
   <v-form ref="form" class="font-lato" v-model="valid" lazy-validation>
-    <v-card :class="loginError ? 'login-error' : ''" width="300px">
-      <v-card-text class="text-xs-center">
+    <v-sheet
+      class="elevation-24"
+      :class="loginError ? 'login-error' : ''"
+      width="300px"
+    >
+      <div class="py-4 text-center">
         <h3>Log in</h3>
-        <h3 class="light">with a valid account</h3>
-      </v-card-text>
+        <span class="large light">with a valid account</span>
+      </div>
 
-      <v-container>
+      <div class="px-6 pt-4 pb-10">
         <v-text-field
           v-model="username"
           label="Username"
           class="input-group--focused"
           :rules="[rules.required]"
           ref="username"
-          outline
+          outlined
           @keyup.enter="login"
         />
 
         <v-text-field
           v-model="password"
           label="Password"
-          class="input-group--focused"
+          class="input-group--focused pb-4"
           :rules="[rules.required]"
           :type="showPassword ? 'text' : 'password'"
-          :append-icon="showPassword ? 'visibility_off' : 'visibility'"
-          outline
+          :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+          outlined
           @keyup.enter="login"
           @click:append="showPassword = !showPassword"
         />
@@ -33,14 +37,14 @@
           <template>{{ 'log in' }}</template>
         </v-btn>
 
-        <v-card-text
+        <div
           v-if="loginError"
-          class="text-xs-center mt-4 login-error-message"
+          class="text-center mt-6 px-6 login-error-message"
         >
-          <h3>Invalid username or password!</h3>
-        </v-card-text>
-      </v-container>
-    </v-card>
+          Invalid username or password!
+        </div>
+      </div>
+    </v-sheet>
   </v-form>
 </template>
 
@@ -77,7 +81,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .login-error {
   border: 1px solid #ff5252 !important;
   box-shadow: 0 3px 1px -2px rgba(255, 0, 0, 0.2),

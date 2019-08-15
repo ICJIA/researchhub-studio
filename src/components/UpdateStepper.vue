@@ -12,8 +12,18 @@
     <template v-slot:stepHeader2>{{ stepHeader2 }}</template>
 
     <template v-slot:stepItem2>
+      <div class="text-center greycolor">
+        <template>{{ 'Content type: ' }}</template>
+        <span class="capitalize">{{ contentType }}</span>
+      </div>
+
       <template v-if="type === 'post'">
-        <v-radio-group v-if="contentType !== 'authors'" v-model="status" row>
+        <v-radio-group
+          v-model="status"
+          label="Status:"
+          class="justify-center mt-2 pt-0"
+          row
+        >
           <v-radio
             v-for="status in statusOptions"
             :key="status"
@@ -33,7 +43,7 @@
     <template v-slot:stepHeader3>{{ stepHeader3 }}</template>
 
     <template v-slot:stepItem3>
-      <v-flex class="no-shadow">
+      <v-col class="no-shadow">
         <CreateForm
           v-if="type === 'create'"
           :contentType="contentType"
@@ -46,7 +56,7 @@
           :status="status"
           :update="true"
         />
-      </v-flex>
+      </v-col>
     </template>
   </BaseStepper>
 </template>
