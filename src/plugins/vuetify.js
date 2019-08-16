@@ -1,9 +1,15 @@
 import Vue from 'vue'
-import Vuetify, { VAppBar, VNavigationDrawer, VSpacer } from 'vuetify/lib'
+import Vuetify, {
+  VAppBar,
+  VFooter,
+  VNavigationDrawer,
+  VSpacer
+} from 'vuetify/lib'
 
 Vue.use(Vuetify, {
   components: {
     VAppBar,
+    VFooter,
     VNavigationDrawer,
     VSpacer
   }
