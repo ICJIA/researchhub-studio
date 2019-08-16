@@ -1,8 +1,8 @@
 <template>
-  <div class="font-lato">
+  <div>
     <BaseViewTitle :page="page" />
 
-    <v-col class="mx-auto" cols="12" sm="10" lg="8" xl="7">
+    <v-col class="mx-auto font-lato" cols="12" sm="10" lg="8" xl="7">
       <template v-if="page">
         <h2 class="bold"><slot name="title"></slot></h2>
         <p class="py-2"><slot name="description"></slot></p>
