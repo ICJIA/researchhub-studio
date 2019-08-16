@@ -1,5 +1,5 @@
 <template>
-  <div class="view-title">
+  <div class="view-title font-lato">
     <v-col class="mx-auto py-2" cols="12" sm="10" lg="8" xl="7">
       <h4 class="light">
         <template>{{ 'ICJIA Research Hub' }}</template>
@@ -23,7 +23,7 @@ export default {
 
 <style scoped>
 .view-title {
-  color: white;
   background-color: #466c8c;
+  color: white;
 }
 </style>
