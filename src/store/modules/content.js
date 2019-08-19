@@ -26,8 +26,7 @@ const state = {
   filelist: [],
   item: {},
   itemId: '',
-  itemlist: [],
-  types: ['apps', 'articles', 'datasets']
+  itemlist: []
 }
 
 const getters = {

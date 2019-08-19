@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import contentTypes from '@/consts/contentTypes'
 const BaseStepper = () => import('@/components/BaseStepper')
 const PostForm = () => import('@/components/PostForm')
 const ContentTypeSelector = () => import('@/components/ContentTypeSelector')
@@ -31,7 +32,7 @@ export default {
   data() {
     return {
       contentType: 'apps',
-      contentTypes: this.$store.state.content.types,
+      contentTypes,
       stepHeader1: 'Select content type',
       stepHeader2: 'Post'
     }

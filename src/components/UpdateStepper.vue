@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import contentTypes from '@/consts/contentTypes'
 import { statusOptions } from '@/consts/fieldOptions'
 
 const BaseStepper = () => import('@/components/BaseStepper')
@@ -83,8 +84,8 @@ export default {
   },
   data() {
     return {
-      contentTypes: this.$store.state.content.types,
       contentType: 'apps',
+      contentTypes,
       status: 'submitted',
       statusOptions,
       stepHeader1: 'Select content type',
