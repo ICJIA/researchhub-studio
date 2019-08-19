@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import tasks from '@/consts/tasks'
 const BaseViewLayout = () => import('@/components/BaseViewLayout')
 const HomeTaskCard = () => import('@/components/HomeTaskCard')
 
@@ -26,7 +27,7 @@ export default {
   },
   computed: {
     tasks() {
-      return this.$store.state.task.items
+      return tasks
     },
     role() {
       return this.$store.state.auth.role
