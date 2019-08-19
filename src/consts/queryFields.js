@@ -43,6 +43,7 @@ const datasetFields = [
   'external',
   'categories',
   'tags',
+  'project',
   'sources',
   'timeperiod',
   'unit',

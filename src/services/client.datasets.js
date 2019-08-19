@@ -17,6 +17,6 @@ const fetchItemById = async id =>
 const fetchItemsList = async status =>
   await fetchListByStatus({
     contentType: 'datasets',
-    fields: baseFields,
+    fields: [...baseFields, 'project'],
     status
   })
