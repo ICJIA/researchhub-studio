@@ -38,7 +38,7 @@
           </v-btn>
         </PreviewDialog>
         <template v-if="type === 'manage'">
-          <template v-if="isStatusPublished && isAdmin">
+          <template v-if="isStatusPublished && !isRoleAuthenticated">
             <v-btn icon @click="updateToSubmitted(item)">
               <v-icon class="greyicon">mdi-close</v-icon>
             </v-btn>
@@ -114,10 +114,14 @@ export default {
   },
   computed: {
     items() {
-      return this.$store.state.content.itemlist
+      const items = this.$store.state.content.itemlist
+
+      return this.contentType === 'datasets'
+        ? this.filterDatasets(items, this.$store.state.auth.role)
+        : items
     },
-    isAdmin() {
-      return this.$store.state.auth.role === 'Administrator'
+    isRoleAuthenticated() {
+      return this.$store.state.auth.role === 'Authenticated'
     },
     isStatusCreated() {
       return this.status === 'created'
@@ -158,6 +162,16 @@ export default {
         contentType: this.contentType,
         ...params
       })
+    },
+    filterDatasets(datasets, role) {
+      switch (role) {
+        case 'Administrator':
+          return datasets
+        case 'Authenticated':
+          return datasets.filter(el => !el.project)
+        case 'Data Manager':
+          return datasets.filter(el => el.project)
+      }
     },
     async loadItemList() {
       this.loading = true
