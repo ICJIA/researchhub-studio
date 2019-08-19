@@ -19,6 +19,7 @@
 
 <script>
 import contentTypes from '@/consts/contentTypes'
+import stepperMixin from '@/mixins/stepperMixin'
 const BaseStepper = () => import('@/components/BaseStepper')
 const ContentTypeSelector = () => import('@/components/ContentTypeSelector')
 const CreateForm = () => import('@/components/CreateForm')
@@ -29,6 +30,7 @@ export default {
     ContentTypeSelector,
     CreateForm
   },
+  mixins: [stepperMixin],
   data() {
     return {
       contentType: 'apps',

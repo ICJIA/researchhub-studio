@@ -39,6 +39,7 @@
 <script>
 import contentTypes from '@/consts/contentTypes'
 import { statusOptions } from '@/consts/fieldOptions'
+import stepperMixin from '@/mixins/stepperMixin'
 
 const BaseStepper = () => import('@/components/BaseStepper')
 const ContentTypeSelector = () => import('@/components/ContentTypeSelector')
@@ -50,6 +51,7 @@ export default {
     ContentTypeSelector,
     ItemTable
   },
+  mixins: [stepperMixin],
   props: {
     type: String
   },
