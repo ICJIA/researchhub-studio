@@ -165,9 +165,9 @@ export default {
         case 'Administrator':
           return datasets
         case 'Authenticated':
-          return datasets.filter(el => !el.project)
-        case 'Data Manager':
           return datasets.filter(el => el.project)
+        case 'Data Manager':
+          return datasets.filter(el => !el.project)
       }
     },
     async loadItemList() {
