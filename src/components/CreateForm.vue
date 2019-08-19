@@ -160,7 +160,7 @@
       </CreateFormDatasetFields>
 
       <!-- common fields input 2 -->
-      <v-row>
+      <v-row class="pb-12">
         <v-col class="px-4" cols="10" sm="8" lg="5">
           <v-textarea
             v-model="item.citation"
@@ -219,8 +219,6 @@
           </v-col>
         </v-col>
       </v-row>
-
-      <div style="height: 50px;"></div>
 
       <v-btn class="mx-2" outlined @click="onSave">Save</v-btn>
       <PreviewDialog

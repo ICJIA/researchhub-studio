@@ -6,7 +6,7 @@
     @form-reset="onReset"
   >
     <v-form>
-      <v-row class="pl-4">
+      <v-row class="pl-4 pb-12">
         <v-col class="px-4" cols="10">
           <p class="greycolor">Status</p>
           <v-radio-group v-model="statusLocal" row>
@@ -102,9 +102,7 @@
         </template>
       </v-row>
 
-      <div style="height: 50px;"></div>
-
-      <v-btn outlined @click="onSave">Save</v-btn>
+      <v-btn class="mx-2" outlined @click="onSave">Save</v-btn>
       <PreviewDialog
         v-if="saved"
         :key="previewKey"
@@ -112,7 +110,7 @@
         :icon="false"
         :local="true"
       />
-      <v-btn v-else outlined disabled>Preview</v-btn>
+      <v-btn v-else class="mx-2" outlined disabled>Preview</v-btn>
     </v-form>
   </BaseForm>
 </template>
