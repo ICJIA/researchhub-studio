@@ -1,5 +1,5 @@
 <template>
-  <BaseStepper :stepNumTotal="2" @stepper-navigate-before="resetItem">
+  <BaseStepper :stepNumTotal="2" @stepper-navigate-before="navigateBefore">
     <template v-slot:stepHeader1>{{ 'Select content type' }}</template>
 
     <template v-slot:stepHeader2>{{ 'Create' }}</template>
@@ -12,7 +12,7 @@
     </template>
 
     <template v-slot:stepItem2>
-      <CreateForm :contentType="contentType" :update="false" />
+      <CreateForm :contentType="contentType" :key="formKey" :update="false" />
     </template>
   </BaseStepper>
 </template>
@@ -29,6 +29,17 @@ export default {
     ContentTypeSelector,
     CreateForm
   },
-  mixins: [stepperMixin]
+  mixins: [stepperMixin],
+  data() {
+    return {
+      formKey: 0
+    }
+  },
+  methods: {
+    navigateBefore() {
+      this.resetItem()
+      this.formKey += 1
+    }
+  }
 }
 </script>
