@@ -93,15 +93,7 @@ export default {
   },
   data() {
     return {
-      abstract: null,
-      description: null,
-      noteString: null,
-      sourceString: null,
       timeperiodOptions,
-      timeperiodString: null,
-      timeperiodType: null,
-      variableString: null,
-      unit: null,
       unitOptions
     }
   }

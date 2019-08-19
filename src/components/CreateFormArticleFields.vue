@@ -100,11 +100,7 @@ export default {
   },
   data() {
     return {
-      abstract: null,
-      authors: null,
-      authorString: null,
       hasFiles: this.mainfiletype !== null,
-      mainfiletype: null,
       mainfiletypeOptions
     }
   },
