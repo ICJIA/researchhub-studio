@@ -1,6 +1,6 @@
 <template>
-  <BaseStepper :stepNumTotal="2" @stepper-navigate-before="navigateBefore">
-    <template v-slot:stepHeader1>{{ stepHeader1 }}</template>
+  <BaseStepper :stepNumTotal="2" @stepper-navigate-before="resetItem">
+    <template v-slot:stepHeader1>{{ 'Select content type' }}</template>
 
     <template v-slot:stepItem1>
       <ContentTypeSelector
@@ -9,7 +9,7 @@
       />
     </template>
 
-    <template v-slot:stepHeader2>{{ stepHeader2 }}</template>
+    <template v-slot:stepHeader2>{{ 'Manage' }}</template>
 
     <template v-slot:stepItem2>
       <div class="text-center greycolor">
@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import contentTypes from '@/consts/contentTypes'
 import { statusOptions } from '@/consts/fieldOptions'
 import stepperMixin from '@/mixins/stepperMixin'
 
@@ -57,23 +56,13 @@ export default {
   },
   data() {
     return {
-      contentType: 'apps',
-      contentTypes,
       status: 'submitted',
-      statusOptions,
-      stepHeader1: 'Select content type',
-      stepHeader2: 'Manage'
+      statusOptions
     }
   },
   watch: {
     contentType() {
       this.status = 'submitted'
-    }
-  },
-  methods: {
-    navigateBefore() {
-      this.$store.dispatch('content/setItem', {})
-      this.$store.dispatch('content/setItemId', '')
     }
   }
 }
