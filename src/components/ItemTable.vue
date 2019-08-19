@@ -132,9 +132,6 @@ export default {
     isStatusSubmitted() {
       return this.status === 'submitted'
     },
-    headersAuthor() {
-      return this.headers.filter(el => el.value !== 'date')
-    },
     msgNoResult() {
       console.log('Your search')
       return `Your search for "${this.search}" found no results.`
