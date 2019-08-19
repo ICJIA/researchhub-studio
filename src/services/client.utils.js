@@ -1,5 +1,4 @@
 import client from './client'
-import { baseFields } from '@/consts/queryFields'
 
 export {
   fetchData,
@@ -23,10 +22,10 @@ const fetchOneById = async ({ contentType, id, fields }) =>
  * @param {String} args.contentType
  * @param {String} args.status
  */
-const fetchListByStatus = async ({ contentType, status }) =>
+const fetchListByStatus = async ({ contentType, fields, status }) =>
   await fetchData(contentType)({
     params: `sort: "date:desc", where: { status: "${status}" }`,
-    fields: baseFields
+    fields
   })
 
 /**
