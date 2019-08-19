@@ -43,7 +43,7 @@
     <template v-slot:stepHeader3>{{ 'Update' }}</template>
 
     <template v-slot:stepItem3>
-      <v-col class="no-shadow">
+      <v-col>
         <CreateForm
           v-if="type === 'create'"
           :contentType="contentType"
@@ -102,10 +102,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.no-shadow >>> div {
-  --webkit-box-shadow: None !important;
-  box-shadow: None !important;
-}
-</style>

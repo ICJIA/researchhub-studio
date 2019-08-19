@@ -32,10 +32,3 @@ export default {
   mixins: [stepperMixin]
 }
 </script>
-
-<style scoped>
-.no-shadow >>> div {
-  --webkit-box-shadow: None !important;
-  box-shadow: None !important;
-}
-</style>
