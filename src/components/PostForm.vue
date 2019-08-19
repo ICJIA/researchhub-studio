@@ -9,11 +9,11 @@
       <v-row class="pl-4 pb-12">
         <v-col class="px-4" cols="10">
           <p class="greycolor">Status</p>
-          <v-radio-group v-model="statusLocal" row>
+          <v-radio-group v-model="statusLocal" class="capitalize" row>
             <v-radio
               v-for="status in statusOptions"
               :key="status"
-              :label="status[0].toUpperCase() + status.slice(1)"
+              :label="status"
               :value="status"
             ></v-radio>
           </v-radio-group>

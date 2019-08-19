@@ -20,13 +20,13 @@
       <v-radio-group
         v-model="status"
         label="Status:"
-        class="justify-center mt-2 pt-0"
+        class="capitalize justify-center mt-2 pt-0"
         row
       >
         <v-radio
           v-for="status in statusOptions"
           :key="status"
-          :label="status[0].toUpperCase() + status.slice(1)"
+          :label="status"
           :value="status"
         ></v-radio>
       </v-radio-group>
