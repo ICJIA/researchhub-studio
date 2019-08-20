@@ -1,5 +1,5 @@
 <template>
-  <RHBaseToolbar :menu="isLoggedIn">
+  <BaseToolbar :menu="isLoggedIn">
     <template v-slot:titleExtra>
       <span class="light"> Studio</span>
     </template>
@@ -23,18 +23,13 @@
         <v-list-item-title>log out</v-list-item-title>
       </v-list-item>
     </template>
-  </RHBaseToolbar>
+  </BaseToolbar>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-const RHBaseToolbar = () =>
-  import('icjia-research-lib/lib/cjs').then(lib => lib.BaseToolbar)
 
 export default {
-  components: {
-    RHBaseToolbar
-  },
   computed: {
     ...mapState('auth', {
       isLoggedIn: 'isLoggedIn'
