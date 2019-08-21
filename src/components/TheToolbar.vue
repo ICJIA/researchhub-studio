@@ -1,5 +1,5 @@
 <template>
-  <BaseToolbar :menu="isLoggedIn">
+  <BaseToolbar :menu="isLoggedIn" logoPath="./icjia-logo.png">
     <template v-slot:titleExtra>
       <span class="light"> Studio</span>
     </template>
