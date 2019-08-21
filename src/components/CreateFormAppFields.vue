@@ -28,12 +28,6 @@ export default {
   model: {
     prop: 'item',
     event: 'change'
-  },
-  data() {
-    return {
-      description: null,
-      url: null
-    }
   }
 }
 </script>

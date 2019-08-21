@@ -25,7 +25,7 @@
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
 
-            <v-col class="no-shadow pa-0 mx-12">
+            <v-col class="pa-0 mx-12">
               <slot :name="`stepItem${step}`"></slot>
             </v-col>
 
@@ -88,10 +88,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.no-shadow >>> div {
-  --webkit-box-shadow: None !important;
-  box-shadow: None !important;
-}
-</style>

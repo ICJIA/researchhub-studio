@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import vuetify from './plugins/vuetify'
 
-import 'icjia-research-lib/lib/index.css'
+import 'icjia-research-lib/style.css'
 import 'nprogress/nprogress.css'
 
 import App from './App.vue'

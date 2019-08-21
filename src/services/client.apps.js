@@ -1,5 +1,5 @@
 import { fetchOneById, fetchListByStatus } from './client.utils'
-import { appFields } from '@/consts/queryFields'
+import { appFields, baseFields } from '@/consts/queryFields'
 
 export { fetchItemById, fetchItemsList }
 
@@ -15,4 +15,4 @@ const fetchItemById = async id =>
  * @param {String} status
  */
 const fetchItemsList = async status =>
-  await fetchListByStatus({ contentType: 'apps', status })
+  await fetchListByStatus({ contentType: 'apps', fields: baseFields, status })

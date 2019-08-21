@@ -15,6 +15,7 @@ export default {
   mainfiletype: '',
   notes: null,
   noteString: null,
+  project: null,
   sources: null,
   sourceString: null,
   timeperiod: null,

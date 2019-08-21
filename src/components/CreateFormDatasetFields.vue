@@ -1,6 +1,14 @@
 <template>
   <v-row>
     <v-col class="px-4" cols="10" sm="8" lg="4">
+      <v-checkbox
+        v-model="item.project"
+        label="Project data?"
+        :disabled="!isAdmin"
+      />
+    </v-col>
+
+    <v-col class="px-4" cols="10" sm="8" lg="4">
       <v-textarea
         v-model="item.sourceString"
         label="Sources"
@@ -93,17 +101,13 @@ export default {
   },
   data() {
     return {
-      abstract: null,
-      description: null,
-      noteString: null,
-      sourceString: null,
+      isAdmin: this.$store.state.auth.role === 'Administrator',
       timeperiodOptions,
-      timeperiodString: null,
-      timeperiodType: null,
-      variableString: null,
-      unit: null,
       unitOptions
     }
+  },
+  created() {
+    this.item.project = this.$store.state.auth.role === 'Authenticated'
   }
 }
 </script>
