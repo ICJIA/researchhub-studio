@@ -28,8 +28,12 @@
 
 <script>
 import { mapState } from 'vuex'
+const BaseToolbar = () => import('icjia-research-lib').then(m => m.BaseToolbar)
 
 export default {
+  components: {
+    BaseToolbar
+  },
   computed: {
     ...mapState('auth', {
       isLoggedIn: 'isLoggedIn'

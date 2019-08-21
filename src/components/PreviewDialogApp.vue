@@ -9,7 +9,14 @@
 </template>
 
 <script>
+const AppCard = () => import('icjia-research-lib').then(m => m.AppCard)
+const AppView = () => import('icjia-research-lib').then(m => m.AppView)
+
 export default {
+  components: {
+    AppCard,
+    AppView
+  },
   props: {
     item: Object,
     view: Boolean

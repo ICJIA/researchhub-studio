@@ -14,7 +14,14 @@
 </template>
 
 <script>
+const DatasetCard = () => import('icjia-research-lib').then(m => m.DatasetCard)
+const DatasetView = () => import('icjia-research-lib').then(m => m.DatasetView)
+
 export default {
+  components: {
+    DatasetCard,
+    DatasetView
+  },
   props: {
     item: Object,
     view: Boolean

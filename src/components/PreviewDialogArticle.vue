@@ -15,7 +15,14 @@
 </template>
 
 <script>
+const ArticleCard = () => import('icjia-research-lib').then(m => m.ArticleCard)
+const ArticleView = () => import('icjia-research-lib').then(m => m.ArticleView)
+
 export default {
+  components: {
+    ArticleCard,
+    ArticleView
+  },
   props: {
     item: Object,
     view: Boolean
