@@ -31,6 +31,8 @@ module.exports = {
       ? process.env.VUE_APP_PUBLIC_PATH
       : '/',
   configureWebpack: config => {
+    config.entry.app = './src/entry.js'
+
     if (process.env.NODE_ENV === `production`) {
       config.optimization.splitChunks.chunks = 'all'
       config.plugins.push(
