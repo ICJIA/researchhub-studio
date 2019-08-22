@@ -114,7 +114,7 @@ export default {
   methods: {
     closePreview() {
       this.dialog = false
-      this.view = false
+      this.view = true
     },
     async reload() {
       switch (this.contentType) {
