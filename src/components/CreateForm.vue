@@ -92,6 +92,7 @@
           <MyDropzone
             ref="DropzoneMainfile"
             fileTypes=".pdf"
+            :limitFilesize="false"
             :maxOne="true"
             :update="update"
           >
@@ -101,7 +102,12 @@
         </template>
 
         <template v-slot:extrafile>
-          <MyDropzone ref="DropzoneExtrafile" :maxOne="true" :update="update">
+          <MyDropzone
+            ref="DropzoneExtrafile"
+            :limitFilesize="false"
+            :maxOne="true"
+            :update="update"
+          >
             <template v-slot:title>{{ 'Extra file' }}</template>
             <template v-slot:message>{{ dropzoneMsgFile }}</template>
           </MyDropzone>
