@@ -387,7 +387,8 @@ export default {
       this.item.tagString += this.item.tagString ? `, ${e}` : e
     },
     useExistingAuthors(e) {
-      this.item.authorString += this.item.authorString ? `\n${e}` : e
+      const { authorString } = this.item
+      this.item.authorString = authorString ? `${authorString}\n${e}` : e
     }
   }
 }
