@@ -32,9 +32,9 @@ export default {
   },
   props: {
     fileTypes: String,
-    limitFilesize: {
-      type: Boolean,
-      default: true
+    maxFilesize: {
+      type: Number,
+      default: 0
     },
     maxOne: {
       type: Boolean,
@@ -67,7 +67,7 @@ export default {
         }
       }
       if (this.maxOne) options.maxFiles = 1
-      if (this.limitFilesize) options.maxFilesize = 0.5
+      if (this.maxFilesize) options.maxFilesize = this.maxFilesize
 
       return options
     }

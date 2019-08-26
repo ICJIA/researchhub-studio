@@ -25,7 +25,6 @@
             ref="DropzoneJson"
             fileTypes=".json"
             :maxOne="true"
-            :limitFilesize="false"
             :update="update"
           >
             <template v-slot:title>{{ 'JSON file' }}</template>
@@ -92,7 +91,6 @@
               ref="DropzoneData"
               fileTypes=".csv"
               :maxOne="true"
-              :limitFilesize="false"
               :update="update"
             >
               <template v-slot:title>{{ 'Data file' }}</template>
