@@ -36,7 +36,7 @@ export default {
       type: Number,
       default: 0
     },
-    maxOne: {
+    multipleFiles: {
       type: Boolean,
       default: false
     },
@@ -66,7 +66,7 @@ export default {
           done()
         }
       }
-      if (this.maxOne) options.maxFiles = 1
+      if (!this.multipleFiles) options.maxFiles = 1
       if (this.maxFilesize) options.maxFilesize = this.maxFilesize
 
       return options

@@ -72,7 +72,6 @@
           <MyDropzone
             ref="DropzoneImage"
             fileTypes=".jpg, .jpeg, .png"
-            :maxOne="true"
             :update="update"
           >
             <template v-slot:title>{{ 'Image' }}</template>
@@ -93,7 +92,6 @@
             ref="DropzoneMainfile"
             fileTypes=".pdf"
             :maxFilesize="5"
-            :maxOne="true"
             :update="update"
           >
             <template v-slot:title>{{ 'Main file' }}</template>
@@ -105,7 +103,6 @@
           <MyDropzone
             ref="DropzoneExtrafile"
             :maxFilesize="10"
-            :maxOne="true"
             :update="update"
           >
             <template v-slot:title>{{ 'Extra file' }}</template>
@@ -118,7 +115,6 @@
             ref="DropzoneSplash"
             fileTypes=".jpg, .jpeg, .png"
             :maxFilesize="0.5"
-            :maxOne="true"
             :update="update"
           >
             <template v-slot:title>{{ 'Splash image' }}</template>
@@ -131,7 +127,7 @@
             ref="DropzoneImages"
             fileTypes=".jpg, .jpeg, .png"
             :maxFilesize="0.1"
-            :maxOne="false"
+            :multipleFiles="true"
             :update="update"
           >
             <template v-slot:title>{{ 'Figures' }}</template>
@@ -158,7 +154,6 @@
             ref="DropzoneDatafile"
             fileTypes=".csv"
             :maxFilesize="100"
-            :maxOne="true"
             :update="update"
           >
             <template v-slot:title>{{ 'Data file' }}</template>

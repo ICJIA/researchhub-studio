@@ -24,7 +24,6 @@
             key="DropzoneJson"
             ref="DropzoneJson"
             fileTypes=".json"
-            :maxOne="true"
             :update="update"
           >
             <template v-slot:title>{{ 'JSON file' }}</template>
@@ -34,11 +33,7 @@
 
         <template v-if="contentType === 'apps'">
           <v-col class="px-4 pt-4" cols="10">
-            <MyDropzone
-              ref="DropzoneImage"
-              fileTypes=".jpg, .jpeg, .png"
-              :maxOne="true"
-            >
+            <MyDropzone ref="DropzoneImage" fileTypes=".jpg, .jpeg, .png">
               <template v-slot:title>{{ 'Image' }}</template>
               <template v-slot:message>{{ dropzoneMsgImage }}</template>
             </MyDropzone>
@@ -50,7 +45,6 @@
             <MyDropzone
               ref="DropzoneSplash"
               fileTypes=".jpg, .jpeg, .png"
-              :maxOne="true"
               :update="update"
             >
               <template v-slot:title>{{ 'Splash image' }}</template>
@@ -75,7 +69,6 @@
               key="DropzoneMarkdown"
               ref="DropzoneMarkdown"
               fileTypes=".md"
-              :maxOne="true"
               :update="update"
             >
               <template v-slot:title>{{ 'Article body' }}</template>
@@ -90,7 +83,6 @@
               key="DropzoneData"
               ref="DropzoneData"
               fileTypes=".csv"
-              :maxOne="true"
               :update="update"
             >
               <template v-slot:title>{{ 'Data file' }}</template>
