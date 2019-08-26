@@ -72,7 +72,6 @@
           <MyDropzone
             ref="DropzoneImage"
             fileTypes=".jpg, .jpeg, .png"
-            :maxOne="true"
             :update="update"
           >
             <template v-slot:title>{{ 'Image' }}</template>
@@ -92,7 +91,7 @@
           <MyDropzone
             ref="DropzoneMainfile"
             fileTypes=".pdf"
-            :maxOne="true"
+            :maxFilesize="5"
             :update="update"
           >
             <template v-slot:title>{{ 'Main file' }}</template>
@@ -101,7 +100,11 @@
         </template>
 
         <template v-slot:extrafile>
-          <MyDropzone ref="DropzoneExtrafile" :maxOne="true" :update="update">
+          <MyDropzone
+            ref="DropzoneExtrafile"
+            :maxFilesize="10"
+            :update="update"
+          >
             <template v-slot:title>{{ 'Extra file' }}</template>
             <template v-slot:message>{{ dropzoneMsgFile }}</template>
           </MyDropzone>
@@ -111,7 +114,7 @@
           <MyDropzone
             ref="DropzoneSplash"
             fileTypes=".jpg, .jpeg, .png"
-            :maxOne="true"
+            :maxFilesize="0.5"
             :update="update"
           >
             <template v-slot:title>{{ 'Splash image' }}</template>
@@ -123,7 +126,8 @@
           <MyDropzone
             ref="DropzoneImages"
             fileTypes=".jpg, .jpeg, .png"
-            :maxOne="false"
+            :maxFilesize="0.1"
+            :multipleFiles="true"
             :update="update"
           >
             <template v-slot:title>{{ 'Figures' }}</template>
@@ -149,8 +153,7 @@
           <MyDropzone
             ref="DropzoneDatafile"
             fileTypes=".csv"
-            :maxOne="true"
-            :limitFilesize="false"
+            :maxFilesize="100"
             :update="update"
           >
             <template v-slot:title>{{ 'Data file' }}</template>
@@ -387,7 +390,8 @@ export default {
       this.item.tagString += this.item.tagString ? `, ${e}` : e
     },
     useExistingAuthors(e) {
-      this.item.authorString += this.item.authorString ? `\n${e}` : e
+      const { authorString } = this.item
+      this.item.authorString = authorString ? `${authorString}\n${e}` : e
     }
   }
 }
