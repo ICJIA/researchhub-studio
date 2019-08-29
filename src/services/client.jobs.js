@@ -125,7 +125,10 @@ const getFileId = async ({ contentType, field, id }) =>
 const postFile = async ({ file, refId, ref, field }) =>
   await client
     .post('/upload', prepareForm({ file, refId, ref, field }))
-    .catch(err => console.error(err))
+    .catch(err => {
+      console.error(err)
+      alert(`⚠️Failed to upload the file!`)
+    })
 
 /**
  * Prepare a uploads file for the given content type item field.
