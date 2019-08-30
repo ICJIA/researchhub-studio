@@ -180,6 +180,12 @@
           />
         </v-col>
 
+        <v-col v-if="contentType === 'articles'" class="px-4" cols="12">
+          <v-col class="pa-0" cols="10" sm="8" lg="4">
+            <v-text-field v-model="item.doi" label="DOI" />
+          </v-col>
+        </v-col>
+
         <v-col v-if="contentType !== 'apps'" class="px-4" cols="12">
           <v-col class="pa-0" cols="10" sm="8" lg="4">
             <v-select
