@@ -173,9 +173,9 @@ export default {
   methods: {
     async parseItem() {
       return {
+        status: this.statusLocal,
         ...this.item,
-        ...(await addDropzoneFiles(this.dropzoneList)),
-        ...(this.update ? { status: this.statusLocal } : {})
+        ...(await addDropzoneFiles(this.dropzoneList))
       }
     },
     rerenderPreview() {
