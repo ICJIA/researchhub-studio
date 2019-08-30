@@ -50,8 +50,8 @@
           />
         </v-col>
 
-        <v-col class="px-4" cols="10" sm="8" lg="4">
-          <v-row>
+        <v-col class="pl-1 pr-4" cols="10" sm="8" lg="4">
+          <v-row no-gutters>
             <CreateFormExistingTags @useExistingTags="useExistingTags" />
             <v-text-field
               v-model="item.tagString"

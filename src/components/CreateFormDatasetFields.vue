@@ -41,7 +41,7 @@
       </v-row>
     </v-col>
 
-    <v-col cols="12">
+    <v-col cols="12" class="px-0">
       <v-col class="px-4" cols="10" sm="8" lg="4">
         <v-select
           v-model="item.unit"
