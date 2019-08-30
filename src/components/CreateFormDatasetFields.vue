@@ -107,7 +107,7 @@ export default {
     }
   },
   created() {
-    this.item.project = this.$store.state.auth.role === 'Authenticated'
+    this.item.project = this.$store.state.auth.role === 'Author'
   }
 }
 </script>

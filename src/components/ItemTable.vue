@@ -38,7 +38,7 @@
           </v-btn>
         </PreviewDialog>
         <template v-if="type === 'manage'">
-          <template v-if="isStatusPublished && !isRoleAuthenticated">
+          <template v-if="isStatusPublished && !isRoleAuthor">
             <v-btn icon @click="updateToSubmitted(item)">
               <v-icon class="greyicon">mdi-close</v-icon>
             </v-btn>
@@ -120,8 +120,8 @@ export default {
         ? this.filterDatasets(items, this.$store.state.auth.role)
         : items
     },
-    isRoleAuthenticated() {
-      return this.$store.state.auth.role === 'Authenticated'
+    isRoleAuthor() {
+      return this.$store.state.auth.role === 'Author'
     },
     isStatusCreated() {
       return this.status === 'created'
@@ -164,7 +164,7 @@ export default {
       switch (role) {
         case 'Administrator':
           return datasets
-        case 'Authenticated':
+        case 'Author':
           return datasets.filter(el => el.project)
         case 'Data Manager':
           return datasets.filter(el => !el.project)
