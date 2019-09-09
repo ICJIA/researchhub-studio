@@ -50,8 +50,8 @@
           />
         </v-col>
 
-        <v-col class="px-4" cols="10" sm="8" lg="4">
-          <v-row>
+        <v-col class="pl-1 pr-4" cols="10" sm="8" lg="4">
+          <v-row no-gutters>
             <CreateFormExistingTags @useExistingTags="useExistingTags" />
             <v-text-field
               v-model="item.tagString"
@@ -178,6 +178,12 @@
             label="Funding acknowledgement"
             auto-grow
           />
+        </v-col>
+
+        <v-col v-if="contentType === 'articles'" class="px-4" cols="12">
+          <v-col class="pa-0" cols="10" sm="8" lg="4">
+            <v-text-field v-model="item.doi" label="DOI" />
+          </v-col>
         </v-col>
 
         <v-col v-if="contentType !== 'apps'" class="px-4" cols="12">

@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col class="px-4" cols="10" sm="8" lg="5">
+    <v-col class="pl-1 pr-4" cols="10" sm="8" lg="5">
       <v-row no-gutters>
         <v-col class="shrink">
           <CreateFormExistingAuthors @useExistingAuthors="useExistingAuthors" />

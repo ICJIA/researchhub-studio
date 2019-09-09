@@ -12,16 +12,22 @@
         </v-col>
       </template>
     </v-row>
+
+    <div class="text-center">
+      <AuthorGuideButton />
+    </div>
   </BaseViewLayout>
 </template>
 
 <script>
 import tasks from '@/consts/tasks'
+const AuthorGuideButton = () => import('@/components/AuthorGuideButton')
 const BaseViewLayout = () => import('@/components/BaseViewLayout')
 const HomeTaskCard = () => import('@/components/HomeTaskCard')
 
 export default {
   components: {
+    AuthorGuideButton,
     BaseViewLayout,
     HomeTaskCard
   },
