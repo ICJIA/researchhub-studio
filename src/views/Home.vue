@@ -1,7 +1,9 @@
 <template>
   <BaseViewLayout>
     <div class="text-center py-6">
-      <h1 class="uppercase font-lato bold wide">Choose your task</h1>
+      <h1 class="font-lato font-weight-bold text-uppercase wide">
+        <template>{{ 'Choose your task' }}</template>
+      </h1>
       <p>Permission level: {{ role }}</p>
     </div>
 

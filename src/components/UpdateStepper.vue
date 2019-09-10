@@ -14,14 +14,14 @@
     <template v-slot:stepItem2>
       <div class="text-center greycolor">
         <template>{{ 'Content type: ' }}</template>
-        <span class="capitalize">{{ contentType }}</span>
+        <span class="text-capitalize">{{ contentType }}</span>
       </div>
 
       <template v-if="type === 'post'">
         <v-radio-group
           v-model="status"
           label="Status:"
-          class="capitalize justify-center mt-2 pt-0"
+          class="justify-center text-capitalize mt-2 pt-0"
           row
         >
           <v-radio

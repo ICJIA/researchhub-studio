@@ -7,7 +7,7 @@
     >
       <div class="py-4 text-center">
         <h3>Log in</h3>
-        <span class="large light">with a valid account</span>
+        <span class="font-weight-light large">with a valid account</span>
       </div>
 
       <div class="px-6 pt-4 pb-10">

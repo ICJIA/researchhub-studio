@@ -1,7 +1,7 @@
 <template>
   <BaseToolbar :menu="isLoggedIn" logoPath="./icjia-logo.png">
     <template v-slot:titleExtra>
-      <span class="light"> Studio</span>
+      <span class="font-weight-light"> Studio</span>
     </template>
 
     <template v-slot:toolbarItems v-if="isLoggedIn">

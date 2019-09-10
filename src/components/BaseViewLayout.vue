@@ -5,7 +5,7 @@
     <v-col class="mx-auto font-lato" cols="12" sm="10" lg="8" xl="7">
       <template v-if="page">
         <v-row justify="space-between" no-gutters>
-          <h2 class="bold"><slot name="title"></slot></h2>
+          <h2 class="font-weight-bold"><slot name="title"></slot></h2>
 
           <AuthorGuideButton
             v-if="isAuthor"
