@@ -3,7 +3,7 @@
     <v-row class="mb-4">
       <div class="greycolor">
         <template>{{ 'Content type: ' }}</template>
-        <span class="capitalize">{{ contentType }}</span>
+        <span class="text-capitalize">{{ contentType }}</span>
       </div>
 
       <v-spacer></v-spacer>

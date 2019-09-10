@@ -2,7 +2,7 @@
   <v-col class="mx-auto pa-0" cols="2">
     <v-radio-group v-model="selected" @change="updateContentType">
       <v-radio
-        class="capitalize"
+        class="text-capitalize"
         v-for="contentType in contentTypes"
         :key="contentType"
         :label="contentType"

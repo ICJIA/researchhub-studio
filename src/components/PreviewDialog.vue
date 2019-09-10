@@ -13,7 +13,7 @@
 
     <v-card>
       <v-toolbar class="toolbar">
-        <span class="px-4 wide uppercase">{{ msgTitle }}</span>
+        <span class="px-4 text-uppercase wide">{{ msgTitle }}</span>
 
         <v-spacer></v-spacer>
 
