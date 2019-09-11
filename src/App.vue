@@ -14,8 +14,8 @@
 
 <script>
 import { healthCheck } from '@/services/client.utils'
+import TheToolbar from './components/TheToolbar'
 const ServerError = () => import('./components/ServerError')
-const TheToolbar = () => import('./components/TheToolbar')
 const TheFooter = () => import('./components/TheFooter')
 
 export default {
