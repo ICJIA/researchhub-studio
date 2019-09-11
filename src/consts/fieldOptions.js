@@ -11,7 +11,7 @@ const categoryOptions = [
   'courts',
   'crimes',
   'law enforcement',
-  'victimization',
+  'victims',
   'other'
 ]
 
