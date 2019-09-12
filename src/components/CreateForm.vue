@@ -387,8 +387,8 @@ export default {
     titleToSlug() {
       if (!this.update) {
         this.item.slug = this.item.title
-          .replace(/[^\w\s-]/gi, '')
-          .replace(/\s/gi, '-')
+          .replace(/[\s/]/gi, '-')
+          .replace(/[^\w-]/gi, '')
           .toLowerCase()
       }
     },
