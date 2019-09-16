@@ -133,7 +133,6 @@ export default {
       return this.status === 'submitted'
     },
     msgNoResult() {
-      console.log('Your search')
       return `Your search for "${this.search}" found no results.`
     },
     msgNoData() {
