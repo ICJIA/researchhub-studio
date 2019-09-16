@@ -35,6 +35,8 @@ module.exports = {
 
     if (process.env.NODE_ENV === `production`) {
       config.optimization.splitChunks.chunks = 'all'
+      config.optimization.splitChunks.minSize = 0
+      config.optimization.splitChunks.maxSize = 250000
       config.plugins.push(
         // new BundleAnalyzerPlugin(),
         ...compressionPlugins
