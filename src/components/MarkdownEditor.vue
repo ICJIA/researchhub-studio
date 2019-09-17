@@ -38,11 +38,21 @@
 <script>
 import MarkdownItTexmath from 'markdown-it-texmath'
 
-const md = require('markdown-it')({
+const mdOpts = {
   html: true,
   linkify: true,
   typographer: true
-}).use(require('markdown-it-footnote'))
+}
+
+const mdLinkAttrOpts = {
+  attrs: {
+    target: '_blank'
+  }
+}
+
+const md = require('markdown-it')(mdOpts)
+  .use(require('markdown-it-footnote'))
+  .use(require('markdown-it-link-attributes'), mdLinkAttrOpts)
 
 const loadFromCDN = (tagName, attrs) => {
   const el = document.createElement(tagName)
