@@ -59,13 +59,13 @@
             </v-btn>
 
             <v-btn icon @click="deleteItem(item)">
-              <v-icon color="error">mdi-delete-forever</v-icon>
+              <v-icon color="error">{{ mdiDeleteForever }}</v-icon>
             </v-btn>
           </template>
         </template>
 
         <v-btn v-if="type === 'update'" icon @click="editItem(item)">
-          <v-icon class="greyicon">mdi-pencil</v-icon>
+          <v-icon class="greyicon">{{ mdiPencil }}</v-icon>
         </v-btn>
       </template>
 
@@ -77,6 +77,15 @@
 </template>
 
 <script>
+import {
+  mdiCheck,
+  mdiClose,
+  mdiDeleteForever,
+  mdiEye,
+  mdiMagnify,
+  mdiPencil
+} from '@mdi/js'
+
 const PreviewDialog = () => import('@/components/PreviewDialog')
 
 export default {
@@ -109,6 +118,12 @@ export default {
         }
       ],
       loading: false,
+      mdiCheck,
+      mdiClose,
+      mdiDeleteForever,
+      mdiEye,
+      mdiMagnify,
+      mdiPencil,
       search: ''
     }
   },

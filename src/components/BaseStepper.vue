@@ -22,7 +22,7 @@
         <v-stepper-content :key="`content${step}`" :step="step">
           <v-row align="center">
             <v-btn v-if="stepNum > 1" icon @click="navigateBefore">
-              <v-icon>mdi-chevron-left</v-icon>
+              <v-icon>{{ mdiChevronLeft }}</v-icon>
             </v-btn>
 
             <v-col class="pa-0 mx-12">
@@ -35,7 +35,7 @@
               @click="navigateNext"
               :disabled="itemNotSelected"
             >
-              <v-icon>mdi-chevron-right</v-icon>
+              <v-icon>{{ mdiChevronRight }}</v-icon>
             </v-btn>
           </v-row>
         </v-stepper-content>
@@ -45,12 +45,16 @@
 </template>
 
 <script>
+import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
+
 export default {
   props: {
     stepNumTotal: Number
   },
   data() {
     return {
+      mdiChevronLeft,
+      mdiChevronRight,
       stepNum: 1
     }
   },

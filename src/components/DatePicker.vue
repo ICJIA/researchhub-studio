@@ -13,7 +13,7 @@
         v-on="on"
         v-model="dateLocal"
         label="Date"
-        append-icon="mdi-calendar"
+        :append-icon="mdiCalendar"
         readonly
       />
     </template>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { mdiCalendar } from '@mdi/js'
+
 export default {
   props: {
     date: String
@@ -30,6 +32,7 @@ export default {
   data() {
     return {
       dateLocal: null,
+      mdiCalendar,
       menu: false
     }
   },

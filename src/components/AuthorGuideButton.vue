@@ -1,11 +1,13 @@
 <template>
   <v-btn text :href="href" target="_blank">
-    <v-icon class="small" color="warning">mdi-help-circle</v-icon>
+    <v-icon class="small" color="warning">{{ mdiHelpCircle }}</v-icon>
     <span class="px-1 small">{{ text }}</span>
   </v-btn>
 </template>
 
 <script>
+import { mdiHelpCircle } from '@mdi/js'
+
 export default {
   props: {
     path: {
@@ -15,6 +17,11 @@ export default {
     text: {
       type: String,
       default: 'Go to Author Guide'
+    }
+  },
+  data() {
+    return {
+      mdiHelpCircle
     }
   },
   computed: {
