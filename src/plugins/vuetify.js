@@ -5,6 +5,7 @@ import Vuetify, {
   VNavigationDrawer,
   VSpacer
 } from 'vuetify/lib'
+import { ResearchHubLibIcons } from 'icjia-research-lib'
 
 Vue.use(Vuetify, {
   components: {
@@ -16,5 +17,9 @@ Vue.use(Vuetify, {
 })
 
 export default new Vuetify({
-  theme: { disable: true }
+  theme: { disable: true },
+  icons: {
+    iconfont: 'mdiSvg',
+    values: { ...ResearchHubLibIcons }
+  }
 })

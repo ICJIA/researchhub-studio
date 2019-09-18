@@ -4,7 +4,7 @@
       <v-tooltip top>
         <template v-slot:activator="{ on: onTooltip }">
           <v-btn class="mx-0 mt-4" text icon v-on="onDialog">
-            <v-icon v-on="onTooltip">mdi-magnify-plus-outline</v-icon>
+            <v-icon v-on="onTooltip">{{ mdiMagnifyPlusOutline }}</v-icon>
           </v-btn>
         </template>
         <span class="font-lato">Use existing authors</span>
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { mdiMagnifyPlusOutline } from '@mdi/js'
 import { fetchItemsList as fetchAuthorsList } from '@/services/client.authors'
 
 export default {
@@ -42,7 +43,8 @@ export default {
     return {
       dialog: false,
       authorOptions: [],
-      authors: []
+      authors: [],
+      mdiMagnifyPlusOutline
     }
   },
   async created() {

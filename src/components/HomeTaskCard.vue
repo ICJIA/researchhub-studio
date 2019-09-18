@@ -4,7 +4,7 @@
       <v-row align="center" justify="center" class="fill-height">
         <span class="large text-uppercase wide">{{ task.title }}</span>
         <span v-if="task.adminOnly" class="pl-2">
-          <v-icon small color="error">mdi-alert</v-icon>
+          <v-icon small color="error">{{ mdiAlert }}</v-icon>
           <span class="small admin-only">Admin only</span>
         </span>
       </v-row>
@@ -13,9 +13,16 @@
 </template>
 
 <script>
+import { mdiAlert } from '@mdi/js'
+
 export default {
   props: {
     task: Object
+  },
+  data() {
+    return {
+      mdiAlert
+    }
   }
 }
 </script>
