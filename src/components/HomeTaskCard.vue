@@ -4,7 +4,7 @@
       <v-row align="center" justify="center" class="fill-height">
         <span class="large text-uppercase wide">{{ task.title }}</span>
         <span v-if="task.adminOnly" class="pl-2">
-          <v-icon small color="error">{{ mdiAlert }}</v-icon>
+          <v-icon small color="error">{{ $options.static.mdiAlert }}</v-icon>
           <span class="small admin-only">Admin only</span>
         </span>
       </v-row>
@@ -19,10 +19,8 @@ export default {
   props: {
     task: Object
   },
-  data() {
-    return {
-      mdiAlert
-    }
+  static: {
+    mdiAlert
   }
 }
 </script>

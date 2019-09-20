@@ -35,7 +35,7 @@
             v-model="item.timeperiodType"
             label="Time period type"
             clearable
-            :items="timeperiodOptions"
+            :items="$options.static.timeperiodOptions"
           />
         </v-col>
       </v-row>
@@ -47,7 +47,7 @@
           v-model="item.unit"
           label="Unit"
           clearable
-          :items="unitOptions"
+          :items="$options.static.unitOptions"
         />
       </v-col>
     </v-col>
@@ -101,13 +101,15 @@ export default {
   },
   data() {
     return {
-      isAdmin: this.$store.state.auth.role === 'Administrator',
-      timeperiodOptions,
-      unitOptions
+      isAdmin: this.$store.state.auth.role === 'Administrator'
     }
   },
   created() {
     this.item.project = this.$store.state.auth.role === 'Author'
+  },
+  static: {
+    timeperiodOptions,
+    unitOptions
   }
 }
 </script>

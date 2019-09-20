@@ -39,7 +39,7 @@
         <p class="pt-2 greycolor">Main file type</p>
         <v-radio-group v-model="item.mainfiletype" row>
           <v-radio
-            v-for="option in mainfiletypeOptions"
+            v-for="option in $options.static.mainfiletypeOptions"
             :key="option"
             :label="option"
             :value="option"
@@ -100,14 +100,16 @@ export default {
   },
   data() {
     return {
-      hasFiles: this.mainfiletype !== null,
-      mainfiletypeOptions
+      hasFiles: this.mainfiletype !== null
     }
   },
   methods: {
     useExistingAuthors(e) {
       this.$emit('useExistingAuthors', e)
     }
+  },
+  static: {
+    mainfiletypeOptions
   }
 }
 </script>

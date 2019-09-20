@@ -15,7 +15,7 @@
       >
         <template v-slot:title>{{ 'Are you sure?' }}</template>
 
-        <template v-slot:main>{{ msgWarning }}</template>
+        <template v-slot:main>{{ $options.static.msgWarning }}</template>
       </BaseButtonDialog>
 
       <BaseButtonDialog
@@ -31,7 +31,9 @@
         <template v-slot:main>
           <template>{{ msgMain }}</template>
           <br />
-          <template v-if="formType === 'create'">{{ msgCreate }}</template>
+          <template v-if="formType === 'create'">{{
+            $options.static.msgCreate
+          }}</template>
         </template>
       </BaseButtonDialog>
     </v-row>
@@ -53,13 +55,7 @@ export default {
   },
   data() {
     return {
-      stepNum: 1,
-      msgCreate:
-        'You will be able to update or submit this draft later.' +
-        ' When you submit a draft, your submission will get a preview link.' +
-        ' You may publish your submission once approved.',
-      msgWarning:
-        'You will lose the saved work. Are you sure to proceed and reset?'
+      stepNum: 1
     }
   },
   computed: {
@@ -69,6 +65,14 @@ export default {
     msgMain() {
       return `Make sure to preview the content before you ${this.formType} it!`
     }
+  },
+  static: {
+    msgCreate:
+      'You will be able to update or submit this draft later.' +
+      ' When you submit a draft, your submission will get a preview link.' +
+      ' You may publish your submission once approved.',
+    msgWarning:
+      'You will lose the saved work. Are you sure to proceed and reset?'
   }
 }
 </script>

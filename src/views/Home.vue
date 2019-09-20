@@ -8,7 +8,7 @@
     </div>
 
     <v-row class="mb-12" justify="center">
-      <template v-for="(task, i) in tasks">
+      <template v-for="(task, i) in $options.static.tasks">
         <v-col :key="i" v-if="checkPermission(task)" cols="12" sm="6" lg="4">
           <HomeTaskCard :task="task" />
         </v-col>
@@ -34,9 +34,6 @@ export default {
     HomeTaskCard
   },
   computed: {
-    tasks() {
-      return tasks
-    },
     role() {
       return this.$store.state.auth.role
     }
@@ -49,6 +46,9 @@ export default {
         return !card.adminOnly
       }
     }
+  },
+  static: {
+    tasks
   }
 }
 </script>

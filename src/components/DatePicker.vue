@@ -13,7 +13,7 @@
         v-on="on"
         v-model="dateLocal"
         label="Date"
-        :append-icon="mdiCalendar"
+        :append-icon="$options.static.mdiCalendar"
         readonly
       />
     </template>
@@ -32,7 +32,6 @@ export default {
   data() {
     return {
       dateLocal: null,
-      mdiCalendar,
       menu: false
     }
   },
@@ -47,6 +46,9 @@ export default {
       this.menu = false
       this.$emit('update:date', e)
     }
+  },
+  static: {
+    mdiCalendar
   }
 }
 </script>

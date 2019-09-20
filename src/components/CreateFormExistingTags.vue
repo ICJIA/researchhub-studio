@@ -4,7 +4,9 @@
       <v-tooltip top>
         <template v-slot:activator="{ on: onTooltip }">
           <v-btn class="mx-0 mt-4" text icon v-on="onDialog">
-            <v-icon v-on="onTooltip">{{ mdiMagnifyPlusOutline }}</v-icon>
+            <v-icon v-on="onTooltip">{{
+              $options.static.mdiMagnifyPlusOutline
+            }}</v-icon>
           </v-btn>
         </template>
         <span class="font-lato">Use existing tags</span>
@@ -42,7 +44,6 @@ export default {
   data() {
     return {
       dialog: false,
-      mdiMagnifyPlusOutline,
       tagOptions: [],
       tags: []
     }
@@ -59,6 +60,9 @@ export default {
       this.$emit('useExistingTags', this.tags.join(', '))
       this.closeDialog()
     }
+  },
+  static: {
+    mdiMagnifyPlusOutline
   }
 }
 </script>

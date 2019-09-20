@@ -45,7 +45,7 @@
             label="Categories"
             clearable
             multiple
-            :items="categoryOptions"
+            :items="$options.static.categoryOptions"
             :rules="[rules.required]"
           />
         </v-col>
@@ -75,7 +75,9 @@
             :update="update"
           >
             <template v-slot:title>{{ 'Image' }}</template>
-            <template v-slot:message>{{ dropzoneMsgImage }}</template>
+            <template v-slot:message>{{
+              $options.static.dropzoneMsgImage
+            }}</template>
           </MyDropzone>
         </template>
       </CreateFormAppFields>
@@ -95,7 +97,9 @@
             :update="update"
           >
             <template v-slot:title>{{ 'Main file' }}</template>
-            <template v-slot:message>{{ dropzoneMsgPDF }}</template>
+            <template v-slot:message>{{
+              $options.static.dropzoneMsgPDF
+            }}</template>
           </MyDropzone>
         </template>
 
@@ -106,7 +110,9 @@
             :update="update"
           >
             <template v-slot:title>{{ 'Extra file' }}</template>
-            <template v-slot:message>{{ dropzoneMsgFile }}</template>
+            <template v-slot:message>{{
+              $options.static.dropzoneMsgFile
+            }}</template>
           </MyDropzone>
         </template>
 
@@ -118,7 +124,9 @@
             :update="update"
           >
             <template v-slot:title>{{ 'Splash image' }}</template>
-            <template v-slot:message>{{ dropzoneMsgImage }}</template>
+            <template v-slot:message>{{
+              $options.static.dropzoneMsgImage
+            }}</template>
           </MyDropzone>
         </template>
 
@@ -131,7 +139,9 @@
             :update="update"
           >
             <template v-slot:title>{{ 'Figures' }}</template>
-            <template v-slot:message>{{ dropzoneMsgImages }}</template>
+            <template v-slot:message>{{
+              $options.static.dropzoneMsgImages
+            }}</template>
           </MyDropzone>
         </template>
 
@@ -157,7 +167,9 @@
             :update="update"
           >
             <template v-slot:title>{{ 'Data file' }}</template>
-            <template v-slot:message>{{ dropzoneMsgCsv }}</template>
+            <template v-slot:message>{{
+              $options.static.dropzoneMsgCsv
+            }}</template>
           </MyDropzone>
         </template>
       </CreateFormDatasetFields>
@@ -299,10 +311,8 @@ export default {
     return {
       appOptions: [],
       articleOptions: [],
-      categoryOptions,
       datasetOptions: [],
       dropzoneList: {},
-      ...dropzoneMsgs,
       formKey: 0,
       item: { ...initItem },
       previewKey: 0,
@@ -399,6 +409,10 @@ export default {
       const { authorString } = this.item
       this.item.authorString = authorString ? `${authorString}\n${e}` : e
     }
+  },
+  static: {
+    categoryOptions,
+    ...dropzoneMsgs
   }
 }
 </script>

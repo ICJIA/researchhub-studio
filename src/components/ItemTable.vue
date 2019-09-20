@@ -4,7 +4,7 @@
       <v-col cols="6" lg="4">
         <v-text-field
           v-model="search"
-          append-icon="mdi-magnify"
+          :append-icon="$options.static.mdiMagnify"
           label="Search"
           hide-details
           single-line
@@ -16,7 +16,7 @@
     <v-data-table
       v-if="items"
       class="item-table"
-      :headers="headers"
+      :headers="$options.static.headers"
       :items="items"
       :search="search"
       sort-by="date"
@@ -34,38 +34,40 @@
           :status="status"
         >
           <v-btn icon @click="dispatchAction('fetchItem', { id: item._id })">
-            <v-icon class="greyicon">mdi-eye</v-icon>
+            <v-icon class="greyicon">{{ $options.static.mdiEye }}</v-icon>
           </v-btn>
         </PreviewDialog>
         <template v-if="type === 'manage'">
           <template v-if="isStatusPublished && !isRoleAuthor">
             <v-btn icon @click="updateToSubmitted(item)">
-              <v-icon class="greyicon">mdi-close</v-icon>
+              <v-icon class="greyicon">{{ $options.static.mdiClose }}</v-icon>
             </v-btn>
           </template>
 
           <template v-if="isStatusSubmitted">
             <v-btn icon @click="updateToPublished(item)">
-              <v-icon class="greyicon">mdi-check</v-icon>
+              <v-icon class="greyicon">{{ $options.static.mdiCheck }}</v-icon>
             </v-btn>
             <v-btn icon @click="updateToCreated(item)">
-              <v-icon class="greyicon">mdi-close</v-icon>
+              <v-icon class="greyicon">{{ $options.static.mdiClose }}</v-icon>
             </v-btn>
           </template>
 
           <template v-if="isStatusCreated">
             <v-btn icon @click="updateToSubmitted(item)">
-              <v-icon class="greyicon">mdi-check</v-icon>
+              <v-icon class="greyicon">{{ $options.static.mdiCheck }}</v-icon>
             </v-btn>
 
             <v-btn icon @click="deleteItem(item)">
-              <v-icon color="error">{{ mdiDeleteForever }}</v-icon>
+              <v-icon color="error">{{
+                $options.static.mdiDeleteForever
+              }}</v-icon>
             </v-btn>
           </template>
         </template>
 
         <v-btn v-if="type === 'update'" icon @click="editItem(item)">
-          <v-icon class="greyicon">{{ mdiPencil }}</v-icon>
+          <v-icon class="greyicon">{{ $options.static.mdiPencil }}</v-icon>
         </v-btn>
       </template>
 
@@ -99,31 +101,7 @@ export default {
   },
   data() {
     return {
-      headers: [
-        {
-          text: 'Date',
-          align: 'left',
-          value: 'date'
-        },
-        {
-          text: 'Title',
-          align: 'left',
-          value: 'title'
-        },
-        {
-          text: 'Actions',
-          align: 'right',
-          value: 'action',
-          sortable: false
-        }
-      ],
       loading: false,
-      mdiCheck,
-      mdiClose,
-      mdiDeleteForever,
-      mdiEye,
-      mdiMagnify,
-      mdiPencil,
       search: ''
     }
   },
@@ -242,6 +220,32 @@ export default {
 
       this.handleUpdate(res, msgSuccess, msgFailure)
     }
+  },
+  static: {
+    headers: [
+      {
+        text: 'Date',
+        align: 'left',
+        value: 'date'
+      },
+      {
+        text: 'Title',
+        align: 'left',
+        value: 'title'
+      },
+      {
+        text: 'Actions',
+        align: 'right',
+        value: 'action',
+        sortable: false
+      }
+    ],
+    mdiCheck,
+    mdiClose,
+    mdiDeleteForever,
+    mdiEye,
+    mdiMagnify,
+    mdiPencil
   }
 }
 </script>

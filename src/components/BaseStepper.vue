@@ -22,7 +22,7 @@
         <v-stepper-content :key="`content${step}`" :step="step">
           <v-row align="center">
             <v-btn v-if="stepNum > 1" icon @click="navigateBefore">
-              <v-icon>{{ mdiChevronLeft }}</v-icon>
+              <v-icon>{{ $options.static.mdiChevronLeft }}</v-icon>
             </v-btn>
 
             <v-col class="pa-0 mx-12">
@@ -35,7 +35,7 @@
               @click="navigateNext"
               :disabled="itemNotSelected"
             >
-              <v-icon>{{ mdiChevronRight }}</v-icon>
+              <v-icon>{{ $options.static.mdiChevronRight }}</v-icon>
             </v-btn>
           </v-row>
         </v-stepper-content>
@@ -53,8 +53,6 @@ export default {
   },
   data() {
     return {
-      mdiChevronLeft,
-      mdiChevronRight,
       stepNum: 1
     }
   },
@@ -89,6 +87,10 @@ export default {
         to
       })
     }
+  },
+  static: {
+    mdiChevronLeft,
+    mdiChevronRight
   }
 }
 </script>

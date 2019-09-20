@@ -25,7 +25,7 @@
           row
         >
           <v-radio
-            v-for="status in statusOptions"
+            v-for="status in $options.static.statusOptions"
             :key="status"
             :label="status"
             :value="status"
@@ -85,8 +85,7 @@ export default {
   },
   data() {
     return {
-      status: 'submitted',
-      statusOptions
+      status: 'submitted'
     }
   },
   watch: {
@@ -99,6 +98,9 @@ export default {
     navigateBefore(step) {
       if (step.to === 2) this.resetItem()
     }
+  },
+  static: {
+    statusOptions
   }
 }
 </script>
