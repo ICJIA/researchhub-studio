@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <v-row no-gutters>
     <v-col cols="12" lg="6">
       <span class="greycolor small">
@@ -13,8 +14,8 @@
       <v-textarea
         id="editor"
         ref="myEditor"
-        height="400"
         v-model="markdownLocal"
+        height="400"
         filled
         no-resize
         @scroll="syncScrollEditor"
@@ -28,8 +29,8 @@
       <div
         id="preview"
         ref="myPreview"
-        v-html="compiledMarkdown"
         @scroll="syncScrollPreview"
+        v-html="compiledMarkdown"
       ></div>
     </v-col>
   </v-row>
@@ -76,7 +77,10 @@ function syncScroll(from, to) {
 
 export default {
   props: {
-    markdown: String
+    markdown: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {

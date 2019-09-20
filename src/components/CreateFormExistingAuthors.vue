@@ -17,12 +17,12 @@
       <v-divider></v-divider>
       <v-card-text style="height: 300px;">
         <v-checkbox
-          v-model="authors"
           v-for="author in authorOptions"
           :key="author"
+          v-model="authors"
+          hide-details
           :label="author"
           :value="author"
-          hide-details
         >
         </v-checkbox>
       </v-card-text>

@@ -1,18 +1,18 @@
 <template>
-  <BaseStepper :stepNumTotal="2" @stepper-navigate-before="resetItem">
+  <BaseStepper :step-num-total="2" @stepper-navigate-before="resetItem">
     <template #stepHeader1>{{ 'Select content type' }}</template>
 
     <template #stepHeader2>{{ 'Post' }}</template>
 
     <template #stepItem1>
       <ContentTypeSelector
-        :contentTypes="contentTypes"
-        :contentType.sync="contentType"
+        :content-types="contentTypes"
+        :content-type.sync="contentType"
       />
     </template>
 
     <template #stepItem2>
-      <PostForm :contentType="contentType" :update="false" status="created" />
+      <PostForm :content-type="contentType" status="created" :update="false" />
     </template>
   </BaseStepper>
 </template>

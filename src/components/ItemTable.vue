@@ -5,8 +5,8 @@
         <v-text-field
           v-model="search"
           :append-icon="$options.static.mdiMagnify"
-          label="Search"
           hide-details
+          label="Search"
           single-line
           width="300"
         ></v-text-field>
@@ -26,9 +26,9 @@
 
       <template #item.action="{ item }">
         <PreviewDialog
-          :contentType="contentType"
-          :icon="true"
           :id="item._id"
+          :content-type="contentType"
+          :icon="true"
           :status="status"
         >
           <v-btn icon @click="dispatchAction('fetchItem', { id: item._id })">
@@ -93,9 +93,18 @@ export default {
     PreviewDialog
   },
   props: {
-    contentType: String,
-    status: String,
-    type: String
+    contentType: {
+      type: String,
+      default: ''
+    },
+    status: {
+      type: String,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {

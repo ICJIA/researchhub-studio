@@ -1,8 +1,8 @@
 <template>
   <BaseForm
-    :contentType="contentType"
     :key="formKey"
-    :formType="update ? 'update' : 'create'"
+    :content-type="contentType"
+    :form-type="update ? 'update' : 'create'"
     @form-main="onMain"
     @form-reset="onReset"
   >
@@ -71,7 +71,7 @@
         <template #image>
           <MyDropzone
             ref="DropzoneImage"
-            fileTypes=".jpg, .jpeg, .png"
+            file-types=".jpg, .jpeg, .png"
             :update="update"
           >
             <template #title>{{ 'Image' }}</template>
@@ -90,8 +90,8 @@
         <template #mainfile>
           <MyDropzone
             ref="DropzoneMainfile"
-            fileTypes=".pdf"
-            :maxFilesize="5"
+            file-types=".pdf"
+            :max-filesize="5"
             :update="update"
           >
             <template #title>{{ 'Main file' }}</template>
@@ -102,7 +102,7 @@
         <template #extrafile>
           <MyDropzone
             ref="DropzoneExtrafile"
-            :maxFilesize="10"
+            :max-filesize="10"
             :update="update"
           >
             <template #title>{{ 'Extra file' }}</template>
@@ -113,8 +113,8 @@
         <template #splash>
           <MyDropzone
             ref="DropzoneSplash"
-            fileTypes=".jpg, .jpeg, .png"
-            :maxFilesize="0.5"
+            file-types=".jpg, .jpeg, .png"
+            :max-filesize="0.5"
             :update="update"
           >
             <template #title>{{ 'Splash image' }}</template>
@@ -125,9 +125,9 @@
         <template #figures>
           <MyDropzone
             ref="DropzoneImages"
-            fileTypes=".jpg, .jpeg, .png"
-            :maxFilesize="0.1"
-            :multipleFiles="true"
+            file-types=".jpg, .jpeg, .png"
+            :max-filesize="0.1"
+            :multiple-files="true"
             :update="update"
           >
             <template #title>{{ 'Figures' }}</template>
@@ -154,8 +154,8 @@
         <template #datafile>
           <MyDropzone
             ref="DropzoneDatafile"
-            fileTypes=".csv"
-            :maxFilesize="100"
+            file-types=".csv"
+            :max-filesize="100"
             :update="update"
           >
             <template #title>{{ 'Data file' }}</template>
@@ -235,7 +235,7 @@
       <PreviewDialog
         v-if="saved"
         :key="previewKey"
-        :contentType="contentType"
+        :content-type="contentType"
         :icon="false"
         :local="true"
         status="created"
@@ -280,8 +280,7 @@ const PreviewDialog = () => import('@/components/PreviewDialog')
 const initItem = { ...emptyItem }
 
 export default {
-  name: 'createform',
-  mixins: [formMixin],
+  name: 'Createform',
   components: {
     BaseForm,
     CreateFormAppFields,
@@ -293,8 +292,12 @@ export default {
     MyDropzone,
     PreviewDialog
   },
+  mixins: [formMixin],
   props: {
-    contentType: String,
+    contentType: {
+      type: String,
+      default: ''
+    },
     update: Boolean
   },
   data() {

@@ -89,14 +89,20 @@ export default {
   components: {
     CreateFormExistingAuthors
   },
-  props: {
-    item: Object,
-    rules: Object,
-    update: Boolean
-  },
   model: {
     prop: 'item',
     event: 'change'
+  },
+  props: {
+    item: {
+      type: Object,
+      default: null
+    },
+    rules: {
+      type: Object,
+      default: null
+    },
+    update: Boolean
   },
   data() {
     return {

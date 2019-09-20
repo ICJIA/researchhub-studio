@@ -1,11 +1,11 @@
 <template>
-  <BaseStepper :stepNumTotal="3" @stepper-navigate-before="navigateBefore">
+  <BaseStepper :step-num-total="3" @stepper-navigate-before="navigateBefore">
     <template #stepHeader1>{{ 'Select content type' }}</template>
 
     <template #stepItem1>
       <ContentTypeSelector
-        :contentTypes="contentTypes"
-        :contentType.sync="contentType"
+        :content-types="contentTypes"
+        :content-type.sync="contentType"
       />
     </template>
 
@@ -25,18 +25,18 @@
           row
         >
           <v-radio
-            v-for="status in $options.static.statusOptions"
-            :key="status"
-            :label="status"
-            :value="status"
+            v-for="statusOption in $options.static.statusOptions"
+            :key="statusOption"
+            :label="statusOption"
+            :value="statusOption"
           ></v-radio>
         </v-radio-group>
 
-        <ItemTable type="update" :contentType="contentType" :status="status" />
+        <ItemTable type="update" :content-type="contentType" :status="status" />
       </template>
 
       <template v-if="type === 'create'">
-        <ItemTable type="update" :contentType="contentType" status="created" />
+        <ItemTable type="update" :content-type="contentType" status="created" />
       </template>
     </template>
 
@@ -46,13 +46,13 @@
       <v-col>
         <CreateForm
           v-if="type === 'create'"
-          :contentType="contentType"
+          :content-type="contentType"
           :update="true"
         />
 
         <PostForm
           v-if="type === 'post'"
-          :contentType="contentType"
+          :content-type="contentType"
           :status="status"
           :update="true"
         />
@@ -81,7 +81,10 @@ export default {
   },
   mixins: [stepperMixin],
   props: {
-    type: String
+    type: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {

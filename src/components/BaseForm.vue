@@ -9,8 +9,8 @@
       <v-spacer></v-spacer>
 
       <BaseButtonDialog
-        btnName="reset"
-        btnType="error"
+        btn-name="reset"
+        btn-type="error"
         @base-event="$emit('form-reset')"
       >
         <template #title>{{ 'Are you sure?' }}</template>
@@ -19,9 +19,9 @@
       </BaseButtonDialog>
 
       <BaseButtonDialog
-        btnType="primary"
-        :btnName="formType"
-        :btnCondition="itemReady"
+        :btn-condition="itemReady"
+        :btn-name="formType"
+        btn-type="primary"
         @base-event="$emit('form-main')"
       >
         <template #title>
@@ -50,8 +50,14 @@ export default {
     BaseButtonDialog
   },
   props: {
-    contentType: String,
-    formType: String
+    contentType: {
+      type: String,
+      default: ''
+    },
+    formType: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {

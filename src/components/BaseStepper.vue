@@ -11,8 +11,8 @@
         </v-stepper-step>
 
         <v-divider
-          :key="`divider${step}`"
           v-if="step < stepNumTotal"
+          :key="`divider${step}`"
         ></v-divider>
       </template>
     </v-stepper-header>
@@ -32,8 +32,8 @@
             <v-btn
               v-if="stepNum < stepNumTotal"
               icon
-              @click="navigateNext"
               :disabled="itemNotSelected"
+              @click="navigateNext"
             >
               <v-icon>{{ $options.static.mdiChevronRight }}</v-icon>
             </v-btn>
@@ -49,7 +49,10 @@ import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
 
 export default {
   props: {
-    stepNumTotal: Number
+    stepNumTotal: {
+      type: Number,
+      default: 1
+    }
   },
   data() {
     return {

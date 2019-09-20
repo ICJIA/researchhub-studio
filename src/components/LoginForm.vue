@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" class="font-lato" v-model="valid" lazy-validation>
+  <v-form ref="form" v-model="valid" class="font-lato" lazy-validation>
     <v-sheet
       class="elevation-24"
       :class="loginError ? 'login-error' : ''"
@@ -12,11 +12,11 @@
 
       <div class="px-6 pt-4 pb-10">
         <v-text-field
-          v-model="username"
-          label="Username"
-          class="input-group--focused"
-          :rules="[rules.required]"
           ref="username"
+          v-model="username"
+          class="input-group--focused"
+          label="Username"
+          :rules="[rules.required]"
           outlined
           @keyup.enter="login"
         />
@@ -50,9 +50,6 @@
 
 <script>
 export default {
-  async mounted() {
-    await this.$nextTick(this.$refs.username.focus)
-  },
   data() {
     return {
       username: '',
@@ -64,6 +61,9 @@ export default {
       },
       valid: true
     }
+  },
+  async mounted() {
+    await this.$nextTick(this.$refs.username.focus)
   },
   methods: {
     login() {

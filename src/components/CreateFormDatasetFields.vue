@@ -3,18 +3,18 @@
     <v-col class="px-4" cols="10" sm="8" lg="4">
       <v-checkbox
         v-model="item.project"
-        label="Project data?"
         :disabled="!isAdmin"
+        label="Project data?"
       />
     </v-col>
 
     <v-col class="px-4" cols="10" sm="8" lg="4">
       <v-textarea
         v-model="item.sourceString"
-        label="Sources"
-        hint="Format: title | url; Separate sources with new lines"
-        rows="3"
         auto-grow
+        hint="Format: title | url; Separate sources with new lines"
+        label="Sources"
+        rows="3"
         :rules="[rules.required]"
       />
     </v-col>
@@ -24,8 +24,8 @@
         <v-col class="px-4" cols="10" sm="8" lg="4">
           <v-text-field
             v-model="item.timeperiodString"
-            label="Time period"
             hint="Format: yyyy-yyyy"
+            label="Time period"
             :rules="[rules.timeperiod]"
           />
         </v-col>
@@ -33,9 +33,9 @@
         <v-col class="px-4" cols="10" sm="8" lg="4">
           <v-select
             v-model="item.timeperiodType"
-            label="Time period type"
             clearable
             :items="$options.static.timeperiodOptions"
+            label="Time period type"
           />
         </v-col>
       </v-row>
@@ -45,9 +45,9 @@
       <v-col class="px-4" cols="10" sm="8" lg="4">
         <v-select
           v-model="item.unit"
-          label="Unit"
           clearable
           :items="$options.static.unitOptions"
+          label="Unit"
         />
       </v-col>
     </v-col>
@@ -59,8 +59,8 @@
     <v-col class="px-4" cols="10" sm="8" lg="5">
       <v-textarea
         v-model="item.description"
-        label="Description"
         auto-grow
+        label="Description"
         :rules="[rules.required]"
       />
     </v-col>
@@ -68,18 +68,18 @@
     <v-col class="px-4" cols="10" sm="8" lg="5">
       <v-textarea
         v-model="item.noteString"
-        label="Notes"
-        hint="Separate notes with new lines"
         auto-grow
+        hint="Separate notes with new lines"
+        label="Notes"
       />
     </v-col>
 
     <v-col class="px-4" cols="10" sm="8" lg="5">
       <v-textarea
         v-model="item.variableString"
-        label="Variables"
-        hint="Format: name | type | definition | values; Separate rows with new lines"
         auto-grow
+        hint="Format: name | type | definition | values; Separate rows with new lines"
+        label="Variables"
         :rules="[rules.required]"
       />
     </v-col>
@@ -90,14 +90,20 @@
 import { timeperiodOptions, unitOptions } from '@/consts/fieldOptions'
 
 export default {
-  props: {
-    item: Object,
-    rules: Object,
-    update: Boolean
-  },
   model: {
     prop: 'item',
     event: 'change'
+  },
+  props: {
+    item: {
+      type: Object,
+      default: null
+    },
+    rules: {
+      type: Object,
+      default: null
+    },
+    update: Boolean
   },
   data() {
     return {

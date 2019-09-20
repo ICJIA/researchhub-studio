@@ -1,10 +1,10 @@
 <template>
-  <BaseToolbar :menu="isLoggedIn" logoPath="/icjia-logo.png">
+  <BaseToolbar :menu="isLoggedIn" logo-path="/icjia-logo.png">
     <template #titleExtra>
       <span class="font-weight-light"> Studio</span>
     </template>
 
-    <template #toolbarItems v-if="isLoggedIn">
+    <template v-if="isLoggedIn" #toolbarItems>
       <v-btn v-for="(view, i) in views" :key="i" :to="`/${view.path}`" text>
         <v-icon v-if="/post/.test(view.name)" color="error">{{
           $options.static.mdiAlert
@@ -15,7 +15,7 @@
       <v-btn color="primary" text @click="logout">log out</v-btn>
     </template>
 
-    <template #toolbarDrawerItems v-if="isLoggedIn">
+    <template v-if="isLoggedIn" #toolbarDrawerItems>
       <v-list-item v-for="(view, i) in views" :key="i" :to="`/${view.path}`">
         <v-icon v-if="/post/.test(view.name)" color="error">{{
           $options.static.mdiAlert

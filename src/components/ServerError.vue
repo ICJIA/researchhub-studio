@@ -3,7 +3,7 @@
     <BaseViewTitle page="Error" />
 
     <div class="error-page">
-      <v-icon x-large color="error">{{
+      <v-icon color="error" x-large>{{
         $options.static.mdiCloseCircle
       }}</v-icon>
       <h1 class="pb-4">Sorry, something went wrong</h1>

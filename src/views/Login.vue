@@ -1,6 +1,6 @@
 <template>
   <div class="fill-height" style="background-color:#466c8c;">
-    <v-row class="fill-height" justify="center" align="center">
+    <v-row class="fill-height" align="center" justify="center">
       <login-form />
     </v-row>
   </div>

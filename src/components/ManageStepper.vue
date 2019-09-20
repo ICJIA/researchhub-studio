@@ -1,11 +1,11 @@
 <template>
-  <BaseStepper :stepNumTotal="2" @stepper-navigate-before="resetItem">
+  <BaseStepper :step-num-total="2" @stepper-navigate-before="resetItem">
     <template #stepHeader1>{{ 'Select content type' }}</template>
 
     <template #stepItem1>
       <ContentTypeSelector
-        :contentTypes="contentTypes"
-        :contentType.sync="contentType"
+        :content-types="contentTypes"
+        :content-type.sync="contentType"
       />
     </template>
 
@@ -19,19 +19,19 @@
 
       <v-radio-group
         v-model="status"
-        label="Status:"
         class="justify-center text-capitalize mt-2 pt-0"
+        label="Status:"
         row
       >
         <v-radio
-          v-for="status in $options.static.statusOptions"
-          :key="status"
-          :label="status"
-          :value="status"
+          v-for="statusOption in $options.static.statusOptions"
+          :key="statusOption"
+          :label="statusOption"
+          :value="statusOption"
         ></v-radio>
       </v-radio-group>
 
-      <ItemTable type="manage" :contentType="contentType" :status="status" />
+      <ItemTable :content-type="contentType" :status="status" type="manage" />
     </template>
   </BaseStepper>
 </template>
@@ -52,7 +52,10 @@ export default {
   },
   mixins: [stepperMixin],
   props: {
-    type: String
+    type: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {

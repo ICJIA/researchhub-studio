@@ -17,12 +17,12 @@
       <v-divider></v-divider>
       <v-card-text style="height: 300px;">
         <v-checkbox
-          v-model="tags"
           v-for="tag in tagOptions"
           :key="tag"
+          v-model="tags"
+          hide-details
           :label="tag"
           :value="tag"
-          hide-details
         >
         </v-checkbox>
       </v-card-text>

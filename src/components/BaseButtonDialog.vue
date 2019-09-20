@@ -35,8 +35,14 @@
 <script>
 export default {
   props: {
-    btnName: String,
-    btnType: String,
+    btnName: {
+      type: String,
+      default: ''
+    },
+    btnType: {
+      type: String,
+      default: ''
+    },
     btnCondition: {
       type: Boolean,
       default: true

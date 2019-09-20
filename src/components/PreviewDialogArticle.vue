@@ -1,10 +1,10 @@
 <template>
   <div>
     <ArticleView
-      id="article-view"
       v-if="view"
-      :item="item"
+      id="article-view"
       :downloader="nodownloader"
+      :item="item"
       :preview="true"
     />
 
@@ -24,7 +24,10 @@ export default {
     ArticleView
   },
   props: {
-    item: Object,
+    item: {
+      type: Object,
+      default: null
+    },
     view: Boolean
   },
   methods: {

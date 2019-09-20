@@ -1,5 +1,5 @@
 <template>
-  <v-btn text :href="href" target="_blank">
+  <v-btn :href="href" text target="_blank">
     <v-icon class="small" color="warning">{{
       $options.static.mdiHelpCircle
     }}</v-icon>

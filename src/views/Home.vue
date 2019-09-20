@@ -9,7 +9,7 @@
 
     <v-row class="mb-12" justify="center">
       <template v-for="(task, i) in $options.static.tasks">
-        <v-col :key="i" v-if="checkPermission(task)" cols="12" sm="6" lg="4">
+        <v-col v-if="checkPermission(task)" :key="i" cols="12" sm="6" lg="4">
           <HomeTaskCard :task="task" />
         </v-col>
       </template>

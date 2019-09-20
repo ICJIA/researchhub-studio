@@ -19,7 +19,10 @@ import { mdiChevronRight } from '@mdi/js'
 
 export default {
   props: {
-    page: String
+    page: {
+      type: String,
+      default: null
+    }
   },
   static: {
     mdiChevronRight

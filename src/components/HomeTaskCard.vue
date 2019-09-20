@@ -1,7 +1,7 @@
 <template>
   <router-link :to="`/${task.path}`">
-    <v-card class="ma-2" hover height="150">
-      <v-row align="center" justify="center" class="fill-height">
+    <v-card class="ma-2" height="150" hover>
+      <v-row class="fill-height" align="center" justify="center">
         <span class="large text-uppercase wide">{{ task.title }}</span>
         <span v-if="task.adminOnly" class="pl-2">
           <v-icon small color="error">{{ $options.static.mdiAlert }}</v-icon>
@@ -17,7 +17,10 @@ import { mdiAlert } from '@mdi/js'
 
 export default {
   props: {
-    task: Object
+    task: {
+      type: Object,
+      default: null
+    }
   },
   static: {
     mdiAlert
