@@ -1,8 +1,8 @@
 <template>
   <BaseViewLayout>
-    <template v-slot:title>{{ 'Post update' }}</template>
+    <template #title>{{ 'Post update' }}</template>
 
-    <template v-slot:description>
+    <template #description>
       <template>{{ 'Post updates to existing items.' }}</template>
       <span class="greycolor ml-4">
         <v-icon color="error">{{ $options.static.mdiAlert }}</v-icon>

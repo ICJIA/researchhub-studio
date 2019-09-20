@@ -1,17 +1,17 @@
 <template>
   <BaseStepper :stepNumTotal="3" @stepper-navigate-before="navigateBefore">
-    <template v-slot:stepHeader1>{{ 'Select content type' }}</template>
+    <template #stepHeader1>{{ 'Select content type' }}</template>
 
-    <template v-slot:stepItem1>
+    <template #stepItem1>
       <ContentTypeSelector
         :contentTypes="contentTypes"
         :contentType.sync="contentType"
       />
     </template>
 
-    <template v-slot:stepHeader2>{{ 'Select item' }}</template>
+    <template #stepHeader2>{{ 'Select item' }}</template>
 
-    <template v-slot:stepItem2>
+    <template #stepItem2>
       <div class="text-center greycolor">
         <template>{{ 'Content type: ' }}</template>
         <span class="text-capitalize">{{ contentType }}</span>
@@ -40,9 +40,9 @@
       </template>
     </template>
 
-    <template v-slot:stepHeader3>{{ 'Update' }}</template>
+    <template #stepHeader3>{{ 'Update' }}</template>
 
-    <template v-slot:stepItem3>
+    <template #stepItem3>
       <v-col>
         <CreateForm
           v-if="type === 'create'"

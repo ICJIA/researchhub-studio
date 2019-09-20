@@ -5,7 +5,7 @@
     hide-overlay
     transition="dialog-bottom-transition"
   >
-    <template v-slot:activator="{ on }">
+    <template #activator="{ on }">
       <v-btn class="mx-2" v-on="on" :outlined="!icon" :icon="icon">
         <slot>Preview</slot>
       </v-btn>

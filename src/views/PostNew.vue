@@ -1,8 +1,8 @@
 <template>
   <BaseViewLayout>
-    <template v-slot:title>{{ 'Post new' }}</template>
+    <template #title>{{ 'Post new' }}</template>
 
-    <template v-slot:description>
+    <template #description>
       <template>{{ 'Post new items of any type and status.' }}</template>
       <span class="greycolor ml-4">
         <v-icon color="error">{{ $options.static.mdiAlert }}</v-icon>

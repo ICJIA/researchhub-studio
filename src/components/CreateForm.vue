@@ -68,16 +68,14 @@
         v-model="item"
         :rules="rules"
       >
-        <template v-slot:image>
+        <template #image>
           <MyDropzone
             ref="DropzoneImage"
             fileTypes=".jpg, .jpeg, .png"
             :update="update"
           >
-            <template v-slot:title>{{ 'Image' }}</template>
-            <template v-slot:message>{{
-              $options.static.dropzoneMsgImage
-            }}</template>
+            <template #title>{{ 'Image' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgImage }}</template>
           </MyDropzone>
         </template>
       </CreateFormAppFields>
@@ -89,48 +87,42 @@
         :update="update"
         @useExistingAuthors="useExistingAuthors"
       >
-        <template v-slot:mainfile>
+        <template #mainfile>
           <MyDropzone
             ref="DropzoneMainfile"
             fileTypes=".pdf"
             :maxFilesize="5"
             :update="update"
           >
-            <template v-slot:title>{{ 'Main file' }}</template>
-            <template v-slot:message>{{
-              $options.static.dropzoneMsgPDF
-            }}</template>
+            <template #title>{{ 'Main file' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgPDF }}</template>
           </MyDropzone>
         </template>
 
-        <template v-slot:extrafile>
+        <template #extrafile>
           <MyDropzone
             ref="DropzoneExtrafile"
             :maxFilesize="10"
             :update="update"
           >
-            <template v-slot:title>{{ 'Extra file' }}</template>
-            <template v-slot:message>{{
-              $options.static.dropzoneMsgFile
-            }}</template>
+            <template #title>{{ 'Extra file' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgFile }}</template>
           </MyDropzone>
         </template>
 
-        <template v-slot:splash>
+        <template #splash>
           <MyDropzone
             ref="DropzoneSplash"
             fileTypes=".jpg, .jpeg, .png"
             :maxFilesize="0.5"
             :update="update"
           >
-            <template v-slot:title>{{ 'Splash image' }}</template>
-            <template v-slot:message>{{
-              $options.static.dropzoneMsgImage
-            }}</template>
+            <template #title>{{ 'Splash image' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgImage }}</template>
           </MyDropzone>
         </template>
 
-        <template v-slot:figures>
+        <template #figures>
           <MyDropzone
             ref="DropzoneImages"
             fileTypes=".jpg, .jpeg, .png"
@@ -138,14 +130,14 @@
             :multipleFiles="true"
             :update="update"
           >
-            <template v-slot:title>{{ 'Figures' }}</template>
-            <template v-slot:message>{{
+            <template #title>{{ 'Figures' }}</template>
+            <template #message>{{
               $options.static.dropzoneMsgImages
             }}</template>
           </MyDropzone>
         </template>
 
-        <template v-slot:articlebody>
+        <template #articlebody>
           <MarkdownEditor
             :markdown.sync="item.markdown"
             :rules="[rules.required]"
@@ -159,17 +151,15 @@
         :rules="rules"
         :update="update"
       >
-        <template v-slot:datafile>
+        <template #datafile>
           <MyDropzone
             ref="DropzoneDatafile"
             fileTypes=".csv"
             :maxFilesize="100"
             :update="update"
           >
-            <template v-slot:title>{{ 'Data file' }}</template>
-            <template v-slot:message>{{
-              $options.static.dropzoneMsgCsv
-            }}</template>
+            <template #title>{{ 'Data file' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgCsv }}</template>
           </MyDropzone>
         </template>
       </CreateFormDatasetFields>

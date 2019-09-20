@@ -13,9 +13,9 @@
         btnType="error"
         @base-event="$emit('form-reset')"
       >
-        <template v-slot:title>{{ 'Are you sure?' }}</template>
+        <template #title>{{ 'Are you sure?' }}</template>
 
-        <template v-slot:main>{{ $options.static.msgWarning }}</template>
+        <template #main>{{ $options.static.msgWarning }}</template>
       </BaseButtonDialog>
 
       <BaseButtonDialog
@@ -24,11 +24,11 @@
         :btnCondition="itemReady"
         @base-event="$emit('form-main')"
       >
-        <template v-slot:title>
+        <template #title>
           <h3>Ready to {{ formType }}?</h3>
         </template>
 
-        <template v-slot:main>
+        <template #main>
           <template>{{ msgMain }}</template>
           <br />
           <template v-if="formType === 'create'">{{

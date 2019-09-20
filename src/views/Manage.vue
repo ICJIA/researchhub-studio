@@ -1,8 +1,8 @@
 <template>
   <BaseViewLayout>
-    <template v-slot:title>{{ 'Manage contents' }}</template>
+    <template #title>{{ 'Manage contents' }}</template>
 
-    <template v-slot:description>{{
+    <template #description>{{
       'Review and publish submissions or take down published items to make changes.'
     }}</template>
 

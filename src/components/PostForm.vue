@@ -26,18 +26,16 @@
             fileTypes=".json"
             :update="update"
           >
-            <template v-slot:title>{{ 'JSON file' }}</template>
-            <template v-slot:message>{{
-              $options.static.dropzoneMsgJson
-            }}</template>
+            <template #title>{{ 'JSON file' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgJson }}</template>
           </MyDropzone>
         </v-col>
 
         <template v-if="contentType === 'apps'">
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone ref="DropzoneImage" fileTypes=".jpg, .jpeg, .png">
-              <template v-slot:title>{{ 'Image' }}</template>
-              <template v-slot:message>{{
+              <template #title>{{ 'Image' }}</template>
+              <template #message>{{
                 $options.static.dropzoneMsgImage
               }}</template>
             </MyDropzone>
@@ -51,8 +49,8 @@
               fileTypes=".jpg, .jpeg, .png"
               :update="update"
             >
-              <template v-slot:title>{{ 'Splash image' }}</template>
-              <template v-slot:message>{{
+              <template #title>{{ 'Splash image' }}</template>
+              <template #message>{{
                 $options.static.dropzoneMsgImage
               }}</template>
             </MyDropzone>
@@ -77,8 +75,8 @@
               fileTypes=".md"
               :update="update"
             >
-              <template v-slot:title>{{ 'Article body' }}</template>
-              <template v-slot:message>{{
+              <template #title>{{ 'Article body' }}</template>
+              <template #message>{{
                 $options.static.dropzoneMsgMarkdown
               }}</template>
             </MyDropzone>
@@ -93,10 +91,8 @@
               fileTypes=".csv"
               :update="update"
             >
-              <template v-slot:title>{{ 'Data file' }}</template>
-              <template v-slot:message>{{
-                $options.static.dropzoneMsgCsv
-              }}</template>
+              <template #title>{{ 'Data file' }}</template>
+              <template #message>{{ $options.static.dropzoneMsgCsv }}</template>
             </MyDropzone>
           </v-col>
         </template>

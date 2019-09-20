@@ -22,11 +22,9 @@
       sort-by="date"
       :sort-desc="true"
     >
-      <template v-slot:item.date="{ item }">{{
-        item.date.slice(0, 10)
-      }}</template>
+      <template #item.date="{ item }">{{ item.date.slice(0, 10) }}</template>
 
-      <template v-slot:item.action="{ item }">
+      <template #item.action="{ item }">
         <PreviewDialog
           :contentType="contentType"
           :icon="true"
@@ -71,9 +69,9 @@
         </v-btn>
       </template>
 
-      <template v-slot:no-results>{{ msgNoResult }}</template>
+      <template #no-results>{{ msgNoResult }}</template>
 
-      <template v-slot:no-data>{{ msgNoData }}</template>
+      <template #no-data>{{ msgNoData }}</template>
     </v-data-table>
   </div>
 </template>

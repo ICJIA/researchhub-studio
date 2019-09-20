@@ -1,17 +1,17 @@
 <template>
   <BaseStepper :stepNumTotal="2" @stepper-navigate-before="resetItem">
-    <template v-slot:stepHeader1>{{ 'Select content type' }}</template>
+    <template #stepHeader1>{{ 'Select content type' }}</template>
 
-    <template v-slot:stepItem1>
+    <template #stepItem1>
       <ContentTypeSelector
         :contentTypes="contentTypes"
         :contentType.sync="contentType"
       />
     </template>
 
-    <template v-slot:stepHeader2>{{ 'Manage' }}</template>
+    <template #stepHeader2>{{ 'Manage' }}</template>
 
-    <template v-slot:stepItem2>
+    <template #stepItem2>
       <div class="text-center greycolor">
         <template>{{ 'Content type: ' }}</template>
         <span class="text-capitalize">{{ contentType }}</span>

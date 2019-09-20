@@ -1,8 +1,8 @@
 <template>
   <v-dialog v-model="dialog" persistent scrollable max-width="300px">
-    <template v-slot:activator="{ on: onDialog }">
+    <template #activator="{ on: onDialog }">
       <v-tooltip top>
-        <template v-slot:activator="{ on: onTooltip }">
+        <template #activator="{ on: onTooltip }">
           <v-btn class="mx-0 mt-4" text icon v-on="onDialog">
             <v-icon v-on="onTooltip">{{
               $options.static.mdiMagnifyPlusOutline

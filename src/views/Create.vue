@@ -1,8 +1,8 @@
 <template>
   <BaseViewLayout>
-    <template v-slot:title>{{ 'Create contents' }}</template>
+    <template #title>{{ 'Create contents' }}</template>
 
-    <template v-slot:description>
+    <template #description>
       <template>{{
         'Fill out the form, preview the result, and create a new item.'
       }}</template>

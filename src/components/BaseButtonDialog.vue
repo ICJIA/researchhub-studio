@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" width="500" :disabled="!btnCondition">
-    <template v-slot:activator="{ on }">
+    <template #activator="{ on }">
       <v-btn
         outlined
         class="mx-2"
