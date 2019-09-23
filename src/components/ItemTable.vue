@@ -200,6 +200,12 @@ export default {
         this.handleUpdate(res, msgSuccess, msgFailure)
       }
     },
+    async triggerBuildMain(contentType) {
+      const buildHookUrl = process.env.VUE_APP_MAIN_BUILD_HOOK
+      const triggerTitle = `Deploy+triggered+by+hook:+New+${contentType}+item+published`
+
+      fetch(`${buildHookUrl}?trigger_title=${triggerTitle}`, { method: 'POST' })
+    },
     async updateToCreated({ _id: id, title }) {
       const res = await this.dispatchAction('updateItemToCreated', { id })
       const msgSuccess = `Status updated to "created": ${title}`
@@ -215,7 +221,11 @@ export default {
         `Public link: ${baseURL}/${this.contentType}/${slug}`
       const msgFailure = `Failed to update status: ${title}`
 
-      this.handleUpdate(res, msgSuccess, msgFailure)
+      this.handleUpdate(res, msgSuccess, msgFailure, () => {
+        if (this.contentType !== 'datasets')
+          this.triggerBuildMain(this.contentType)
+        this.loadItemList()
+      })
     },
     async updateToSubmitted({ _id: id, title, slug }) {
       const res = await this.dispatchAction('updateItemToSubmitted', { id })
