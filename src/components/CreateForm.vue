@@ -1,8 +1,8 @@
 <template>
   <BaseForm
-    :contentType="contentType"
     :key="formKey"
-    :formType="update ? 'update' : 'create'"
+    :content-type="contentType"
+    :form-type="update ? 'update' : 'create'"
     @form-main="onMain"
     @form-reset="onReset"
   >
@@ -45,7 +45,7 @@
             label="Categories"
             clearable
             multiple
-            :items="categoryOptions"
+            :items="$options.static.categoryOptions"
             :rules="[rules.required]"
           />
         </v-col>
@@ -68,14 +68,14 @@
         v-model="item"
         :rules="rules"
       >
-        <template v-slot:image>
+        <template #image>
           <MyDropzone
             ref="DropzoneImage"
-            fileTypes=".jpg, .jpeg, .png"
+            file-types=".jpg, .jpeg, .png"
             :update="update"
           >
-            <template v-slot:title>{{ 'Image' }}</template>
-            <template v-slot:message>{{ dropzoneMsgImage }}</template>
+            <template #title>{{ 'Image' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgImage }}</template>
           </MyDropzone>
         </template>
       </CreateFormAppFields>
@@ -87,55 +87,57 @@
         :update="update"
         @useExistingAuthors="useExistingAuthors"
       >
-        <template v-slot:mainfile>
+        <template #mainfile>
           <MyDropzone
             ref="DropzoneMainfile"
-            fileTypes=".pdf"
-            :maxFilesize="5"
+            file-types=".pdf"
+            :max-filesize="5"
             :update="update"
           >
-            <template v-slot:title>{{ 'Main file' }}</template>
-            <template v-slot:message>{{ dropzoneMsgPDF }}</template>
+            <template #title>{{ 'Main file' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgPDF }}</template>
           </MyDropzone>
         </template>
 
-        <template v-slot:extrafile>
+        <template #extrafile>
           <MyDropzone
             ref="DropzoneExtrafile"
-            :maxFilesize="10"
+            :max-filesize="10"
             :update="update"
           >
-            <template v-slot:title>{{ 'Extra file' }}</template>
-            <template v-slot:message>{{ dropzoneMsgFile }}</template>
+            <template #title>{{ 'Extra file' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgFile }}</template>
           </MyDropzone>
         </template>
 
-        <template v-slot:splash>
+        <template #splash>
           <MyDropzone
             ref="DropzoneSplash"
-            fileTypes=".jpg, .jpeg, .png"
-            :maxFilesize="0.5"
+            file-types=".jpg, .jpeg, .png"
+            :max-filesize="0.5"
             :update="update"
           >
-            <template v-slot:title>{{ 'Splash image' }}</template>
-            <template v-slot:message>{{ dropzoneMsgImage }}</template>
+            <template #title>{{ 'Splash image' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgImage }}</template>
           </MyDropzone>
         </template>
 
-        <template v-slot:figures>
+        <template #figures>
           <MyDropzone
             ref="DropzoneImages"
-            fileTypes=".jpg, .jpeg, .png"
-            :maxFilesize="0.1"
-            :multipleFiles="true"
+            file-types=".jpg, .jpeg, .png"
+            :max-filesize="0.1"
+            :multiple-files="true"
             :update="update"
           >
-            <template v-slot:title>{{ 'Figures' }}</template>
-            <template v-slot:message>{{ dropzoneMsgImages }}</template>
+            <template #title>{{ 'Figures' }}</template>
+            <template #message>{{
+              $options.static.dropzoneMsgImages
+            }}</template>
           </MyDropzone>
         </template>
 
-        <template v-slot:articlebody>
+        <template #articlebody>
           <MarkdownEditor
             :markdown.sync="item.markdown"
             :rules="[rules.required]"
@@ -149,15 +151,15 @@
         :rules="rules"
         :update="update"
       >
-        <template v-slot:datafile>
+        <template #datafile>
           <MyDropzone
             ref="DropzoneDatafile"
-            fileTypes=".csv"
-            :maxFilesize="100"
+            file-types=".csv"
+            :max-filesize="100"
             :update="update"
           >
-            <template v-slot:title>{{ 'Data file' }}</template>
-            <template v-slot:message>{{ dropzoneMsgCsv }}</template>
+            <template #title>{{ 'Data file' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgCsv }}</template>
           </MyDropzone>
         </template>
       </CreateFormDatasetFields>
@@ -233,7 +235,7 @@
       <PreviewDialog
         v-if="saved"
         :key="previewKey"
-        :contentType="contentType"
+        :content-type="contentType"
         :icon="false"
         :local="true"
         status="created"
@@ -278,8 +280,7 @@ const PreviewDialog = () => import('@/components/PreviewDialog')
 const initItem = { ...emptyItem }
 
 export default {
-  name: 'createform',
-  mixins: [formMixin],
+  name: 'Createform',
   components: {
     BaseForm,
     CreateFormAppFields,
@@ -291,18 +292,20 @@ export default {
     MyDropzone,
     PreviewDialog
   },
+  mixins: [formMixin],
   props: {
-    contentType: String,
+    contentType: {
+      type: String,
+      default: ''
+    },
     update: Boolean
   },
   data() {
     return {
       appOptions: [],
       articleOptions: [],
-      categoryOptions,
       datasetOptions: [],
       dropzoneList: {},
-      ...dropzoneMsgs,
       formKey: 0,
       item: { ...initItem },
       previewKey: 0,
@@ -399,6 +402,10 @@ export default {
       const { authorString } = this.item
       this.item.authorString = authorString ? `${authorString}\n${e}` : e
     }
+  },
+  static: {
+    categoryOptions,
+    ...dropzoneMsgs
   }
 }
 </script>

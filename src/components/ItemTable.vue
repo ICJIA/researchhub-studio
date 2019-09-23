@@ -4,9 +4,9 @@
       <v-col cols="6" lg="4">
         <v-text-field
           v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
+          :append-icon="$options.static.mdiMagnify"
           hide-details
+          label="Search"
           single-line
           width="300"
         ></v-text-field>
@@ -16,62 +16,62 @@
     <v-data-table
       v-if="items"
       class="item-table"
-      :headers="headers"
+      :headers="$options.static.headers"
       :items="items"
       :search="search"
       sort-by="date"
       :sort-desc="true"
     >
-      <template v-slot:item.date="{ item }">{{
-        item.date.slice(0, 10)
-      }}</template>
+      <template #item.date="{ item }">{{ item.date.slice(0, 10) }}</template>
 
-      <template v-slot:item.action="{ item }">
-        <PreviewDialog
-          :contentType="contentType"
-          :icon="true"
-          :id="item._id"
-          :status="status"
-        >
-          <v-btn icon @click="dispatchAction('fetchItem', { id: item._id })">
-            <v-icon class="greyicon">mdi-eye</v-icon>
+      <template #item.action="{ item }">
+        <div class="d-flex justify-end">
+          <PreviewDialog
+            :id="item._id"
+            :content-type="contentType"
+            :icon="true"
+            :status="status"
+          >
+            <v-btn icon @click="dispatchAction('fetchItem', { id: item._id })">
+              <v-icon>{{ $options.static.mdiEye }}</v-icon>
+            </v-btn>
+          </PreviewDialog>
+
+          <template v-if="type === 'manage'">
+            <template v-if="isStatusPublished && !isRoleAuthor">
+              <v-btn icon @click="updateToSubmitted(item)">
+                <v-icon>{{ $options.static.mdiClose }}</v-icon>
+              </v-btn>
+            </template>
+
+            <template v-if="isStatusSubmitted">
+              <v-btn icon @click="updateToPublished(item)">
+                <v-icon>{{ $options.static.mdiCheck }}</v-icon>
+              </v-btn>
+              <v-btn icon @click="updateToCreated(item)">
+                <v-icon>{{ $options.static.mdiClose }}</v-icon>
+              </v-btn>
+            </template>
+
+            <template v-if="isStatusCreated">
+              <v-btn icon @click="updateToSubmitted(item)">
+                <v-icon>{{ $options.static.mdiCheck }}</v-icon>
+              </v-btn>
+              <v-btn color="error" icon @click="deleteItem(item)">
+                <v-icon>{{ $options.static.mdiDeleteForever }}</v-icon>
+              </v-btn>
+            </template>
+          </template>
+
+          <v-btn v-if="type === 'update'" icon @click="editItem(item)">
+            <v-icon>{{ $options.static.mdiPencil }}</v-icon>
           </v-btn>
-        </PreviewDialog>
-        <template v-if="type === 'manage'">
-          <template v-if="isStatusPublished && !isRoleAuthor">
-            <v-btn icon @click="updateToSubmitted(item)">
-              <v-icon class="greyicon">mdi-close</v-icon>
-            </v-btn>
-          </template>
-
-          <template v-if="isStatusSubmitted">
-            <v-btn icon @click="updateToPublished(item)">
-              <v-icon class="greyicon">mdi-check</v-icon>
-            </v-btn>
-            <v-btn icon @click="updateToCreated(item)">
-              <v-icon class="greyicon">mdi-close</v-icon>
-            </v-btn>
-          </template>
-
-          <template v-if="isStatusCreated">
-            <v-btn icon @click="updateToSubmitted(item)">
-              <v-icon class="greyicon">mdi-check</v-icon>
-            </v-btn>
-
-            <v-btn icon @click="deleteItem(item)">
-              <v-icon color="error">{{ mdiDeleteForever }}</v-icon>
-            </v-btn>
-          </template>
-        </template>
-
-        <v-btn v-if="type === 'update'" icon @click="editItem(item)">
-          <v-icon class="greyicon">{{ mdiPencil }}</v-icon>
-        </v-btn>
+        </div>
       </template>
 
-      <template v-slot:no-results>{{ msgNoResult }}</template>
+      <template #no-results>{{ msgNoResult }}</template>
 
-      <template v-slot:no-data>{{ msgNoData }}</template>
+      <template #no-data>{{ msgNoData }}</template>
     </v-data-table>
   </div>
 </template>
@@ -93,37 +93,22 @@ export default {
     PreviewDialog
   },
   props: {
-    contentType: String,
-    status: String,
-    type: String
+    contentType: {
+      type: String,
+      default: ''
+    },
+    status: {
+      type: String,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
-      headers: [
-        {
-          text: 'Date',
-          align: 'left',
-          value: 'date'
-        },
-        {
-          text: 'Title',
-          align: 'left',
-          value: 'title'
-        },
-        {
-          text: 'Actions',
-          align: 'right',
-          value: 'action',
-          sortable: false
-        }
-      ],
       loading: false,
-      mdiCheck,
-      mdiClose,
-      mdiDeleteForever,
-      mdiEye,
-      mdiMagnify,
-      mdiPencil,
       search: ''
     }
   },
@@ -190,10 +175,10 @@ export default {
       await this.dispatchAction('fetchItemList', { status: this.status })
       this.loading = false
     },
-    handleUpdate(res, msgSuccess, msgFailure) {
+    handleUpdate(res, msgSuccess, msgFailure, callback = this.loadItemList) {
       if (res && res.status === 200) {
         alert(`✔️${msgSuccess}`)
-        this.loadItemList()
+        callback()
       } else {
         alert(`⚠️${msgFailure}`)
       }
@@ -215,6 +200,12 @@ export default {
         this.handleUpdate(res, msgSuccess, msgFailure)
       }
     },
+    async triggerBuildMain(contentType) {
+      const buildHookUrl = process.env.VUE_APP_MAIN_BUILD_HOOK
+      const triggerTitle = `Deploy+triggered+by+hook:+New+${contentType}+item+published`
+
+      fetch(`${buildHookUrl}?trigger_title=${triggerTitle}`, { method: 'POST' })
+    },
     async updateToCreated({ _id: id, title }) {
       const res = await this.dispatchAction('updateItemToCreated', { id })
       const msgSuccess = `Status updated to "created": ${title}`
@@ -230,7 +221,11 @@ export default {
         `Public link: ${baseURL}/${this.contentType}/${slug}`
       const msgFailure = `Failed to update status: ${title}`
 
-      this.handleUpdate(res, msgSuccess, msgFailure)
+      this.handleUpdate(res, msgSuccess, msgFailure, () => {
+        if (this.contentType !== 'datasets')
+          this.triggerBuildMain(this.contentType)
+        this.loadItemList()
+      })
     },
     async updateToSubmitted({ _id: id, title, slug }) {
       const res = await this.dispatchAction('updateItemToSubmitted', { id })
@@ -242,6 +237,32 @@ export default {
 
       this.handleUpdate(res, msgSuccess, msgFailure)
     }
+  },
+  static: {
+    headers: [
+      {
+        text: 'Date',
+        align: 'left',
+        value: 'date'
+      },
+      {
+        text: 'Title',
+        align: 'left',
+        value: 'title'
+      },
+      {
+        text: 'Actions',
+        align: 'right',
+        value: 'action',
+        sortable: false
+      }
+    ],
+    mdiCheck,
+    mdiClose,
+    mdiDeleteForever,
+    mdiEye,
+    mdiMagnify,
+    mdiPencil
   }
 }
 </script>
@@ -249,9 +270,5 @@ export default {
 <style scoped>
 .item-table >>> td {
   font-size: 0.95em;
-}
-
-.greyicon {
-  color: rgba(0, 0, 0, 0.54) !important;
 }
 </style>

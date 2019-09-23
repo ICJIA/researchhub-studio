@@ -1,6 +1,8 @@
 <template>
-  <v-btn text :href="href" target="_blank">
-    <v-icon class="small" color="warning">{{ mdiHelpCircle }}</v-icon>
+  <v-btn :href="href" text target="_blank">
+    <v-icon class="small" color="warning">{{
+      $options.static.mdiHelpCircle
+    }}</v-icon>
     <span class="px-1 small">{{ text }}</span>
   </v-btn>
 </template>
@@ -19,15 +21,13 @@ export default {
       default: 'Go to Author Guide'
     }
   },
-  data() {
-    return {
-      mdiHelpCircle
-    }
-  },
   computed: {
     href() {
       return `${process.env.VUE_APP_MAIN_BASE_URL}/docs/auth-guide/${this.path}`
     }
+  },
+  static: {
+    mdiHelpCircle
   }
 }
 </script>

@@ -2,8 +2,8 @@
   <v-col class="mx-auto mt-6 px-0" cols="12" sm="10" lg="8" xl="7">
     <DatasetView
       v-if="view"
-      :item="item"
       :downloader="nodownloader"
+      :item="item"
       :preview="true"
     />
 
@@ -23,7 +23,10 @@ export default {
     DatasetView
   },
   props: {
-    item: Object,
+    item: {
+      type: Object,
+      default: null
+    },
     view: Boolean
   },
   methods: {

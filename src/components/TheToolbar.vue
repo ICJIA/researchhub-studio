@@ -1,21 +1,25 @@
 <template>
-  <BaseToolbar :menu="isLoggedIn" logoPath="/icjia-logo.png">
-    <template v-slot:titleExtra>
+  <BaseToolbar :menu="isLoggedIn" logo-path="/icjia-logo.png">
+    <template #titleExtra>
       <span class="font-weight-light"> Studio</span>
     </template>
 
-    <template v-slot:toolbarItems v-if="isLoggedIn">
+    <template v-if="isLoggedIn" #toolbarItems>
       <v-btn v-for="(view, i) in views" :key="i" :to="`/${view.path}`" text>
-        <v-icon v-if="/post/.test(view.name)" color="error">mdi-alert</v-icon>
+        <v-icon v-if="/post/.test(view.name)" color="error">{{
+          $options.static.mdiAlert
+        }}</v-icon>
         <template>{{ view.name }}</template>
       </v-btn>
 
       <v-btn color="primary" text @click="logout">log out</v-btn>
     </template>
 
-    <template v-slot:toolbarDrawerItems v-if="isLoggedIn">
+    <template v-if="isLoggedIn" #toolbarDrawerItems>
       <v-list-item v-for="(view, i) in views" :key="i" :to="`/${view.path}`">
-        <v-icon v-if="/post/.test(view.name)" color="error">mdi-alert</v-icon>
+        <v-icon v-if="/post/.test(view.name)" color="error">{{
+          $options.static.mdiAlert
+        }}</v-icon>
         <v-list-item-title>{{ view.name }}</v-list-item-title>
       </v-list-item>
 
@@ -27,6 +31,7 @@
 </template>
 
 <script>
+import { mdiAlert } from '@mdi/js'
 import { mapState } from 'vuex'
 const BaseToolbar = () => import('icjia-research-lib').then(m => m.BaseToolbar)
 
@@ -62,6 +67,9 @@ export default {
         .dispatch('auth/logout')
         .then(() => this.$router.push('/login'))
     }
+  },
+  static: {
+    mdiAlert
   }
 }
 </script>

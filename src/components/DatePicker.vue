@@ -3,18 +3,18 @@
     ref="menu"
     v-model="menu"
     :close-on-content-click="false"
-    transition="scale-transition"
-    offset-y
     full-width
     min-width="290px"
+    offset-y
+    transition="scale-transition"
   >
-    <template v-slot:activator="{ on }">
+    <template #activator="{ on }">
       <v-text-field
-        v-on="on"
         v-model="dateLocal"
+        :append-icon="$options.static.mdiCalendar"
         label="Date"
-        :append-icon="mdiCalendar"
         readonly
+        v-on="on"
       />
     </template>
 
@@ -27,12 +27,14 @@ import { mdiCalendar } from '@mdi/js'
 
 export default {
   props: {
-    date: String
+    date: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
       dateLocal: null,
-      mdiCalendar,
       menu: false
     }
   },
@@ -47,6 +49,9 @@ export default {
       this.menu = false
       this.$emit('update:date', e)
     }
+  },
+  static: {
+    mdiCalendar
   }
 }
 </script>

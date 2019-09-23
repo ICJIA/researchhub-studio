@@ -1,7 +1,7 @@
 <template>
   <BaseForm
-    :contentType="contentType"
-    formType="post"
+    :content-type="contentType"
+    form-type="post"
     @form-main="onMain"
     @form-reset="onReset"
   >
@@ -11,10 +11,10 @@
           <p class="greycolor">Status</p>
           <v-radio-group v-model="statusLocal" class="text-capitalize" row>
             <v-radio
-              v-for="status in statusOptions"
-              :key="status"
-              :label="status"
-              :value="status"
+              v-for="statusOption in $options.static.statusOptions"
+              :key="statusOption"
+              :label="statusOption"
+              :value="statusOption"
             ></v-radio>
           </v-radio-group>
         </v-col>
@@ -23,19 +23,21 @@
           <MyDropzone
             key="DropzoneJson"
             ref="DropzoneJson"
-            fileTypes=".json"
+            file-types=".json"
             :update="update"
           >
-            <template v-slot:title>{{ 'JSON file' }}</template>
-            <template v-slot:message>{{ dropzoneMsgJson }}</template>
+            <template #title>{{ 'JSON file' }}</template>
+            <template #message>{{ $options.static.dropzoneMsgJson }}</template>
           </MyDropzone>
         </v-col>
 
         <template v-if="contentType === 'apps'">
           <v-col class="px-4 pt-4" cols="10">
-            <MyDropzone ref="DropzoneImage" fileTypes=".jpg, .jpeg, .png">
-              <template v-slot:title>{{ 'Image' }}</template>
-              <template v-slot:message>{{ dropzoneMsgImage }}</template>
+            <MyDropzone ref="DropzoneImage" file-types=".jpg, .jpeg, .png">
+              <template #title>{{ 'Image' }}</template>
+              <template #message>{{
+                $options.static.dropzoneMsgImage
+              }}</template>
             </MyDropzone>
           </v-col>
         </template>
@@ -44,11 +46,13 @@
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
               ref="DropzoneSplash"
-              fileTypes=".jpg, .jpeg, .png"
+              file-types=".jpg, .jpeg, .png"
               :update="update"
             >
-              <template v-slot:title>{{ 'Splash image' }}</template>
-              <template v-slot:message>{{ dropzoneMsgImage }}</template>
+              <template #title>{{ 'Splash image' }}</template>
+              <template #message>{{
+                $options.static.dropzoneMsgImage
+              }}</template>
             </MyDropzone>
           </v-col>
 
@@ -56,11 +60,11 @@
             <MyDropzone
               key="DropzoneImages"
               ref="DropzoneImages"
-              fileTypes=".jpg, .jpeg, .png"
+              file-types=".jpg, .jpeg, .png"
               :update="update"
             >
               <template>{{ 'Figures' }}</template>
-              <template>{{ dropzoneMsgImages }}</template>
+              <template>{{ $options.static.dropzoneMsgImages }}</template>
             </MyDropzone>
           </v-col>
 
@@ -68,11 +72,13 @@
             <MyDropzone
               key="DropzoneMarkdown"
               ref="DropzoneMarkdown"
-              fileTypes=".md"
+              file-types=".md"
               :update="update"
             >
-              <template v-slot:title>{{ 'Article body' }}</template>
-              <template v-slot:message>{{ dropzoneMsgMarkdown }}</template>
+              <template #title>{{ 'Article body' }}</template>
+              <template #message>{{
+                $options.static.dropzoneMsgMarkdown
+              }}</template>
             </MyDropzone>
           </v-col>
         </template>
@@ -82,11 +88,11 @@
             <MyDropzone
               key="DropzoneData"
               ref="DropzoneData"
-              fileTypes=".csv"
+              file-types=".csv"
               :update="update"
             >
-              <template v-slot:title>{{ 'Data file' }}</template>
-              <template v-slot:message>{{ dropzoneMsgCsv }}</template>
+              <template #title>{{ 'Data file' }}</template>
+              <template #message>{{ $options.static.dropzoneMsgCsv }}</template>
             </MyDropzone>
           </v-col>
         </template>
@@ -96,11 +102,11 @@
       <PreviewDialog
         v-if="saved"
         :key="previewKey"
-        :contentType="contentType"
+        :content-type="contentType"
         :icon="false"
         :local="true"
       />
-      <v-btn v-else class="mx-2" outlined disabled>Preview</v-btn>
+      <v-btn v-else class="mx-2" disabled outlined>Preview</v-btn>
     </v-form>
   </BaseForm>
 </template>
@@ -122,26 +128,29 @@ const MyDropzone = () => import('@/components/MyDropzone')
 const PreviewDialog = () => import('@/components/PreviewDialog')
 
 export default {
-  name: 'postform',
-  mixins: [formMixin],
   components: {
     BaseForm,
     MyDropzone,
     PreviewDialog
   },
+  mixins: [formMixin],
   props: {
-    contentType: String,
-    status: String,
+    contentType: {
+      type: String,
+      default: ''
+    },
+    status: {
+      type: String,
+      default: ''
+    },
     update: Boolean
   },
   data() {
     return {
       dropzoneList: {},
-      ...dropzoneMsgs,
       item: {},
       previewKey: 0,
       statusLocal: this.status,
-      statusOptions,
       saved: false
     }
   },
@@ -204,6 +213,10 @@ export default {
       await this.$nextTick()
       this.saved = true
     }
+  },
+  static: {
+    ...dropzoneMsgs,
+    statusOptions
   }
 }
 </script>

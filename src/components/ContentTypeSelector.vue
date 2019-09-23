@@ -2,9 +2,9 @@
   <v-col class="mx-auto pa-0" cols="2">
     <v-radio-group v-model="selected" @change="updateContentType">
       <v-radio
-        class="text-capitalize"
         v-for="contentType in contentTypes"
         :key="contentType"
+        class="text-capitalize"
         :label="contentType"
         :value="contentType"
       ></v-radio>
@@ -15,7 +15,10 @@
 <script>
 export default {
   props: {
-    contentTypes: Array
+    contentTypes: {
+      type: Array,
+      default: null
+    }
   },
   data() {
     return {

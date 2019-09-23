@@ -34,12 +34,7 @@ export default {
   computed: {
     page() {
       const name = this.$route.name
-      return name === 'home'
-        ? ''
-        : name
-            .split(' ')
-            .map(el => `${el.charAt(0).toUpperCase()}${el.slice(1)}`)
-            .join(' ')
+      return name === 'home' ? '' : name
     },
     isAuthor() {
       return this.$store.state.auth.role === 'Author'

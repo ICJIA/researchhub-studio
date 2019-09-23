@@ -1,8 +1,8 @@
 <template>
   <BaseViewLayout>
-    <template v-slot:title>{{ 'Update contents' }}</template>
+    <template #title>{{ 'Update contents' }}</template>
 
-    <template v-slot:description>{{
+    <template #description>{{
       'Make updates to existing drafts. Select an item to update, make changes, and apply the update.'
     }}</template>
 

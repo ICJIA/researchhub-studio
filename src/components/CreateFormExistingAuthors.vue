@@ -1,10 +1,12 @@
 <template>
   <v-dialog v-model="dialog" persistent scrollable max-width="300px">
-    <template v-slot:activator="{ on: onDialog }">
+    <template #activator="{ on: onDialog }">
       <v-tooltip top>
-        <template v-slot:activator="{ on: onTooltip }">
+        <template #activator="{ on: onTooltip }">
           <v-btn class="mx-0 mt-4" text icon v-on="onDialog">
-            <v-icon v-on="onTooltip">{{ mdiMagnifyPlusOutline }}</v-icon>
+            <v-icon v-on="onTooltip">{{
+              $options.static.mdiMagnifyPlusOutline
+            }}</v-icon>
           </v-btn>
         </template>
         <span class="font-lato">Use existing authors</span>
@@ -15,12 +17,12 @@
       <v-divider></v-divider>
       <v-card-text style="height: 300px;">
         <v-checkbox
-          v-model="authors"
           v-for="author in authorOptions"
           :key="author"
+          v-model="authors"
+          hide-details
           :label="author"
           :value="author"
-          hide-details
         >
         </v-checkbox>
       </v-card-text>
@@ -43,8 +45,7 @@ export default {
     return {
       dialog: false,
       authorOptions: [],
-      authors: [],
-      mdiMagnifyPlusOutline
+      authors: []
     }
   },
   async created() {
@@ -63,6 +64,9 @@ export default {
         )
       this.closeDialog()
     }
+  },
+  static: {
+    mdiMagnifyPlusOutline
   }
 }
 </script>

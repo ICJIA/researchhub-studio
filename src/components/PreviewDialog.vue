@@ -5,8 +5,8 @@
     hide-overlay
     transition="dialog-bottom-transition"
   >
-    <template v-slot:activator="{ on }">
-      <v-btn class="mx-2" v-on="on" :outlined="!icon" :icon="icon">
+    <template #activator="{ on }">
+      <v-btn class="mx-2" :icon="icon" :outlined="!icon" v-on="on">
         <slot>Preview</slot>
       </v-btn>
     </template>
@@ -75,9 +75,15 @@ export default {
     PreviewDialogDataset
   },
   props: {
-    contentType: String,
+    contentType: {
+      type: String,
+      default: ''
+    },
     icon: Boolean,
-    id: String,
+    id: {
+      type: String,
+      default: ''
+    },
     local: {
       type: Boolean,
       default: false
@@ -111,6 +117,14 @@ export default {
       }
     }
   },
+  watch: {
+    async id() {
+      if (!this.local) await this.reload()
+    }
+  },
+  async created() {
+    if (!this.local) await this.reload()
+  },
   methods: {
     closePreview() {
       this.dialog = false
@@ -128,14 +142,6 @@ export default {
           this.item = (await fetchDatasetById(this.id)).data
       }
     }
-  },
-  watch: {
-    async id() {
-      if (!this.local) await this.reload()
-    }
-  },
-  async created() {
-    if (!this.local) await this.reload()
   }
 }
 </script>

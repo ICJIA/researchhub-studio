@@ -1,18 +1,18 @@
 <template>
-  <BaseStepper :stepNumTotal="2" @stepper-navigate-before="resetItem">
-    <template v-slot:stepHeader1>{{ 'Select content type' }}</template>
+  <BaseStepper :step-num-total="2" @stepper-navigate-before="resetItem">
+    <template #stepHeader1>{{ 'Select content type' }}</template>
 
-    <template v-slot:stepHeader2>{{ 'Post' }}</template>
+    <template #stepHeader2>{{ 'Post' }}</template>
 
-    <template v-slot:stepItem1>
+    <template #stepItem1>
       <ContentTypeSelector
-        :contentTypes="contentTypes"
-        :contentType.sync="contentType"
+        :content-types="contentTypes"
+        :content-type.sync="contentType"
       />
     </template>
 
-    <template v-slot:stepItem2>
-      <PostForm :contentType="contentType" :update="false" status="created" />
+    <template #stepItem2>
+      <PostForm :content-type="contentType" status="created" :update="false" />
     </template>
   </BaseStepper>
 </template>
