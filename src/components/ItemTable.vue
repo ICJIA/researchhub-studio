@@ -32,40 +32,38 @@
           :status="status"
         >
           <v-btn icon @click="dispatchAction('fetchItem', { id: item._id })">
-            <v-icon class="greyicon">{{ $options.static.mdiEye }}</v-icon>
+            <v-icon>{{ $options.static.mdiEye }}</v-icon>
           </v-btn>
         </PreviewDialog>
+
         <template v-if="type === 'manage'">
           <template v-if="isStatusPublished && !isRoleAuthor">
             <v-btn icon @click="updateToSubmitted(item)">
-              <v-icon class="greyicon">{{ $options.static.mdiClose }}</v-icon>
+              <v-icon>{{ $options.static.mdiClose }}</v-icon>
             </v-btn>
           </template>
 
           <template v-if="isStatusSubmitted">
             <v-btn icon @click="updateToPublished(item)">
-              <v-icon class="greyicon">{{ $options.static.mdiCheck }}</v-icon>
+              <v-icon>{{ $options.static.mdiCheck }}</v-icon>
             </v-btn>
             <v-btn icon @click="updateToCreated(item)">
-              <v-icon class="greyicon">{{ $options.static.mdiClose }}</v-icon>
+              <v-icon>{{ $options.static.mdiClose }}</v-icon>
             </v-btn>
           </template>
 
           <template v-if="isStatusCreated">
             <v-btn icon @click="updateToSubmitted(item)">
-              <v-icon class="greyicon">{{ $options.static.mdiCheck }}</v-icon>
+              <v-icon>{{ $options.static.mdiCheck }}</v-icon>
             </v-btn>
-
-            <v-btn icon @click="deleteItem(item)">
-              <v-icon color="error">{{
-                $options.static.mdiDeleteForever
-              }}</v-icon>
+            <v-btn color="error" icon @click="deleteItem(item)">
+              <v-icon>{{ $options.static.mdiDeleteForever }}</v-icon>
             </v-btn>
           </template>
         </template>
 
         <v-btn v-if="type === 'update'" icon @click="editItem(item)">
-          <v-icon class="greyicon">{{ $options.static.mdiPencil }}</v-icon>
+          <v-icon>{{ $options.static.mdiPencil }}</v-icon>
         </v-btn>
       </template>
 
@@ -270,9 +268,5 @@ export default {
 <style scoped>
 .item-table >>> td {
   font-size: 0.95em;
-}
-
-.greyicon {
-  color: rgba(0, 0, 0, 0.54) !important;
 }
 </style>
