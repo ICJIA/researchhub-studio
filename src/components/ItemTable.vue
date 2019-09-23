@@ -25,46 +25,48 @@
       <template #item.date="{ item }">{{ item.date.slice(0, 10) }}</template>
 
       <template #item.action="{ item }">
-        <PreviewDialog
-          :id="item._id"
-          :content-type="contentType"
-          :icon="true"
-          :status="status"
-        >
-          <v-btn icon @click="dispatchAction('fetchItem', { id: item._id })">
-            <v-icon>{{ $options.static.mdiEye }}</v-icon>
+        <div class="d-flex justify-end">
+          <PreviewDialog
+            :id="item._id"
+            :content-type="contentType"
+            :icon="true"
+            :status="status"
+          >
+            <v-btn icon @click="dispatchAction('fetchItem', { id: item._id })">
+              <v-icon>{{ $options.static.mdiEye }}</v-icon>
+            </v-btn>
+          </PreviewDialog>
+
+          <template v-if="type === 'manage'">
+            <template v-if="isStatusPublished && !isRoleAuthor">
+              <v-btn icon @click="updateToSubmitted(item)">
+                <v-icon>{{ $options.static.mdiClose }}</v-icon>
+              </v-btn>
+            </template>
+
+            <template v-if="isStatusSubmitted">
+              <v-btn icon @click="updateToPublished(item)">
+                <v-icon>{{ $options.static.mdiCheck }}</v-icon>
+              </v-btn>
+              <v-btn icon @click="updateToCreated(item)">
+                <v-icon>{{ $options.static.mdiClose }}</v-icon>
+              </v-btn>
+            </template>
+
+            <template v-if="isStatusCreated">
+              <v-btn icon @click="updateToSubmitted(item)">
+                <v-icon>{{ $options.static.mdiCheck }}</v-icon>
+              </v-btn>
+              <v-btn color="error" icon @click="deleteItem(item)">
+                <v-icon>{{ $options.static.mdiDeleteForever }}</v-icon>
+              </v-btn>
+            </template>
+          </template>
+
+          <v-btn v-if="type === 'update'" icon @click="editItem(item)">
+            <v-icon>{{ $options.static.mdiPencil }}</v-icon>
           </v-btn>
-        </PreviewDialog>
-
-        <template v-if="type === 'manage'">
-          <template v-if="isStatusPublished && !isRoleAuthor">
-            <v-btn icon @click="updateToSubmitted(item)">
-              <v-icon>{{ $options.static.mdiClose }}</v-icon>
-            </v-btn>
-          </template>
-
-          <template v-if="isStatusSubmitted">
-            <v-btn icon @click="updateToPublished(item)">
-              <v-icon>{{ $options.static.mdiCheck }}</v-icon>
-            </v-btn>
-            <v-btn icon @click="updateToCreated(item)">
-              <v-icon>{{ $options.static.mdiClose }}</v-icon>
-            </v-btn>
-          </template>
-
-          <template v-if="isStatusCreated">
-            <v-btn icon @click="updateToSubmitted(item)">
-              <v-icon>{{ $options.static.mdiCheck }}</v-icon>
-            </v-btn>
-            <v-btn color="error" icon @click="deleteItem(item)">
-              <v-icon>{{ $options.static.mdiDeleteForever }}</v-icon>
-            </v-btn>
-          </template>
-        </template>
-
-        <v-btn v-if="type === 'update'" icon @click="editItem(item)">
-          <v-icon>{{ $options.static.mdiPencil }}</v-icon>
-        </v-btn>
+        </div>
       </template>
 
       <template #no-results>{{ msgNoResult }}</template>
