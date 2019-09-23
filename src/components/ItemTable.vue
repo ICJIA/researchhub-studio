@@ -175,10 +175,10 @@ export default {
       await this.dispatchAction('fetchItemList', { status: this.status })
       this.loading = false
     },
-    handleUpdate(res, msgSuccess, msgFailure) {
+    handleUpdate(res, msgSuccess, msgFailure, callback = this.loadItemList) {
       if (res && res.status === 200) {
         alert(`✔️${msgSuccess}`)
-        this.loadItemList()
+        callback()
       } else {
         alert(`⚠️${msgFailure}`)
       }
