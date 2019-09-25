@@ -88,6 +88,8 @@ import {
 
 const PreviewDialog = () => import('@/components/PreviewDialog')
 
+const baseURL = process.env.VUE_APP_MAIN_BASE_URL
+
 export default {
   components: {
     PreviewDialog
@@ -215,7 +217,6 @@ export default {
     },
     async updateToPublished({ _id: id, title, slug }) {
       const res = await this.dispatchAction('updateItemToPublished', { id })
-      const baseURL = process.env.VUE_APP_MAIN_BASE_URL
       const msgSuccess =
         `Status updated to "published": ${title}\n\n` +
         `Public link: ${baseURL}/${this.contentType}/${slug}`
@@ -229,7 +230,6 @@ export default {
     },
     async updateToSubmitted({ _id: id, title, slug }) {
       const res = await this.dispatchAction('updateItemToSubmitted', { id })
-      const baseURL = process.env.VUE_APP_MAIN_BASE_URL
       const msgSuccess =
         `Status updated to "submitted": ${title}\n\n` +
         `Preview link: ${baseURL}/preview/${this.contentType}/${slug}`

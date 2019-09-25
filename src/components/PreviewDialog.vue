@@ -67,6 +67,8 @@ const PreviewDialogApp = () => import('@/components/PreviewDialogApp')
 const PreviewDialogArticle = () => import('@/components/PreviewDialogArticle')
 const PreviewDialogDataset = () => import('@/components/PreviewDialogDataset')
 
+const baseURL = process.env.VUE_APP_MAIN_BASE_URL
+
 export default {
   components: {
     BaseViewTitle,
@@ -108,8 +110,8 @@ export default {
     link() {
       if (status !== 'created' && this.item) {
         return (
-          `${process.env.VUE_APP_MAIN_BASE_URL}/` +
-          (this.status === 'published' ? '' : 'preview/') +
+          baseURL +
+          (this.status === 'published' ? '/' : '/preview/') +
           `${this.contentType}/${this.item.slug}`
         )
       } else {
