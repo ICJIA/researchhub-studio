@@ -1,5 +1,5 @@
 <template>
-  <BaseToolbar :menu="isLoggedIn" logo-path="/icjia-logo.png">
+  <BaseToolbar :menu="isLoggedIn" :logo-path="$options.static.logoPath">
     <template #titleExtra>
       <span class="font-weight-light"> Studio</span>
     </template>
@@ -69,6 +69,7 @@ export default {
     }
   },
   static: {
+    logoPath: process.env.BASE_URL + 'icjia-logo.png',
     mdiAlert
   }
 }
