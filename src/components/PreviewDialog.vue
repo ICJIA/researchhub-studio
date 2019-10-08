@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import { main } from '@/config'
 import { fetchItemById as fetchAppById } from '@/services/client.apps'
 import { fetchItemById as fetchArticleById } from '@/services/client.articles'
 import { fetchItemById as fetchDatasetById } from '@/services/client.datasets'
@@ -66,8 +67,6 @@ const BaseViewTitle = () => import('@/components/BaseViewTitle')
 const PreviewDialogApp = () => import('@/components/PreviewDialogApp')
 const PreviewDialogArticle = () => import('@/components/PreviewDialogArticle')
 const PreviewDialogDataset = () => import('@/components/PreviewDialogDataset')
-
-const baseURL = process.env.VUE_APP_MAIN_BASE_URL
 
 export default {
   components: {
@@ -110,7 +109,7 @@ export default {
     link() {
       if (status !== 'created' && this.item) {
         return (
-          baseURL +
+          main.baseURL +
           (this.status === 'published' ? '/' : '/preview/') +
           `${this.contentType}/${this.item.slug}`
         )

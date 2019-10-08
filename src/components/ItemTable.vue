@@ -85,10 +85,9 @@ import {
   mdiMagnify,
   mdiPencil
 } from '@mdi/js'
+import { main } from '@/config'
 
 const PreviewDialog = () => import('@/components/PreviewDialog')
-
-const baseURL = process.env.VUE_APP_MAIN_BASE_URL
 
 export default {
   components: {
@@ -203,10 +202,10 @@ export default {
       }
     },
     async triggerBuildMain(contentType) {
-      const buildHookUrl = process.env.VUE_APP_MAIN_BUILD_HOOK
       const triggerTitle = `Deploy+triggered+by+hook:+New+${contentType}+item+published`
+      const triggerURL = `${main.buildHook}?trigger_title=${triggerTitle}`
 
-      fetch(`${buildHookUrl}?trigger_title=${triggerTitle}`, { method: 'POST' })
+      fetch(triggerURL, { method: 'POST' })
     },
     async updateToCreated({ _id: id, title }) {
       const res = await this.dispatchAction('updateItemToCreated', { id })
@@ -219,7 +218,7 @@ export default {
       const res = await this.dispatchAction('updateItemToPublished', { id })
       const msgSuccess =
         `Status updated to "published": ${title}\n\n` +
-        `Public link: ${baseURL}/${this.contentType}/${slug}`
+        `Public link: ${main.baseURL}/${this.contentType}/${slug}`
       const msgFailure = `Failed to update status: ${title}`
 
       this.handleUpdate(res, msgSuccess, msgFailure, () => {
@@ -232,7 +231,7 @@ export default {
       const res = await this.dispatchAction('updateItemToSubmitted', { id })
       const msgSuccess =
         `Status updated to "submitted": ${title}\n\n` +
-        `Preview link: ${baseURL}/preview/${this.contentType}/${slug}`
+        `Preview link: ${main.baseURL}/preview/${this.contentType}/${slug}`
       const msgFailure = `Failed to update status: ${title}`
 
       this.handleUpdate(res, msgSuccess, msgFailure)

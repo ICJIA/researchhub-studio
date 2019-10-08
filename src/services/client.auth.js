@@ -1,3 +1,4 @@
+import { apiBaseURL } from '@/config'
 import client from './client'
 
 export { login, loginUsingToken, logout }
@@ -10,7 +11,7 @@ export { login, loginUsingToken, logout }
 const login = ({ identifier, password }) =>
   new Promise((resolve, reject) => {
     client
-      .post(`${process.env.VUE_APP_API_BASE_URL}/auth/local`, {
+      .post(`${apiBaseURL}/auth/local`, {
         identifier,
         password
       })
