@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import { main } from '@/config'
 import { fetchItemById as fetchAppById } from '@/services/client.apps'
 import { fetchItemById as fetchArticleById } from '@/services/client.articles'
 import { fetchItemById as fetchDatasetById } from '@/services/client.datasets'
@@ -108,8 +109,8 @@ export default {
     link() {
       if (status !== 'created' && this.item) {
         return (
-          `${process.env.VUE_APP_MAIN_BASE_URL}/` +
-          (this.status === 'published' ? '' : 'preview/') +
+          main.baseURL +
+          (this.status === 'published' ? '/' : '/preview/') +
           `${this.contentType}/${this.item.slug}`
         )
       } else {

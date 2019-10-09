@@ -9,6 +9,7 @@
 
 <script>
 import { mdiHelpCircle } from '@mdi/js'
+import { main } from '@/config'
 
 export default {
   props: {
@@ -23,7 +24,7 @@ export default {
   },
   computed: {
     href() {
-      return `${process.env.VUE_APP_MAIN_BASE_URL}/docs/auth-guide/${this.path}`
+      return `${main.baseURL}/docs/auth-guide/${this.path}`
     }
   },
   static: {
