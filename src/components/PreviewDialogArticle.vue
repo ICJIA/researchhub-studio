@@ -9,7 +9,11 @@
     />
 
     <v-col v-else class="mx-auto mt-6 px-0" cols="12" sm="10" lg="8" xl="7">
-      <ArticleCard :item="item" :preview="true" />
+      <ArticleCard
+        :horizontal="$vuetify.breakpoint.smAndUp"
+        :item="item"
+        :preview="true"
+      />
     </v-col>
   </div>
 </template>

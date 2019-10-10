@@ -7,7 +7,7 @@
       :preview="true"
     />
 
-    <v-col v-else cols="12" lg="6">
+    <v-col v-else cols="12" md="6">
       <DatasetCard :item="item" :preview="true" />
     </v-col>
   </v-col>
