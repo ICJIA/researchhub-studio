@@ -3,7 +3,11 @@
     <AppView v-if="view" :item="item" :preview="true" />
 
     <v-col v-else class="mx-auto" cols="12" sm="6" lg="4">
-      <AppCard :item="item" :preview="true" />
+      <AppCard
+        :horizontal="$vuetify.breakpoint.smOnly"
+        :item="item"
+        :preview="true"
+      />
     </v-col>
   </v-col>
 </template>
