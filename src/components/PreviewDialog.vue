@@ -28,7 +28,7 @@
         </v-btn>
 
         <v-btn class="mx-1" icon @click="closePreview">
-          <v-icon>mdi-close</v-icon>
+          <v-icon>{{ $options.static.mdiClose }}</v-icon>
         </v-btn>
       </v-toolbar>
 
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import { mdiClose } from '@mdi/js'
 import { main } from '@/config'
 import { fetchItemById as fetchAppById } from '@/services/client.apps'
 import { fetchItemById as fetchArticleById } from '@/services/client.articles'
@@ -99,7 +100,8 @@ export default {
       dialog: false,
       view: true,
       item: this.local ? this.$store.state.content.item : null,
-      published: this.status === 'published'
+      published: this.status === 'published',
+      mdiClose
     }
   },
   computed: {
@@ -143,6 +145,9 @@ export default {
           this.item = (await fetchDatasetById(this.id)).data
       }
     }
+  },
+  static: {
+    mdiClose
   }
 }
 </script>
