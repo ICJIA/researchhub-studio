@@ -201,11 +201,8 @@ export default {
         this.handleUpdate(res, msgSuccess, msgFailure)
       }
     },
-    async triggerBuildMain(contentType) {
-      const triggerTitle = `Deploy+triggered+by+hook:+New+${contentType}+item+published`
-      const triggerURL = `${main.buildHook}?trigger_title=${triggerTitle}`
-
-      fetch(triggerURL, { method: 'POST' })
+    async triggerBuildMain() {
+      fetch(main.buildHook, { method: 'POST' })
     },
     async updateToCreated({ _id: id, title }) {
       const res = await this.dispatchAction('updateItemToCreated', { id })
@@ -222,8 +219,7 @@ export default {
       const msgFailure = `Failed to update status: ${title}`
 
       this.handleUpdate(res, msgSuccess, msgFailure, () => {
-        if (this.contentType !== 'datasets')
-          this.triggerBuildMain(this.contentType)
+        if (this.contentType !== 'datasets') this.triggerBuildMain()
         this.loadItemList()
       })
     },
