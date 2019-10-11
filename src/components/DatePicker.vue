@@ -3,7 +3,6 @@
     ref="menu"
     v-model="menu"
     :close-on-content-click="false"
-    full-width
     min-width="290px"
     offset-y
     transition="scale-transition"
