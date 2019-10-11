@@ -27,7 +27,9 @@
           class="input-group--focused pb-4"
           :rules="[rules.required]"
           :type="showPassword ? 'text' : 'password'"
-          :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+          :append-icon="
+            showPassword ? $options.static.mdiEyeOff : $options.static.mdiEye
+          "
           outlined
           @keyup.enter="login"
           @click:append="showPassword = !showPassword"
@@ -49,6 +51,8 @@
 </template>
 
 <script>
+import { mdiEye, mdiEyeOff } from '@mdi/js'
+
 export default {
   data() {
     return {
@@ -77,6 +81,10 @@ export default {
           .catch(() => (this.loginError = true))
       }
     }
+  },
+  static: {
+    mdiEye,
+    mdiEyeOff
   }
 }
 </script>

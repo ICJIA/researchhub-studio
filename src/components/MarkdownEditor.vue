@@ -7,7 +7,7 @@
         <template>{{ ' (Use ' }}</template>
         <a href="https://markdown.icjia.cloud/" target="_blank">
           <template>{{ 'ICJIA markdown editor' }}</template>
-          <v-icon small>mdi-open-in-new</v-icon>
+          <v-icon small>{{ $options.static.mdiOpenInNew }}</v-icon>
         </a>
         <template>{{ ') :' }}</template>
       </span>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { mdiOpenInNew } from '@mdi/js'
 import MarkdownItTexmath from 'markdown-it-texmath'
 
 const mdOpts = {
@@ -140,6 +141,9 @@ export default {
     updateMarkdown() {
       this.$emit('update:markdown', this.markdownLocal)
     }
+  },
+  static: {
+    mdiOpenInNew
   }
 }
 </script>
