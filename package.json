@@ -12,7 +12,7 @@
     "core-js": "^3.1.2",
     "dropzone": "^5.5.1",
     "form-data": "^2.5.1",
-    "icjia-research-lib": "github:icjia/icjia-research-lib#v0.7.0",
+    "icjia-research-lib": "github:icjia/icjia-research-lib#v0.8.0",
     "markdown-it": "^9.0.1",
     "markdown-it-footnote": "^3.0.2",
     "markdown-it-link-attributes": "^2.1.0",
