@@ -12,7 +12,7 @@ const router = new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import('./views/Home.vue'),
+      component: () => import('@/views/Home.vue'),
       meta: {
         auth: true,
         adminOnly: false
@@ -21,7 +21,7 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: () => import('./views/Login.vue'),
+      component: () => import('@/views/Login.vue'),
       meta: {
         auth: false
       }
@@ -29,7 +29,7 @@ const router = new Router({
     {
       path: '/post-new',
       name: 'post new',
-      component: () => import('./views/PostNew.vue'),
+      component: () => import('@/views/PostNew.vue'),
       meta: {
         auth: true,
         adminOnly: true
@@ -38,7 +38,7 @@ const router = new Router({
     {
       path: '/post-update',
       name: 'post update',
-      component: () => import('./views/PostUpdate.vue'),
+      component: () => import('@/views/PostUpdate.vue'),
       meta: {
         auth: true,
         adminOnly: true
@@ -47,7 +47,7 @@ const router = new Router({
     {
       path: '/manage',
       name: 'manage',
-      component: () => import('./views/Manage.vue'),
+      component: () => import('@/views/Manage.vue'),
       meta: {
         auth: true,
         adminOnly: false
@@ -56,7 +56,7 @@ const router = new Router({
     {
       path: '/create',
       name: 'create',
-      component: () => import('./views/Create.vue'),
+      component: () => import('@/views/Create.vue'),
       meta: {
         auth: true,
         adminOnly: false
@@ -65,7 +65,7 @@ const router = new Router({
     {
       path: '/update',
       name: 'update',
-      component: () => import('./views/Update.vue'),
+      component: () => import('@/views/Update.vue'),
       meta: {
         auth: true,
         adminOnly: false
