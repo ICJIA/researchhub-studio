@@ -128,7 +128,7 @@ const actions = {
     const item = getters.itemToPost
     if (contentType === 'apps')
       item.contributors = [{ title: 'ICJIA R&A staff' }]
-    await createItem(contentType, getters.itemToPost)
+    return await createItem(contentType, getters.itemToPost)
   },
   async updateItem({ state, getters }, contentType) {
     return await updateItem(contentType, state.itemId, getters.itemToPost)
