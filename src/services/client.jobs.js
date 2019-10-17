@@ -11,7 +11,8 @@ export { createItem, deleteItem, updateItem, updateItemStatus, uploadFile }
 const createItem = async (contentType, item) =>
   await client
     .post(`/${contentType}`, { ...item, status: item.status || 'created' })
-    .catch(err => console.error(err))
+    .then(res => res)
+    .catch(err => err.response)
 
 /**
  * Delete an item of the given content type and id.
@@ -30,7 +31,8 @@ const deleteItem = async (contentType, id) =>
 const updateItem = async (contentType, id, item) =>
   await client
     .put(`/${contentType}/${id}`, item)
-    .catch(err => console.error(err))
+    .then(res => res)
+    .catch(err => err.response)
 
 /**
  * Update an item status.
