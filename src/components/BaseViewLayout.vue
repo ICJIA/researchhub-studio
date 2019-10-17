@@ -9,7 +9,7 @@
 
           <AuthorGuideButton
             v-if="isAuthor"
-            :path="`tutorials/${page.toLowerCase()}-article`"
+            :path="`tutorials/${page.toLowerCase()}-article.html`"
             text="Go to tutorial page"
           />
         </v-row>
