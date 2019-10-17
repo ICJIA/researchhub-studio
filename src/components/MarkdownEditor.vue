@@ -52,10 +52,15 @@ const mdLinkAttrOpts = {
   }
 }
 
+const mdMultimdTableOpts = {
+  enableMultilineRows: true,
+  enableRowspan: true
+}
+
 const md = require('markdown-it')(mdOpts)
   .use(require('markdown-it-footnote'))
   .use(require('markdown-it-link-attributes'), mdLinkAttrOpts)
-  .use(require('markdown-it-multimd-table'))
+  .use(require('markdown-it-multimd-table'), mdMultimdTableOpts)
 
 const loadFromCDN = (tagName, attrs) => {
   const el = document.createElement(tagName)
