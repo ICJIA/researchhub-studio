@@ -52,6 +52,7 @@
 
 <script>
 import { mdiEye, mdiEyeOff } from '@mdi/js'
+import NProgress from 'nprogress'
 
 export default {
   data() {
@@ -78,7 +79,10 @@ export default {
             password: this.password
           })
           .then(() => this.$router.push('/'))
-          .catch(() => (this.loginError = true))
+          .catch(() => {
+            this.loginError = true
+            NProgress.done()
+          })
       }
     }
   },
