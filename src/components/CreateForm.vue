@@ -14,7 +14,11 @@
             v-model="item.title"
             label="Title"
             counter
-            :rules="[rules.required]"
+            :rules="[
+              rules.noLeadingWhitespace,
+              rules.noTrailingWhitespace,
+              rules.required
+            ]"
             @keyup="titleToSlug"
           />
         </v-col>
@@ -310,6 +314,10 @@ export default {
       item: { ...initItem },
       previewKey: 0,
       rules: {
+        noLeadingWhitespace: value =>
+          value.charAt(0) !== ' ' || 'Delete leading whitespace.',
+        noTrailingWhitespace: value =>
+          value.slice(-1) !== ' ' || 'Delete trailing whitespace.',
         required: value => !!value || 'Required.',
         timeperiod: value =>
           /^\d{4}-\d{4}$/g.test(value) || 'Correct format: yyyy-yyyy'

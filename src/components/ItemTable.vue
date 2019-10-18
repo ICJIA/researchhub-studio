@@ -212,16 +212,18 @@ export default {
       this.handleUpdate(res, msgSuccess, msgFailure)
     },
     async updateToPublished({ _id: id, title, slug }) {
-      const res = await this.dispatchAction('updateItemToPublished', { id })
-      const msgSuccess =
-        `Status updated to "published": ${title}\n\n` +
-        `Public link: ${main.baseURL}/${this.contentType}/${slug}`
-      const msgFailure = `Failed to update status: ${title}`
+      if (confirm('Publishing an item is considered final. Are you sure?')) {
+        const res = await this.dispatchAction('updateItemToPublished', { id })
+        const msgSuccess =
+          `Status updated to "published": ${title}\n\n` +
+          `Public link: ${main.baseURL}/${this.contentType}/${slug}`
+        const msgFailure = `Failed to update status: ${title}`
 
-      this.handleUpdate(res, msgSuccess, msgFailure, () => {
-        if (this.contentType !== 'datasets') this.triggerBuildMain()
-        this.loadItemList()
-      })
+        this.handleUpdate(res, msgSuccess, msgFailure, () => {
+          if (this.contentType !== 'datasets') this.triggerBuildMain()
+          this.loadItemList()
+        })
+      }
     },
     async updateToSubmitted({ _id: id, title, slug }) {
       const res = await this.dispatchAction('updateItemToSubmitted', { id })
