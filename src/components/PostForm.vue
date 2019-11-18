@@ -20,12 +20,7 @@
         </v-col>
 
         <v-col class="px-4 pt-4" cols="10">
-          <MyDropzone
-            key="DropzoneJson"
-            ref="DropzoneJson"
-            file-types=".json"
-            :update="update"
-          >
+          <MyDropzone ref="DropzoneJson" file-types=".json" :update="update">
             <template #title>{{ 'JSON file' }}</template>
             <template #message>{{ $options.static.dropzoneMsgJson }}</template>
           </MyDropzone>
@@ -58,7 +53,6 @@
 
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
-              key="DropzoneImages"
               ref="DropzoneImages"
               file-types=".jpg, .jpeg, .png"
               :update="update"
@@ -70,7 +64,6 @@
 
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
-              key="DropzoneMarkdown"
               ref="DropzoneMarkdown"
               file-types=".md"
               :update="update"
@@ -86,7 +79,6 @@
         <template v-if="contentType === 'datasets'">
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
-              key="DropzoneDatafile"
               ref="DropzoneDatafile"
               file-types=".csv"
               :update="update"
