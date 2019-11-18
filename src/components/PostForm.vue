@@ -212,6 +212,7 @@ export default {
       this.$store.dispatch('content/setItem', item)
       await this.$nextTick()
       this.saved = true
+      this.rerenderPreview()
     }
   },
   static: {
