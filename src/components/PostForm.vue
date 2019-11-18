@@ -57,8 +57,10 @@
               file-types=".jpg, .jpeg, .png"
               :update="update"
             >
-              <template>{{ 'Figures' }}</template>
-              <template>{{ $options.static.dropzoneMsgImages }}</template>
+              <template #title>{{ 'Figures' }}</template>
+              <template #message>{{
+                $options.static.dropzoneMsgImages
+              }}</template>
             </MyDropzone>
           </v-col>
 
