@@ -76,6 +76,35 @@
               }}</template>
             </MyDropzone>
           </v-col>
+
+          <template v-if="update">
+            <v-col class="px-4 pt-4" cols="10">
+              <MyDropzone
+                ref="DropzoneMainfile"
+                file-types=".pdf"
+                :max-filesize="5"
+                :update="update"
+              >
+                <template #title>{{ 'Main file' }}</template>
+                <template #message>{{
+                  $options.static.dropzoneMsgPDF
+                }}</template>
+              </MyDropzone>
+            </v-col>
+
+            <v-col class="px-4 pt-4" cols="10">
+              <MyDropzone
+                ref="DropzoneExtrafile"
+                :max-filesize="10"
+                :update="update"
+              >
+                <template #title>{{ 'Extra file' }}</template>
+                <template #message>{{
+                  $options.static.dropzoneMsgFile
+                }}</template>
+              </MyDropzone>
+            </v-col>
+          </template>
         </template>
 
         <template v-if="contentType === 'datasets'">
