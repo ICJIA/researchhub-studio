@@ -86,8 +86,8 @@
         <template v-if="contentType === 'datasets'">
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
-              key="DropzoneData"
-              ref="DropzoneData"
+              key="DropzoneDatafile"
+              ref="DropzoneDatafile"
               file-types=".csv"
               :update="update"
             >
