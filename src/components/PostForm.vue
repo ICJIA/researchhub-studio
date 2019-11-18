@@ -20,12 +20,7 @@
         </v-col>
 
         <v-col class="px-4 pt-4" cols="10">
-          <MyDropzone
-            key="DropzoneJson"
-            ref="DropzoneJson"
-            file-types=".json"
-            :update="update"
-          >
+          <MyDropzone ref="DropzoneJson" file-types=".json" :update="update">
             <template #title>{{ 'JSON file' }}</template>
             <template #message>{{ $options.static.dropzoneMsgJson }}</template>
           </MyDropzone>
@@ -58,19 +53,19 @@
 
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
-              key="DropzoneImages"
               ref="DropzoneImages"
               file-types=".jpg, .jpeg, .png"
               :update="update"
             >
-              <template>{{ 'Figures' }}</template>
-              <template>{{ $options.static.dropzoneMsgImages }}</template>
+              <template #title>{{ 'Figures' }}</template>
+              <template #message>{{
+                $options.static.dropzoneMsgImages
+              }}</template>
             </MyDropzone>
           </v-col>
 
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
-              key="DropzoneMarkdown"
               ref="DropzoneMarkdown"
               file-types=".md"
               :update="update"
@@ -81,13 +76,41 @@
               }}</template>
             </MyDropzone>
           </v-col>
+
+          <template v-if="update">
+            <v-col class="px-4 pt-4" cols="10">
+              <MyDropzone
+                ref="DropzoneMainfile"
+                file-types=".pdf"
+                :max-filesize="5"
+                :update="update"
+              >
+                <template #title>{{ 'Main file' }}</template>
+                <template #message>{{
+                  $options.static.dropzoneMsgPDF
+                }}</template>
+              </MyDropzone>
+            </v-col>
+
+            <v-col class="px-4 pt-4" cols="10">
+              <MyDropzone
+                ref="DropzoneExtrafile"
+                :max-filesize="10"
+                :update="update"
+              >
+                <template #title>{{ 'Extra file' }}</template>
+                <template #message>{{
+                  $options.static.dropzoneMsgFile
+                }}</template>
+              </MyDropzone>
+            </v-col>
+          </template>
         </template>
 
         <template v-if="contentType === 'datasets'">
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
-              key="DropzoneData"
-              ref="DropzoneData"
+              ref="DropzoneDatafile"
               file-types=".csv"
               :update="update"
             >
@@ -212,6 +235,7 @@ export default {
       this.$store.dispatch('content/setItem', item)
       await this.$nextTick()
       this.saved = true
+      this.rerenderPreview()
     }
   },
   static: {

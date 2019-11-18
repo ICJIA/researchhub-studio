@@ -60,7 +60,7 @@ export default {
   computed: {
     dropzoneOptions() {
       let options = {
-        url: 'https://httpbin.org/post',
+        url: '/post',
         thumbnailWidth: 150,
         acceptedFiles: this.fileTypes,
         addRemoveLinks: true,
