@@ -13,8 +13,8 @@
 </template>
 
 <script>
-const AppCard = () => import('icjia-research-lib').then(m => m.AppCard)
-const AppView = () => import('icjia-research-lib').then(m => m.AppView)
+const AppCard = () => import('researchhub-lib').then(m => m.AppCard)
+const AppView = () => import('researchhub-lib').then(m => m.AppView)
 
 export default {
   components: {

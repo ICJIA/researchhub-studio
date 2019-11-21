@@ -14,8 +14,8 @@
 </template>
 
 <script>
-const DatasetCard = () => import('icjia-research-lib').then(m => m.DatasetCard)
-const DatasetView = () => import('icjia-research-lib').then(m => m.DatasetView)
+const DatasetCard = () => import('researchhub-lib').then(m => m.DatasetCard)
+const DatasetView = () => import('researchhub-lib').then(m => m.DatasetView)
 
 export default {
   components: {
