@@ -38,7 +38,7 @@
 
 <script>
 import { mdiOpenInNew } from '@mdi/js'
-import { initTexmath } from 'icjia-research-lib/src/utils/texmath'
+import { initTexmath } from 'researchhub-lib/src/utils/texmath'
 
 const mdOpts = {
   html: true,
