@@ -11,7 +11,6 @@
     "axios": "^0.19.0",
     "core-js": "^3.6.0",
     "dropzone": "^5.5.1",
-    "form-data": "^2.5.1",
     "markdown-it": "^10.0.0",
     "markdown-it-footnote": "^3.0.2",
     "markdown-it-link-attributes": "^3.0.0",
