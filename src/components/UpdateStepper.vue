@@ -18,19 +18,21 @@
       </div>
 
       <template v-if="type === 'post'">
-        <v-radio-group
-          v-model="status"
-          label="Status:"
-          class="justify-center text-capitalize mt-2 pt-0"
-          row
-        >
-          <v-radio
-            v-for="statusOption in $options.static.statusOptions"
-            :key="statusOption"
-            :label="statusOption"
-            :value="statusOption"
-          ></v-radio>
-        </v-radio-group>
+        <v-row justify="center" no-gutters>
+          <v-radio-group
+            v-model="status"
+            label="Status:"
+            class="text-capitalize mt-2 pt-0"
+            row
+          >
+            <v-radio
+              v-for="statusOption in $options.static.statusOptions"
+              :key="statusOption"
+              :label="statusOption"
+              :value="statusOption"
+            ></v-radio>
+          </v-radio-group>
+        </v-row>
 
         <ItemTable type="update" :content-type="contentType" :status="status" />
       </template>
