@@ -136,7 +136,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import formMixin from '@/mixins/formMixin'
 
 import dropzoneMsgs from '@/consts/dropzoneMsgs'
 import { statusOptions } from '@/consts/fieldOptions'
@@ -145,6 +144,7 @@ import addDropzoneFiles from '@/utils/addDropzoneFiles'
 import getDropzoneFilelist from '@/utils/getDropzoneFilelist'
 import getDropzoneList from '@/utils/getDropzoneList'
 import removeDropzoneFiles from '@/utils/removeDropzoneFiles'
+import submitForm from '@/utils/submitForm'
 
 const BaseForm = () => import('@/components/BaseForm')
 const MyDropzone = () => import('@/components/MyDropzone')
@@ -156,7 +156,6 @@ export default {
     MyDropzone,
     PreviewDialog
   },
-  mixins: [formMixin],
   props: {
     contentType: {
       type: String,
@@ -203,17 +202,15 @@ export default {
     this.dropzoneList = getDropzoneList(this.$refs)
   },
   methods: {
-    async parseItem() {
-      return {
-        status: this.statusLocal,
-        ...this.item,
-        ...(await addDropzoneFiles(this.dropzoneList))
-      }
+    async onMain() {
+      await submitForm({
+        contentType: this.contentType,
+        router: this.$router,
+        store: this.$store,
+        update: this.update
+      })
     },
-    rerenderPreview() {
-      this.previewKey += 1
-    },
-    async resetItem() {
+    async onReset() {
       if (this.update) {
         await this.$store.dispatch('content/fetchItem', {
           contentType: this.contentType,
@@ -225,6 +222,25 @@ export default {
       }
       if (this.dropzoneList) removeDropzoneFiles(this.dropzoneList)
       this.saved = false
+    },
+    async onSave() {
+      await this.saveItem()
+      if (this.saved) {
+        if (this.update) this.saveFiles()
+        alert('✔️Changes saved. Try preview.')
+      } else {
+        alert('⚠️Missing required information!')
+      }
+    },
+    async parseItem() {
+      return {
+        status: this.statusLocal,
+        ...this.item,
+        ...(await addDropzoneFiles(this.dropzoneList))
+      }
+    },
+    rerenderPreview() {
+      this.previewKey += 1
     },
     saveFiles() {
       const filelist = getDropzoneFilelist(this.dropzoneList)

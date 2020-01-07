@@ -251,7 +251,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import formMixin from '@/mixins/formMixin'
 
 import dropzoneMsgs from '@/consts/dropzoneMsgs'
 import emptyItem from '@/consts/emptyItem'
@@ -267,6 +266,7 @@ import getDropzoneList from '@/utils/getDropzoneList'
 import parseItem from '@/utils/parseItem'
 import prepareItem from '@/utils/prepareItem'
 import removeDropzoneFiles from '@/utils/removeDropzoneFiles'
+import submitForm from '@/utils/submitForm'
 
 const BaseForm = () => import('@/components/BaseForm')
 const CreateFormAppFields = () => import('@/components/CreateFormAppFields')
@@ -296,7 +296,6 @@ export default {
     MyDropzone,
     PreviewDialog
   },
-  mixins: [formMixin],
   props: {
     contentType: {
       type: String,
@@ -353,19 +352,15 @@ export default {
     this.dropzoneList = getDropzoneList(this.$refs)
   },
   methods: {
-    async parseItem() {
-      return {
-        ...parseItem(this.item),
-        ...(await addDropzoneFiles(this.dropzoneList))
-      }
+    async onMain() {
+      await submitForm({
+        contentType: this.contentType,
+        router: this.$router,
+        store: this.$store,
+        update: this.update
+      })
     },
-    rerenderForm() {
-      this.formKey += 1
-    },
-    rerenderPreview() {
-      this.previewKey += 1
-    },
-    async resetItem() {
+    async onReset() {
       if (this.update) {
         await this.$store.dispatch('content/fetchItem', {
           contentType: this.contentType,
@@ -379,6 +374,27 @@ export default {
       removeDropzoneFiles(this.dropzoneList)
       this.rerenderForm()
       this.saved = false
+    },
+    async onSave() {
+      await this.saveItem()
+      if (this.saved) {
+        if (this.update) this.saveFiles()
+        alert('✔️Changes saved. Try preview.')
+      } else {
+        alert('⚠️Missing required information!')
+      }
+    },
+    async parseItem() {
+      return {
+        ...parseItem(this.item),
+        ...(await addDropzoneFiles(this.dropzoneList))
+      }
+    },
+    rerenderForm() {
+      this.formKey += 1
+    },
+    rerenderPreview() {
+      this.previewKey += 1
     },
     saveFiles() {
       if (this.$refs.form.validate()) {
