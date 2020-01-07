@@ -232,13 +232,6 @@ export default {
         alert('⚠️Missing required information!')
       }
     },
-    async parseItem() {
-      return {
-        status: this.statusLocal,
-        ...this.item,
-        ...(await addDropzoneFiles(this.dropzoneList))
-      }
-    },
     rerenderPreview() {
       this.previewKey += 1
     },
@@ -247,7 +240,11 @@ export default {
       this.$store.dispatch('content/setFilelist', filelist)
     },
     async saveItem() {
-      const item = await this.parseItem()
+      const item = {
+        status: this.statusLocal,
+        ...this.item,
+        ...(await addDropzoneFiles(this.dropzoneList))
+      }
       this.$store.dispatch('content/setItem', item)
       await this.$nextTick()
       this.saved = true

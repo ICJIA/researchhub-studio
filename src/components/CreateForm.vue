@@ -384,12 +384,6 @@ export default {
         alert('⚠️Missing required information!')
       }
     },
-    async parseItem() {
-      return {
-        ...parseItem(this.item),
-        ...(await addDropzoneFiles(this.dropzoneList))
-      }
-    },
     rerenderForm() {
       this.formKey += 1
     },
@@ -404,7 +398,10 @@ export default {
     },
     async saveItem() {
       if (this.$refs.form.validate()) {
-        const item = await this.parseItem()
+        const item = {
+          ...parseItem(this.item),
+          ...(await addDropzoneFiles(this.dropzoneList))
+        }
         this.$store.dispatch('content/setItem', item)
         await this.$nextTick()
         this.saved = true
