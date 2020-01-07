@@ -1,5 +1,5 @@
 <template>
-  <BaseStepper :step-num-total="2" @stepper-navigate-before="resetItem">
+  <BaseStepper :step-num-total="2" @stepper-navigate-before="onNavigateBefore">
     <template #stepHeader1>{{ 'Select content type' }}</template>
 
     <template #stepItem1>
@@ -38,7 +38,8 @@
 
 <script>
 import { statusOptions } from '@/consts/fieldOptions'
-import stepperMixin from '@/mixins/stepperMixin'
+import resetItem from '@/utils/resetItem'
+import setupStepper from '@/utils/setupStepper'
 
 const BaseStepper = () => import('@/components/BaseStepper')
 const ContentTypeSelector = () => import('@/components/ContentTypeSelector')
@@ -50,7 +51,6 @@ export default {
     ContentTypeSelector,
     ItemTable
   },
-  mixins: [stepperMixin],
   props: {
     type: {
       type: String,
@@ -65,6 +65,14 @@ export default {
   watch: {
     contentType() {
       this.status = 'submitted'
+    }
+  },
+  created() {
+    setupStepper(this)
+  },
+  methods: {
+    onNavigateBefore() {
+      resetItem(this.$store)
     }
   },
   static: {

@@ -1,5 +1,5 @@
 <template>
-  <BaseStepper :step-num-total="2" @stepper-navigate-before="resetItem">
+  <BaseStepper :step-num-total="2" @stepper-navigate-before="onNavigateBefore">
     <template #stepHeader1>{{ 'Select content type' }}</template>
 
     <template #stepHeader2>{{ 'Post' }}</template>
@@ -18,7 +18,9 @@
 </template>
 
 <script>
-import stepperMixin from '@/mixins/stepperMixin'
+import resetItem from '@/utils/resetItem'
+import setupStepper from '@/utils/setupStepper'
+
 const BaseStepper = () => import('@/components/BaseStepper')
 const PostForm = () => import('@/components/PostForm')
 const ContentTypeSelector = () => import('@/components/ContentTypeSelector')
@@ -29,6 +31,13 @@ export default {
     PostForm,
     ContentTypeSelector
   },
-  mixins: [stepperMixin]
+  created() {
+    setupStepper(this)
+  },
+  methods: {
+    onNavigateBefore() {
+      resetItem(this.$store)
+    }
+  }
 }
 </script>
