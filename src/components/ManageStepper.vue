@@ -1,5 +1,5 @@
 <template>
-  <BaseStepper :step-num-total="2" @stepper-navigate-before="resetItem">
+  <BaseStepper :step-num-total="2" @stepper-navigate-before="onNavigateBefore">
     <template #stepHeader1>{{ 'Select content type' }}</template>
 
     <template #stepItem1>
@@ -17,19 +17,21 @@
         <span class="text-capitalize">{{ contentType }}</span>
       </div>
 
-      <v-radio-group
-        v-model="status"
-        class="justify-center text-capitalize mt-2 pt-0"
-        label="Status:"
-        row
-      >
-        <v-radio
-          v-for="statusOption in $options.static.statusOptions"
-          :key="statusOption"
-          :label="statusOption"
-          :value="statusOption"
-        ></v-radio>
-      </v-radio-group>
+      <v-row justify="center" no-gutters>
+        <v-radio-group
+          v-model="status"
+          class="text-capitalize mt-2 pt-0"
+          label="Status:"
+          row
+        >
+          <v-radio
+            v-for="statusOption in $options.static.statusOptions"
+            :key="statusOption"
+            :label="statusOption"
+            :value="statusOption"
+          ></v-radio>
+        </v-radio-group>
+      </v-row>
 
       <ItemTable :content-type="contentType" :status="status" type="manage" />
     </template>
@@ -38,7 +40,8 @@
 
 <script>
 import { statusOptions } from '@/consts/fieldOptions'
-import stepperMixin from '@/mixins/stepperMixin'
+import resetItem from '@/utils/resetItem'
+import setupStepper from '@/utils/setupStepper'
 
 const BaseStepper = () => import('@/components/BaseStepper')
 const ContentTypeSelector = () => import('@/components/ContentTypeSelector')
@@ -50,7 +53,6 @@ export default {
     ContentTypeSelector,
     ItemTable
   },
-  mixins: [stepperMixin],
   props: {
     type: {
       type: String,
@@ -65,6 +67,14 @@ export default {
   watch: {
     contentType() {
       this.status = 'submitted'
+    }
+  },
+  created() {
+    setupStepper(this)
+  },
+  methods: {
+    onNavigateBefore() {
+      resetItem(this.$store)
     }
   },
   static: {
