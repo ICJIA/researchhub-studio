@@ -44,6 +44,7 @@ export default {
 <style>
 .error-page {
   font-size: 1.25rem;
+  font-family: 'Lato';
   text-align: center;
   margin-top: 5%;
 }
