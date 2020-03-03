@@ -3,8 +3,8 @@
     <TheToolbar />
 
     <v-content>
+      <AlertCOVID ref="alert" />
       <router-view v-if="alive" />
-
       <ServerError v-else />
     </v-content>
 
@@ -15,12 +15,14 @@
 <script>
 import { healthCheck } from '@/services/client.utils'
 import TheToolbar from './components/TheToolbar'
+const AlertCOVID = () => import('researchhub-lib').then(m => m.AlertCOVID)
 const ServerError = () => import('./components/ServerError')
 const TheFooter = () => import('./components/TheFooter')
 
 export default {
   name: 'App',
   components: {
+    AlertCOVID,
     ServerError,
     TheToolbar,
     TheFooter
@@ -33,6 +35,11 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.state.auth.isLoggedIn
+    }
+  },
+  watch: {
+    $route() {
+      if (this.$refs.alert) this.$refs.alert.reset()
     }
   },
   async created() {
