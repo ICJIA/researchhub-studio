@@ -22,11 +22,16 @@ const fetchOneById = async ({ contentType, id, fields }) =>
  * @param {String} args.contentType
  * @param {String} args.status
  */
-const fetchListByStatus = async ({ contentType, fields, status }) =>
-  await fetchData(contentType)({
-    params: `sort: "date:desc", where: { status: "${status}" }`,
+const fetchListByStatus = async ({ contentType, fields, status }) => {
+  const res = await fetchData(contentType)({
+    params: `where: { status: "${status}" }`,
     fields
   })
+
+  const data = res.data.sort((a, b) => new Date(b.date) - new Date(a.date))
+
+  return { ...res, data }
+}
 
 /**
  * Fetch data from API server
