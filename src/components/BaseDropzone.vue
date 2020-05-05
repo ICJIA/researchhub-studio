@@ -331,6 +331,7 @@ export default {
 
 .base-dropzone .dz-preview .dz-image:hover img {
   transform: none;
+  filter: none;
   -webkit-filter: none;
 }
 
