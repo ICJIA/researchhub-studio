@@ -48,7 +48,7 @@ const getSplash = async ({ splash }) => {
   return files.length
     ? {
         splash: files[0].dataURL,
-        thumbnail: await createThumbnail(files[0].dataURL, 240)
+        thumbnail: await createThumbnail(files[0].dataURL, 500)
       }
     : {}
 }
