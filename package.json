@@ -16,7 +16,7 @@
     "markdown-it-link-attributes": "^3.0.0",
     "markdown-it-multimd-table": "^4.0.3",
     "nprogress": "^0.2.0",
-    "researchhub-lib": "github:icjia/researchhub-lib#v1.1.6",
+    "researchhub-lib": "github:icjia/researchhub-lib#v1.1.5",
     "vue": "^2.6.12",
     "vue-router": "^3.4.7",
     "vuetify": "^2.3.14",
