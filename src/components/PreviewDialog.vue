@@ -74,26 +74,26 @@ export default {
     BaseViewTitle,
     PreviewDialogApp,
     PreviewDialogArticle,
-    PreviewDialogDataset
+    PreviewDialogDataset,
   },
   props: {
     contentType: {
       type: String,
-      default: ''
+      default: '',
     },
     icon: Boolean,
     id: {
       type: String,
-      default: ''
+      default: '',
     },
     local: {
       type: Boolean,
-      default: false
+      default: false,
     },
     status: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
@@ -101,7 +101,7 @@ export default {
       view: true,
       item: this.local ? this.$store.state.content.item : null,
       published: this.status === 'published',
-      mdiClose
+      mdiClose,
     }
   },
   computed: {
@@ -112,7 +112,7 @@ export default {
       if (status !== 'created' && this.item) {
         let link
         if (this.status === 'published') {
-          link = main.baseURL + `${this.contentType}/${this.item.slug}`
+          link = main.baseURL + `/${this.contentType}/${this.item.slug}`
         } else {
           return (
             'https://preview.icjia.cloud/' +
@@ -123,12 +123,12 @@ export default {
       } else {
         return ''
       }
-    }
+    },
   },
   watch: {
     async id() {
       if (!this.local) await this.reload()
-    }
+    },
   },
   async created() {
     if (!this.local) await this.reload()
@@ -149,11 +149,11 @@ export default {
         case 'datasets':
           this.item = (await fetchDatasetById(this.id)).data
       }
-    }
+    },
   },
   static: {
-    mdiClose
-  }
+    mdiClose,
+  },
 }
 </script>
 
