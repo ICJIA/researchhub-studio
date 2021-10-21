@@ -8,5 +8,5 @@ module.exports = {
       'https://icjia.illinois.gov/researchhub',
     buildHook: process.env.VUE_APP_MAIN_BUILD_HOOK
   },
-  publicPath: process.env.VUE_APP_PUBLIC_PATH || '/researchhub/studio/'
+  publicPath: process.env.VUE_APP_PUBLIC_PATH || '/'
 }
