@@ -110,11 +110,16 @@ export default {
     },
     link() {
       if (status !== 'created' && this.item) {
-        return (
-          main.baseURL +
-          (this.status === 'published' ? '/' : '/preview/') +
-          `${this.contentType}/${this.item.slug}`
-        )
+        let link
+        if (this.status === 'published') {
+          link = main.baseURL + `${this.contentType}/${this.item.slug}`
+        } else {
+          return (
+            'https://preview.icjia.cloud/' +
+            `${this.contentType}/${this.item.slug}`
+          )
+        }
+        return link
       } else {
         return ''
       }
