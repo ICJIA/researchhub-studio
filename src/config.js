@@ -5,7 +5,7 @@ module.exports = {
   main: {
     baseURL:
       process.env.VUE_APP_MAIN_BASE_URL ||
-      'https://icjia.illinois.gov/researchhub',
+      'https://icjia.illinois.gov',
     buildHook: process.env.VUE_APP_MAIN_BUILD_HOOK
   },
   publicPath: process.env.VUE_APP_PUBLIC_PATH || '/'
