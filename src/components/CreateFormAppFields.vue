@@ -23,17 +23,17 @@
 export default {
   model: {
     prop: 'item',
-    event: 'change'
+    event: 'change',
   },
   props: {
     item: {
       type: Object,
-      default: null
+      default: null,
     },
     rules: {
       type: Object,
-      default: null
-    }
-  }
+      default: null,
+    },
+  },
 }
 </script>

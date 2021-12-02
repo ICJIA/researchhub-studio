@@ -28,13 +28,13 @@ export default {
   props: {
     date: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
       dateLocal: null,
-      menu: false
+      menu: false,
     }
   },
   mounted() {
@@ -47,10 +47,10 @@ export default {
     onInput(e) {
       this.menu = false
       this.$emit('update:date', e)
-    }
+    },
   },
   static: {
-    mdiCalendar
-  }
+    mdiCalendar,
+  },
 }
 </script>

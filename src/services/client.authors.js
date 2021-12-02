@@ -17,7 +17,7 @@ const fetchItemsList = async () =>
  */
 const useAuthorsList = ({ data, status }) => ({
   data: getAuthorsList(data),
-  status
+  status,
 })
 
 /**
@@ -27,6 +27,8 @@ const useAuthorsList = ({ data, status }) => ({
  */
 const getAuthorsList = ({ articles }) => [
   ...new Set(
-    articles.map(article => article.authors.map(author => author.title)).flat()
-  )
+    articles
+      .map((article) => article.authors.map((author) => author.title))
+      .flat()
+  ),
 ]

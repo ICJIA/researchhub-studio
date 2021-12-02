@@ -1,6 +1,6 @@
 import contentTypes from '@/consts/contentTypes'
 
-export default vm => {
+export default (vm) => {
   vm.contentType = contentTypes[0]
   vm.contentTypes = contentTypes
 

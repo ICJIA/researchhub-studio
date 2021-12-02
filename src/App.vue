@@ -15,7 +15,7 @@
 <script>
 import { healthCheck } from '@/services/client.utils'
 import TheToolbar from './components/TheToolbar'
-const AlertCOVID = () => import('researchhub-lib').then(m => m.AlertCOVID)
+const AlertCOVID = () => import('researchhub-lib').then((m) => m.AlertCOVID)
 const ServerError = () => import('./components/ServerError')
 const TheFooter = () => import('./components/TheFooter')
 
@@ -25,26 +25,26 @@ export default {
     AlertCOVID,
     ServerError,
     TheToolbar,
-    TheFooter
+    TheFooter,
   },
   data() {
     return {
-      alive: true
+      alive: true,
     }
   },
   computed: {
     loggedIn() {
       return this.$store.state.auth.isLoggedIn
-    }
+    },
   },
   watch: {
     $route() {
       if (this.$refs.alert) this.$refs.alert.reset()
-    }
+    },
   },
   async created() {
     this.alive = await healthCheck()
-  }
+  },
 }
 </script>
 

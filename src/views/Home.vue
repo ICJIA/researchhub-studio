@@ -31,12 +31,12 @@ export default {
   components: {
     AuthorGuideButton,
     BaseViewLayout,
-    HomeTaskCard
+    HomeTaskCard,
   },
   computed: {
     role() {
       return this.$store.state.auth.role
-    }
+    },
   },
   methods: {
     checkPermission(card) {
@@ -45,10 +45,10 @@ export default {
       } else {
         return !card.adminOnly
       }
-    }
+    },
   },
   static: {
-    tasks
-  }
+    tasks,
+  },
 }
 </script>

@@ -11,8 +11,8 @@ export { createItem, deleteItem, updateItem, updateItemStatus, uploadFile }
 const createItem = async (contentType, item) =>
   await client
     .post(`/${contentType}`, { ...item, status: item.status || 'created' })
-    .then(res => res)
-    .catch(err => err.response)
+    .then((res) => res)
+    .catch((err) => err.response)
 
 /**
  * Delete an item of the given content type and id.
@@ -20,7 +20,9 @@ const createItem = async (contentType, item) =>
  * @param {String} id
  */
 const deleteItem = async (contentType, id) =>
-  await client.delete(`/${contentType}/${id}`).catch(err => console.error(err))
+  await client
+    .delete(`/${contentType}/${id}`)
+    .catch((err) => console.error(err))
 
 /**
  * Update an item of the given content type and id with the payload.
@@ -31,8 +33,8 @@ const deleteItem = async (contentType, id) =>
 const updateItem = async (contentType, id, item) =>
   await client
     .put(`/${contentType}/${id}`, item)
-    .then(res => res)
-    .catch(err => err.response)
+    .then((res) => res)
+    .catch((err) => err.response)
 
 /**
  * Update an item status.
@@ -47,10 +49,10 @@ const updateItemStatus = async (contentType, id, status) =>
         contentType: contentType.slice(0, -1),
         params: `where: { id: "${id}" }`,
         key: 'status',
-        value: status
-      })
+        value: status,
+      }),
     })
-    .catch(err => console.error(err))
+    .catch((err) => console.error(err))
 
 /**
  * Uploads a file to the given content type item field.
@@ -94,14 +96,14 @@ const buildUpdateQuery = ({ contentType, params, key, value }) =>
 /**
  * @param {String} str
  */
-const capitalize = str => `${str[0].toUpperCase()}${str.slice(1)}`
+const capitalize = (str) => `${str[0].toUpperCase()}${str.slice(1)}`
 
 /**
  * Delete an uploads file by id.
  * @param {String} id
  */
-const deleteFile = async id =>
-  await client.delete(`/upload/files/${id}`).catch(err => console.error(err))
+const deleteFile = async (id) =>
+  await client.delete(`/upload/files/${id}`).catch((err) => console.error(err))
 
 /**
  * Get a related uploads file id for the given content type item field.
@@ -113,7 +115,7 @@ const deleteFile = async id =>
 const getFileId = async ({ contentType, field, id }) =>
   await fetchData(contentType)({
     params: `id: "${id}"`,
-    fields: [`${field} { id }`]
+    fields: [`${field} { id }`],
   })
 
 /**
@@ -127,7 +129,7 @@ const getFileId = async ({ contentType, field, id }) =>
 const postFile = async ({ file, refId, ref, field }) =>
   await client
     .post('/upload', prepareForm({ file, refId, ref, field }))
-    .catch(err => {
+    .catch((err) => {
       console.error(err)
       alert(`⚠️Failed to upload the file!`)
     })

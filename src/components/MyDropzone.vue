@@ -28,22 +28,22 @@ const BaseDropzone = () => import('@/components/BaseDropzone')
 
 export default {
   components: {
-    BaseDropzone
+    BaseDropzone,
   },
   props: {
     fileTypes: {
       type: String,
-      default: ''
+      default: '',
     },
     maxFilesize: {
       type: Number,
-      default: 0
+      default: 0,
     },
     multipleFiles: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    update: Boolean
+    update: Boolean,
   },
   data() {
     return {
@@ -54,7 +54,7 @@ export default {
       progress: false,
       myProgress: 0,
       isMounted: false,
-      dDuplicate: false
+      dDuplicate: false,
     }
   },
   computed: {
@@ -67,51 +67,51 @@ export default {
         autoProcessQueue: false,
         accept(file, done) {
           done()
-        }
+        },
       }
       if (!this.multipleFiles) options.maxFiles = 1
       if (this.maxFilesize) options.maxFilesize = this.maxFilesize
 
       return options
-    }
+    },
   },
   watch: {
     fileAdded() {
       let that = this
-      setTimeout(function() {
+      setTimeout(function () {
         that.fileAdded = false
       }, 2000)
     },
     error() {
       let that = this
-      setTimeout(function() {
+      setTimeout(function () {
         that.error = false
       }, 2000)
     },
     removedFile() {
       let that = this
-      setTimeout(function() {
+      setTimeout(function () {
         that.removedFile = false
       }, 2000)
     },
     progress() {
       let that = this
-      setTimeout(function() {
+      setTimeout(function () {
         that.progress = false
       }, 2000)
     },
     isMounted() {
       let that = this
-      setTimeout(function() {
+      setTimeout(function () {
         that.isMounted = false
       }, 2000)
     },
     dDuplicate() {
       let that = this
-      setTimeout(function() {
+      setTimeout(function () {
         that.dDuplicate = false
       }, 2000)
-    }
+    },
   },
   methods: {
     vfileAdded(file) {
@@ -133,7 +133,7 @@ export default {
     },
     vdduplicate() {
       this.dDuplicate = true
-    }
-  }
+    },
+  },
 }
 </script>

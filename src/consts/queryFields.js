@@ -14,7 +14,7 @@ const appFields = [
   'citation',
   'funding',
   'articles (sort: "date:desc", where: { status: "published" }) { _id title slug }',
-  'datasets (sort: "date:desc", where: { status: "published" }) { _id title slug }'
+  'datasets (sort: "date:desc", where: { status: "published" }) { _id title slug }',
 ]
 
 const articleFields = [
@@ -35,7 +35,7 @@ const articleFields = [
   'mainfile { name url }',
   'extrafile { name url }',
   'apps (sort: "date:desc", where: { status: "published" }) { _id title slug }',
-  'datasets (sort: "date:desc", where: { status: "published" }) { _id title slug }'
+  'datasets (sort: "date:desc", where: { status: "published" }) { _id title slug }',
 ]
 
 const datasetFields = [
@@ -54,5 +54,5 @@ const datasetFields = [
   'funding',
   'datafile { name url }',
   'apps (sort: "date:desc", where: { status: "published" }) { _id title slug } ',
-  'articles (sort: "date:desc", where: { status: "published" }) { _id title slug } '
+  'articles (sort: "date:desc", where: { status: "published" }) { _id title slug } ',
 ]

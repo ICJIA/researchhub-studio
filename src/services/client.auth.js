@@ -13,14 +13,14 @@ const login = ({ identifier, password }) =>
     client
       .post(`${apiBaseURL}/auth/local`, {
         identifier,
-        password
+        password,
       })
       .then(
-        res => {
+        (res) => {
           loginUsingToken(res.data.jwt)
           resolve(res)
         },
-        error => reject(error)
+        (error) => reject(error)
       )
   })
 
@@ -28,7 +28,7 @@ const login = ({ identifier, password }) =>
  * Log in by using JWT for authorization.
  * @param {String} token
  */
-const loginUsingToken = token =>
+const loginUsingToken = (token) =>
   (client.defaults.headers.common['Authorization'] = `Bearer ${token}`)
 
 /**

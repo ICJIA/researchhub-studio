@@ -33,22 +33,22 @@
 <script>
 import { mdiAlert } from '@mdi/js'
 import { mapState } from 'vuex'
-const BaseToolbar = () => import('researchhub-lib').then(m => m.BaseToolbar)
+const BaseToolbar = () => import('researchhub-lib').then((m) => m.BaseToolbar)
 
 export default {
   components: {
-    BaseToolbar
+    BaseToolbar,
   },
   computed: {
     ...mapState('auth', {
-      isLoggedIn: 'isLoggedIn'
+      isLoggedIn: 'isLoggedIn',
     }),
     views() {
       const views = [
         { name: 'home', path: '' },
         { name: 'create', path: 'create' },
         { name: 'update', path: 'update' },
-        { name: 'manage', path: 'manage' }
+        { name: 'manage', path: 'manage' },
       ]
 
       if (this.$store.state.auth.role === 'Administrator') {
@@ -59,18 +59,18 @@ export default {
       }
 
       return views
-    }
+    },
   },
   methods: {
     logout() {
       this.$store
         .dispatch('auth/logout')
         .then(() => this.$router.push('/login'))
-    }
+    },
   },
   static: {
     logoPath: process.env.BASE_URL + 'icjia-logo.png',
-    mdiAlert
-  }
+    mdiAlert,
+  },
 }
 </script>

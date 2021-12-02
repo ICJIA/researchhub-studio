@@ -22,10 +22,10 @@ const PostStepper = () => import('@/components/PostStepper')
 export default {
   components: {
     BaseViewLayout,
-    PostStepper
+    PostStepper,
   },
   static: {
-    mdiAlert
-  }
+    mdiAlert,
+  },
 }
 </script>

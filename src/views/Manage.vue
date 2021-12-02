@@ -17,7 +17,7 @@ const ManageStepper = () => import('@/components/ManageStepper')
 export default {
   components: {
     BaseViewLayout,
-    ManageStepper
-  }
+    ManageStepper,
+  },
 }
 </script>

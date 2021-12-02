@@ -4,14 +4,14 @@
 
 <script>
 import { github } from '@/config'
-const Footer = () => import('researchhub-lib').then(m => m.Footer)
+const Footer = () => import('researchhub-lib').then((m) => m.Footer)
 
 export default {
   components: {
-    Footer
+    Footer,
   },
   static: {
-    github
-  }
+    github,
+  },
 }
 </script>

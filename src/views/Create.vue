@@ -26,10 +26,10 @@ const CreateStepper = () => import('@/components/CreateStepper')
 export default {
   components: {
     BaseViewLayout,
-    CreateStepper
+    CreateStepper,
   },
   static: {
-    mdiAlert
-  }
+    mdiAlert,
+  },
 }
 </script>

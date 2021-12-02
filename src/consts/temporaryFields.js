@@ -5,5 +5,5 @@ export default [
   'tagString',
   'timeperiodString',
   'timeperiodType',
-  'variableString'
+  'variableString',
 ]

@@ -7,13 +7,13 @@ export default async ({ contentType, router, store, update }) => {
     handleSubmitResponse({
       res: await store.dispatch(`content/updateItem`, contentType),
       router,
-      successMsg: 'Item updated'
+      successMsg: 'Item updated',
     })
   } else {
     handleSubmitResponse({
       res: await store.dispatch(`content/createItem`, contentType),
       router,
-      successMsg: 'New item created'
+      successMsg: 'New item created',
     })
   }
 }

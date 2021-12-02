@@ -92,22 +92,22 @@ import { timeperiodOptions, unitOptions } from '@/consts/fieldOptions'
 export default {
   model: {
     prop: 'item',
-    event: 'change'
+    event: 'change',
   },
   props: {
     item: {
       type: Object,
-      default: null
+      default: null,
     },
     rules: {
       type: Object,
-      default: null
+      default: null,
     },
-    update: Boolean
+    update: Boolean,
   },
   data() {
     return {
-      isAdmin: this.$store.state.auth.role === 'Administrator'
+      isAdmin: this.$store.state.auth.role === 'Administrator',
     }
   },
   created() {
@@ -115,7 +115,7 @@ export default {
   },
   static: {
     timeperiodOptions,
-    unitOptions
-  }
+    unitOptions,
+  },
 }
 </script>

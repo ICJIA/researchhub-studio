@@ -3,15 +3,15 @@ import NProgress from 'nprogress'
 import { apiBaseURL } from '@/config'
 
 const client = axios.create({
-  baseURL: apiBaseURL
+  baseURL: apiBaseURL,
 })
 
-client.interceptors.request.use(config => {
+client.interceptors.request.use((config) => {
   NProgress.start()
   return config
 })
 
-client.interceptors.response.use(response => {
+client.interceptors.response.use((response) => {
   NProgress.done()
   return response
 })

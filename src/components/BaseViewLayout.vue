@@ -29,7 +29,7 @@ const BaseViewTitle = () => import('@/components/BaseViewTitle')
 export default {
   components: {
     AuthorGuideButton,
-    BaseViewTitle
+    BaseViewTitle,
   },
   computed: {
     page() {
@@ -38,7 +38,7 @@ export default {
     },
     isAuthor() {
       return this.$store.state.auth.role === 'Author'
-    }
-  }
+    },
+  },
 }
 </script>

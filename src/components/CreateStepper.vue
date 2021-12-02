@@ -29,11 +29,11 @@ export default {
   components: {
     BaseStepper,
     ContentTypeSelector,
-    CreateForm
+    CreateForm,
   },
   data() {
     return {
-      formKey: 0
+      formKey: 0,
     }
   },
   created() {
@@ -43,7 +43,7 @@ export default {
     onNavigateBefore() {
       resetItem(this.$store)
       this.formKey += 1
-    }
-  }
+    },
+  },
 }
 </script>

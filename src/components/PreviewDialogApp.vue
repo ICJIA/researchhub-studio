@@ -13,20 +13,20 @@
 </template>
 
 <script>
-const AppCard = () => import('researchhub-lib').then(m => m.AppCard)
-const AppView = () => import('researchhub-lib').then(m => m.AppView)
+const AppCard = () => import('researchhub-lib').then((m) => m.AppCard)
+const AppView = () => import('researchhub-lib').then((m) => m.AppView)
 
 export default {
   components: {
     AppCard,
-    AppView
+    AppView,
   },
   props: {
     item: {
       type: Object,
-      default: null
+      default: null,
     },
-    view: Boolean
-  }
+    view: Boolean,
+  },
 }
 </script>

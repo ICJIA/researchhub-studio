@@ -62,9 +62,9 @@ export default {
       showPassword: false,
       loginError: false,
       rules: {
-        required: value => !!value || 'Required.'
+        required: (value) => !!value || 'Required.',
       },
-      valid: true
+      valid: true,
     }
   },
   async mounted() {
@@ -76,7 +76,7 @@ export default {
         this.$store
           .dispatch('auth/login', {
             identifier: this.username,
-            password: this.password
+            password: this.password,
           })
           .then(() => this.$router.push('/'))
           .catch(() => {
@@ -84,12 +84,12 @@ export default {
             NProgress.done()
           })
       }
-    }
+    },
   },
   static: {
     mdiEye,
-    mdiEyeOff
-  }
+    mdiEyeOff,
+  },
 }
 </script>
 

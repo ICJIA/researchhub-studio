@@ -21,12 +21,12 @@ export default {
   props: {
     page: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
   static: {
-    mdiChevronRight
-  }
+    mdiChevronRight,
+  },
 }
 </script>
 

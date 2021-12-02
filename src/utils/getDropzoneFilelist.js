@@ -1,6 +1,6 @@
-export default dropzoneList =>
+export default (dropzoneList) =>
   Object.keys(dropzoneList)
-    .filter(field => field.includes('file'))
+    .filter((field) => field.includes('file'))
     .reduce((arr, field) => [...arr, ...getFile(dropzoneList, field)], [])
 
 const getFile = (dropzoneList, field) => {

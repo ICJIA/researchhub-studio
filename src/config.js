@@ -6,7 +6,7 @@ module.exports = {
     baseURL:
       process.env.VUE_APP_MAIN_BASE_URL ||
       'https://icjia.illinois.gov/researchhub',
-    buildHook: process.env.VUE_APP_MAIN_BUILD_HOOK
+    buildHook: process.env.VUE_APP_MAIN_BUILD_HOOK,
   },
-  publicPath: process.env.VUE_APP_PUBLIC_PATH || '/researchhub/studio/'
+  publicPath: process.env.VUE_APP_PUBLIC_PATH || '/researchhub/studio/',
 }

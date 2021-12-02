@@ -43,18 +43,18 @@ import { initTexmath } from 'researchhub-lib/src/utils/texmath'
 const mdOpts = {
   html: true,
   linkify: true,
-  typographer: true
+  typographer: true,
 }
 
 const mdLinkAttrOpts = {
   attrs: {
-    target: '_blank'
-  }
+    target: '_blank',
+  },
 }
 
 const mdMultimdTableOpts = {
   enableMultilineRows: true,
-  enableRowspan: true
+  enableRowspan: true,
 }
 
 const md = require('markdown-it')(mdOpts)
@@ -77,12 +77,12 @@ export default {
   props: {
     markdown: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
-      markdownLocal: null
+      markdownLocal: null,
     }
   },
   computed: {
@@ -94,7 +94,7 @@ export default {
     },
     preview() {
       return this.$refs.myPreview
-    }
+    },
   },
   async created() {
     await initTexmath()
@@ -119,11 +119,11 @@ export default {
     },
     updateMarkdown() {
       this.$emit('update:markdown', this.markdownLocal)
-    }
+    },
   },
   static: {
-    mdiOpenInNew
-  }
+    mdiOpenInNew,
+  },
 }
 </script>
 

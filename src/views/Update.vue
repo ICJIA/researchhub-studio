@@ -17,7 +17,7 @@ const UpdateStepper = () => import('@/components/UpdateStepper')
 export default {
   components: {
     BaseViewLayout,
-    UpdateStepper
-  }
+    UpdateStepper,
+  },
 }
 </script>

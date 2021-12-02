@@ -1,4 +1,4 @@
-export default async dropzoneList => ({
+export default async (dropzoneList) => ({
   // common (post)
   ...(await getJSON(dropzoneList)),
 
@@ -8,7 +8,7 @@ export default async dropzoneList => ({
   // articles
   ...getImages(dropzoneList),
   ...(await getMarkdown(dropzoneList)),
-  ...(await getSplash(dropzoneList))
+  ...(await getSplash(dropzoneList)),
 })
 
 const getImage = ({ image }) => {
@@ -22,19 +22,15 @@ const getImages = ({ images }) => {
   const files = images.getAcceptedFiles()
   return files.length
     ? {
-        images: files.map(file => ({
+        images: files.map((file) => ({
           title: removeExt(file.name),
-          src: file.dataURL
-        }))
+          src: file.dataURL,
+        })),
       }
     : {}
 }
 
-const removeExt = str =>
-  str
-    .split('.')
-    .slice(0, -1)
-    .join('.')
+const removeExt = (str) => str.split('.').slice(0, -1).join('.')
 
 const getMarkdown = async ({ markdown }) => {
   if (!markdown) return {}
@@ -48,7 +44,7 @@ const getSplash = async ({ splash }) => {
   return files.length
     ? {
         splash: files[0].dataURL,
-        thumbnail: await createThumbnail(files[0].dataURL, 500)
+        thumbnail: await createThumbnail(files[0].dataURL, 500),
       }
     : {}
 }
@@ -58,13 +54,13 @@ const getJSON = async ({ json }) => {
   const files = json.getAcceptedFiles()
   return files.length ? JSON.parse(await readFileAsync(files[0])) : {}
 }
-const calculateBase64Size = input => Math.round(new Blob([input]).size / 1024)
+const calculateBase64Size = (input) => Math.round(new Blob([input]).size / 1024)
 
 const createThumbnail = (input, targetSize) => {
   return new Promise((resolve, reject) => {
     const img = document.createElement('img')
 
-    img.onload = function() {
+    img.onload = function () {
       const size = calculateBase64Size(input)
       const compress = size < 50 ? null : 50 / size
 
@@ -86,7 +82,7 @@ const createThumbnail = (input, targetSize) => {
   })
 }
 
-const readFileAsync = file => {
+const readFileAsync = (file) => {
   return new Promise((resolve, reject) => {
     let reader = new FileReader()
 

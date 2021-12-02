@@ -15,7 +15,7 @@
     <v-card class="font-lato">
       <div class="py-4 text-center large">Select from existing tags</div>
       <v-divider></v-divider>
-      <v-card-text style="height: 300px;">
+      <v-card-text style="height: 300px">
         <v-checkbox
           v-for="tag in tagOptions"
           :key="tag"
@@ -45,7 +45,7 @@ export default {
     return {
       dialog: false,
       tagOptions: [],
-      tags: []
+      tags: [],
     }
   },
   async created() {
@@ -59,10 +59,10 @@ export default {
     onUse() {
       this.$emit('useExistingTags', this.tags.join(', '))
       this.closeDialog()
-    }
+    },
   },
   static: {
-    mdiMagnifyPlusOutline
-  }
+    mdiMagnifyPlusOutline,
+  },
 }
 </script>

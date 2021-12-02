@@ -1,4 +1,4 @@
-export default refs => ({
+export default (refs) => ({
   // common (post)
   ...getDz(refs.DropzoneJson, 'json'),
 
@@ -13,7 +13,7 @@ export default refs => ({
   ...getDz(refs.DropzoneSplash, 'splash'),
 
   // datasets
-  ...getDz(refs.DropzoneDatafile, 'datafile')
+  ...getDz(refs.DropzoneDatafile, 'datafile'),
 })
 
 const getDz = (dz, field) => (dz ? { [field]: dz.$refs.MyDropzone } : {})

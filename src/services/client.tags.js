@@ -33,8 +33,8 @@ const getTagsList = ({ apps, articles, datasets }) => [
   ...new Set([
     ...getFieldSet('tags')(apps),
     ...getFieldSet('tags')(articles),
-    ...getFieldSet('tags')(datasets)
-  ])
+    ...getFieldSet('tags')(datasets),
+  ]),
 ]
 
 /**
@@ -42,4 +42,5 @@ const getTagsList = ({ apps, articles, datasets }) => [
  * @param {String} field
  * @param {[Object]} items
  */
-const getFieldSet = field => items => new Set(items.map(el => el[field]).flat())
+const getFieldSet = (field) => (items) =>
+  new Set(items.map((el) => el[field]).flat())

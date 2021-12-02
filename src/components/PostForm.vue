@@ -20,7 +20,12 @@
         </v-col>
 
         <v-col class="px-4 pt-4" cols="10">
-          <MyDropzone ref="DropzoneJson" file-types=".json" :update="update">
+          <MyDropzone
+            ref="DropzoneJson"
+            key="DropzoneJson"
+            file-types=".json"
+            :update="update"
+          >
             <template #title>{{ 'JSON file' }}</template>
             <template #message>{{ $options.static.dropzoneMsgJson }}</template>
           </MyDropzone>
@@ -28,7 +33,11 @@
 
         <template v-if="contentType === 'apps'">
           <v-col class="px-4 pt-4" cols="10">
-            <MyDropzone ref="DropzoneImage" file-types=".jpg, .jpeg, .png">
+            <MyDropzone
+              ref="DropzoneImage"
+              key="DropzoneImage"
+              file-types=".jpg, .jpeg, .png"
+            >
               <template #title>{{ 'Image' }}</template>
               <template #message>{{
                 $options.static.dropzoneMsgImage
@@ -41,6 +50,7 @@
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
               ref="DropzoneSplash"
+              key="DropzoneSplash"
               file-types=".jpg, .jpeg, .png"
               :update="update"
             >
@@ -54,6 +64,7 @@
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
               ref="DropzoneImages"
+              key="DropzoneImages"
               file-types=".jpg, .jpeg, .png"
               :update="update"
             >
@@ -66,6 +77,7 @@
 
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
+              key="DropzoneMarkdown"
               ref="DropzoneMarkdown"
               file-types=".md"
               :update="update"
@@ -81,6 +93,7 @@
             <v-col class="px-4 pt-4" cols="10">
               <MyDropzone
                 ref="DropzoneMainfile"
+                key="DropzoneMainfile"
                 file-types=".pdf"
                 :max-filesize="5"
                 :update="update"
@@ -95,6 +108,7 @@
             <v-col class="px-4 pt-4" cols="10">
               <MyDropzone
                 ref="DropzoneExtrafile"
+                key="DropzoneExtrafile"
                 :max-filesize="10"
                 :update="update"
               >
@@ -111,6 +125,7 @@
           <v-col class="px-4 pt-4" cols="10">
             <MyDropzone
               ref="DropzoneDatafile"
+              key="DropzoneDatafile"
               file-types=".csv"
               :update="update"
             >
@@ -154,18 +169,18 @@ export default {
   components: {
     BaseForm,
     MyDropzone,
-    PreviewDialog
+    PreviewDialog,
   },
   props: {
     contentType: {
       type: String,
-      default: ''
+      default: '',
     },
     status: {
       type: String,
-      default: ''
+      default: '',
     },
-    update: Boolean
+    update: Boolean,
   },
   data() {
     return {
@@ -173,14 +188,14 @@ export default {
       item: {},
       previewKey: 0,
       statusLocal: this.status,
-      saved: false
+      saved: false,
     }
   },
   computed: {
     ...mapState('content', {
       content: 'item',
-      contentId: 'itemId'
-    })
+      contentId: 'itemId',
+    }),
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
@@ -193,7 +208,7 @@ export default {
     // eslint-disable-next-line no-unused-vars
     status(newStatus, _) {
       if (this.update && newStatus) this.statusLocal = newStatus
-    }
+    },
   },
   mounted() {
     this.dropzoneList = getDropzoneList(this.$refs)
@@ -207,14 +222,14 @@ export default {
         contentType: this.contentType,
         router: this.$router,
         store: this.$store,
-        update: this.update
+        update: this.update,
       })
     },
     async onReset() {
       if (this.update) {
         await this.$store.dispatch('content/fetchItem', {
           contentType: this.contentType,
-          id: this.contentId
+          id: this.contentId,
         })
       } else {
         this.$store.dispatch('content/setItem', {})
@@ -243,17 +258,17 @@ export default {
       const item = {
         status: this.statusLocal,
         ...this.item,
-        ...(await addDropzoneFiles(this.dropzoneList))
+        ...(await addDropzoneFiles(this.dropzoneList)),
       }
       this.$store.dispatch('content/setItem', item)
       await this.$nextTick()
       this.saved = true
       this.rerenderPreview()
-    }
+    },
   },
   static: {
     ...dropzoneMsgs,
-    statusOptions
-  }
+    statusOptions,
+  },
 }
 </script>

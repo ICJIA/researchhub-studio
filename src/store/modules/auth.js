@@ -6,7 +6,7 @@ const namespaced = true
 
 const state = {
   isLoggedIn: false,
-  role: ''
+  role: '',
 }
 
 const mutations = {
@@ -18,20 +18,20 @@ const mutations = {
     state.isLoggedIn = false
     state.role = ''
     logout()
-  }
+  },
 }
 
 const actions = {
   login({ commit }, user) {
     return new Promise((resolve, reject) => {
       login(user).then(
-        res => {
+        (res) => {
           sessionStorage.setItem('token', res.data.jwt)
           sessionStorage.setItem('role', res.data.user.role.name)
           commit('LOGIN')
           resolve(res)
         },
-        error => {
+        (error) => {
           reject(error)
         }
       )
@@ -44,5 +44,5 @@ const actions = {
   logout({ commit }) {
     sessionStorage.clear()
     commit('LOGOUT')
-  }
+  },
 }

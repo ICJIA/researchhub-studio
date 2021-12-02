@@ -5,16 +5,16 @@ export default [
     component: () => import('@/views/Home.vue'),
     meta: {
       auth: true,
-      adminOnly: false
-    }
+      adminOnly: false,
+    },
   },
   {
     path: '/login',
     name: 'login',
     component: () => import('@/views/Login.vue'),
     meta: {
-      auth: false
-    }
+      auth: false,
+    },
   },
   {
     path: '/post-new',
@@ -22,8 +22,8 @@ export default [
     component: () => import('@/views/PostNew.vue'),
     meta: {
       auth: true,
-      adminOnly: true
-    }
+      adminOnly: true,
+    },
   },
   {
     path: '/post-update',
@@ -31,8 +31,8 @@ export default [
     component: () => import('@/views/PostUpdate.vue'),
     meta: {
       auth: true,
-      adminOnly: true
-    }
+      adminOnly: true,
+    },
   },
   {
     path: '/manage',
@@ -40,8 +40,8 @@ export default [
     component: () => import('@/views/Manage.vue'),
     meta: {
       auth: true,
-      adminOnly: false
-    }
+      adminOnly: false,
+    },
   },
   {
     path: '/create',
@@ -49,8 +49,8 @@ export default [
     component: () => import('@/views/Create.vue'),
     meta: {
       auth: true,
-      adminOnly: false
-    }
+      adminOnly: false,
+    },
   },
   {
     path: '/update',
@@ -58,8 +58,8 @@ export default [
     component: () => import('@/views/Update.vue'),
     meta: {
       auth: true,
-      adminOnly: false
-    }
+      adminOnly: false,
+    },
   },
   {
     path: '/page-not-found',
@@ -67,11 +67,11 @@ export default [
     component: () => import('@/views/404.vue'),
     meta: {
       auth: true,
-      adminOnly: false
-    }
+      adminOnly: false,
+    },
   },
   {
     path: '*',
-    redirect: { name: '404' }
-  }
+    redirect: { name: '404' },
+  },
 ]

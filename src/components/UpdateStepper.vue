@@ -80,24 +80,24 @@ export default {
     ContentTypeSelector,
     CreateForm,
     ItemTable,
-    PostForm
+    PostForm,
   },
   props: {
     type: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
-      status: 'submitted'
+      status: 'submitted',
     }
   },
   watch: {
     contentType() {
       this.status = 'submitted'
       resetItem(this.$store)
-    }
+    },
   },
   created() {
     setupStepper(this)
@@ -105,10 +105,10 @@ export default {
   methods: {
     onNavigateBefore(step) {
       if (step.to === 2) resetItem(this.$store)
-    }
+    },
   },
   static: {
-    statusOptions
-  }
+    statusOptions,
+  },
 }
 </script>

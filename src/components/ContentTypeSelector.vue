@@ -17,18 +17,18 @@ export default {
   props: {
     contentTypes: {
       type: Array,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
-      selected: this.contentTypes[0]
+      selected: this.contentTypes[0],
     }
   },
   methods: {
     updateContentType() {
       this.$emit('update:contentType', this.selected)
-    }
-  }
+    },
+  },
 }
 </script>

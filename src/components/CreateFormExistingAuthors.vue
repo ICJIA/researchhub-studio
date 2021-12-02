@@ -15,7 +15,7 @@
     <v-card class="font-lato">
       <div class="py-4 text-center large">Select from existing authors</div>
       <v-divider></v-divider>
-      <v-card-text style="height: 300px;">
+      <v-card-text style="height: 300px">
         <v-checkbox
           v-for="author in authorOptions"
           :key="author"
@@ -45,7 +45,7 @@ export default {
     return {
       dialog: false,
       authorOptions: [],
-      authors: []
+      authors: [],
     }
   },
   async created() {
@@ -60,13 +60,13 @@ export default {
       if (this.authors.length)
         this.$emit(
           'useExistingAuthors',
-          this.authors.map(el => `${el} | ${el} is ...`).join('\n')
+          this.authors.map((el) => `${el} | ${el} is ...`).join('\n')
         )
       this.closeDialog()
-    }
+    },
   },
   static: {
-    mdiMagnifyPlusOutline
-  }
+    mdiMagnifyPlusOutline,
+  },
 }
 </script>

@@ -15,20 +15,20 @@ export default {
   props: {
     path: {
       type: String,
-      default: ''
+      default: '',
     },
     text: {
       type: String,
-      default: 'Go to Author Guide'
-    }
+      default: 'Go to Author Guide',
+    },
   },
   computed: {
     href() {
       return `${main.baseURL}/docs/auth-guide/${this.path}`
-    }
+    },
   },
   static: {
-    mdiHelpCircle
-  }
+    mdiHelpCircle,
+  },
 }
 </script>

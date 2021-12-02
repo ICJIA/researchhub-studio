@@ -51,23 +51,23 @@ export default {
   components: {
     BaseStepper,
     ContentTypeSelector,
-    ItemTable
+    ItemTable,
   },
   props: {
     type: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
-      status: 'submitted'
+      status: 'submitted',
     }
   },
   watch: {
     contentType() {
       this.status = 'submitted'
-    }
+    },
   },
   created() {
     setupStepper(this)
@@ -75,10 +75,10 @@ export default {
   methods: {
     onNavigateBefore() {
       resetItem(this.$store)
-    }
+    },
   },
   static: {
-    statusOptions
-  }
+    statusOptions,
+  },
 }
 </script>

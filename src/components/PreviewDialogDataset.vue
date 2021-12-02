@@ -14,25 +14,25 @@
 </template>
 
 <script>
-const DatasetCard = () => import('researchhub-lib').then(m => m.DatasetCard)
-const DatasetView = () => import('researchhub-lib').then(m => m.DatasetView)
+const DatasetCard = () => import('researchhub-lib').then((m) => m.DatasetCard)
+const DatasetView = () => import('researchhub-lib').then((m) => m.DatasetView)
 
 export default {
   components: {
     DatasetCard,
-    DatasetView
+    DatasetView,
   },
   props: {
     item: {
       type: Object,
-      default: null
+      default: null,
     },
-    view: Boolean
+    view: Boolean,
   },
   methods: {
     nodownloader() {
       alert('⚠️Cannot download files in preview!')
-    }
-  }
+    },
+  },
 }
 </script>

@@ -17,7 +17,7 @@
         <slot name="title"></slot>
       </v-card-title>
 
-      <v-card-text style="font-size: 1em;">
+      <v-card-text style="font-size: 1em">
         <slot name="main"></slot>
       </v-card-text>
 
@@ -37,27 +37,27 @@ export default {
   props: {
     btnName: {
       type: String,
-      default: ''
+      default: '',
     },
     btnType: {
       type: String,
-      default: ''
+      default: '',
     },
     btnCondition: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
-      dialog: false
+      dialog: false,
     }
   },
   methods: {
     onClick() {
       this.$emit('base-event')
       this.dialog = false
-    }
-  }
+    },
+  },
 }
 </script>

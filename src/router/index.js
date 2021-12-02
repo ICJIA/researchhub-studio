@@ -9,7 +9,7 @@ Vue.use(Router)
 const router = new Router({
   base: process.env.BASE_URL,
   mode: 'history',
-  routes
+  routes,
 })
 
 const auth = store.state.auth

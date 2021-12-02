@@ -19,12 +19,12 @@ export default {
   props: {
     task: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   static: {
-    mdiAlert
-  }
+    mdiAlert,
+  },
 }
 </script>
 

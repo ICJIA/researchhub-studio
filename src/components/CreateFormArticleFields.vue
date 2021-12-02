@@ -87,35 +87,35 @@ const CreateFormExistingAuthors = () =>
 
 export default {
   components: {
-    CreateFormExistingAuthors
+    CreateFormExistingAuthors,
   },
   model: {
     prop: 'item',
-    event: 'change'
+    event: 'change',
   },
   props: {
     item: {
       type: Object,
-      default: null
+      default: null,
     },
     rules: {
       type: Object,
-      default: null
+      default: null,
     },
-    update: Boolean
+    update: Boolean,
   },
   data() {
     return {
-      hasFiles: this.mainfiletype !== null
+      hasFiles: this.mainfiletype !== null,
     }
   },
   methods: {
     useExistingAuthors(e) {
       this.$emit('useExistingAuthors', e)
-    }
+    },
   },
   static: {
-    mainfiletypeOptions
-  }
+    mainfiletypeOptions,
+  },
 }
 </script>

@@ -3,7 +3,7 @@ export {
   mainfiletypeOptions,
   statusOptions,
   timeperiodOptions,
-  unitOptions
+  unitOptions,
 }
 
 const categoryOptions = [
@@ -12,7 +12,7 @@ const categoryOptions = [
   'crimes',
   'law enforcement',
   'victims',
-  'other'
+  'other',
 ]
 
 const mainfiletypeOptions = ['full report', 'pdf version']
@@ -23,7 +23,7 @@ const timeperiodOptions = [
   'calendar',
   'fiscal-Federal',
   'fiscal-Illinois',
-  'other'
+  'other',
 ]
 
 const unitOptions = ['national', 'state', 'county', 'municipal', 'other']

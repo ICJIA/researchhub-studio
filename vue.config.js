@@ -12,20 +12,20 @@ const compressionPlugins = [
       return zopfli.gzip(input, compressionOptions, callback)
     },
     compressionOptions: {
-      numiterations: 15
+      numiterations: 15,
     },
     minRatio: 0.99,
-    test: compressionTest
+    test: compressionTest,
   }),
   new BrotliPlugin({
     test: compressionTest,
-    minRatio: 0.99
-  })
+    minRatio: 0.99,
+  }),
 ]
 
 module.exports = {
   publicPath: process.env.NODE_ENV === `production` ? publicPath : '/',
-  configureWebpack: config => {
+  configureWebpack: (config) => {
     config.entry.app = './src/entry.js'
 
     if (process.env.NODE_ENV === `production`) {
@@ -35,5 +35,5 @@ module.exports = {
       config.plugins.push(...compressionPlugins)
     }
   },
-  transpileDependencies: ['researchhub-lib', 'vuetify']
+  transpileDependencies: ['researchhub-lib', 'vuetify'],
 }

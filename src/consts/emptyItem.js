@@ -29,5 +29,5 @@ export default {
   url: null,
   apps: null,
   articles: null,
-  datasets: null
+  datasets: null,
 }

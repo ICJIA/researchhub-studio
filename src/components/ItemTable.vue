@@ -88,7 +88,7 @@ import {
   mdiDeleteForever,
   mdiEye,
   mdiMagnify,
-  mdiPencil
+  mdiPencil,
 } from '@mdi/js'
 import { main } from '@/config'
 
@@ -96,26 +96,26 @@ const PreviewDialog = () => import('@/components/PreviewDialog')
 
 export default {
   components: {
-    PreviewDialog
+    PreviewDialog,
   },
   props: {
     contentType: {
       type: String,
-      default: ''
+      default: '',
     },
     status: {
       type: String,
-      default: ''
+      default: '',
     },
     type: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
       loading: false,
-      search: ''
+      search: '',
     }
   },
   computed: {
@@ -145,7 +145,7 @@ export default {
       return this.loading
         ? `Loading "${this.status}" items...`
         : `No "${this.status}" items.`
-    }
+    },
   },
   watch: {
     contentType() {
@@ -153,7 +153,7 @@ export default {
     },
     status() {
       this.loadItemList()
-    }
+    },
   },
   created() {
     this.loadItemList()
@@ -165,7 +165,7 @@ export default {
     async dispatchAction(action, params) {
       return await this.$store.dispatch(`content/${action}`, {
         contentType: this.contentType,
-        ...params
+        ...params,
       })
     },
     filterDatasets(datasets, role) {
@@ -173,9 +173,9 @@ export default {
         case 'Administrator':
           return datasets
         case 'Author':
-          return datasets.filter(el => el.project)
+          return datasets.filter((el) => el.project)
         case 'Data Manager':
-          return datasets.filter(el => !el.project)
+          return datasets.filter((el) => !el.project)
       }
     },
     async loadItemList() {
@@ -241,34 +241,34 @@ export default {
       const msgFailure = `Failed to update status: ${title}`
 
       this.handleUpdate(res, msgSuccess, msgFailure)
-    }
+    },
   },
   static: {
     headers: [
       {
         text: 'Date',
         align: 'left',
-        value: 'date'
+        value: 'date',
       },
       {
         text: 'Title',
         align: 'left',
-        value: 'title'
+        value: 'title',
       },
       {
         text: 'Actions',
         align: 'right',
         value: 'action',
-        sortable: false
-      }
+        sortable: false,
+      },
     ],
     mdiCheck,
     mdiClose,
     mdiDeleteForever,
     mdiEye,
     mdiMagnify,
-    mdiPencil
-  }
+    mdiPencil,
+  },
 }
 </script>
 

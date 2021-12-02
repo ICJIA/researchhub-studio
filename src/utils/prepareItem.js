@@ -1,4 +1,4 @@
-export default content => ({
+export default (content) => ({
   // common
   ...content,
   ...prepareBase(content),
@@ -10,20 +10,20 @@ export default content => ({
   ...getNoteString(content),
   ...getSourceString(content),
   ...getTimeperiodStrings(content),
-  ...getVariableSTring(content)
+  ...getVariableSTring(content),
 })
 
 const prepareBase = ({ date, tags }) => ({
   date: date.slice(0, 10),
-  tagString: tags ? tags.join(', ') : ''
+  tagString: tags ? tags.join(', ') : '',
 })
 
 const getAuthorString = ({ authors }) =>
   authors
     ? {
         authorString: authors
-          .map(el => `${el.title} | ${el.description}`)
-          .join('\n')
+          .map((el) => `${el.title} | ${el.description}`)
+          .join('\n'),
       }
     : {}
 
@@ -31,14 +31,14 @@ const getTimeperiodStrings = ({ timeperiod }) =>
   timeperiod
     ? {
         timeperiodString: `${timeperiod.yearmin}-${timeperiod.yearmax}`,
-        timeperiodType: timeperiod.yeartype
+        timeperiodType: timeperiod.yeartype,
       }
     : {}
 
 const getSourceString = ({ sources }) =>
   sources
     ? {
-        sourceString: sources.map(el => `${el.title} | ${el.url}`).join('\n')
+        sourceString: sources.map((el) => `${el.title} | ${el.url}`).join('\n'),
       }
     : {}
 
@@ -50,8 +50,8 @@ const getVariableSTring = ({ variables }) =>
     ? {
         variableString: variables
           .map(
-            el => `${el.name} | ${el.type} | ${el.definition} | ${el.values}`
+            (el) => `${el.name} | ${el.type} | ${el.definition} | ${el.values}`
           )
-          .join('\n')
+          .join('\n'),
       }
     : {}

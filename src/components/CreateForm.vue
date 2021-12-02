@@ -17,7 +17,7 @@
             :rules="[
               rules.noLeadingWhitespace,
               rules.noTrailingWhitespace,
-              rules.required
+              rules.required,
             ]"
             @keyup="titleToSlug"
           />
@@ -75,6 +75,7 @@
         <template #image>
           <MyDropzone
             ref="DropzoneImage"
+            key="DropzoneImage"
             file-types=".jpg, .jpeg, .png"
             :update="update"
           >
@@ -94,6 +95,7 @@
         <template #mainfile>
           <MyDropzone
             ref="DropzoneMainfile"
+            key="DropzoneMainfile"
             file-types=".pdf"
             :max-filesize="5"
             :update="update"
@@ -106,6 +108,7 @@
         <template #extrafile>
           <MyDropzone
             ref="DropzoneExtrafile"
+            key="DropzoneExtrafile"
             :max-filesize="10"
             :update="update"
           >
@@ -117,6 +120,7 @@
         <template #splash>
           <MyDropzone
             ref="DropzoneSplash"
+            key="DropzoneSplash"
             file-types=".jpg, .jpeg, .png"
             :max-filesize="0.5"
             :update="update"
@@ -129,6 +133,7 @@
         <template #figures>
           <MyDropzone
             ref="DropzoneImages"
+            key="DropzoneImages"
             file-types=".jpg, .jpeg, .png"
             :max-filesize="0.1"
             :multiple-files="true"
@@ -158,6 +163,7 @@
         <template #datafile>
           <MyDropzone
             ref="DropzoneDatafile"
+            key="DropzoneDatafile"
             file-types=".csv"
             :max-filesize="100"
             :update="update"
@@ -294,14 +300,14 @@ export default {
     DatePicker,
     MarkdownEditor,
     MyDropzone,
-    PreviewDialog
+    PreviewDialog,
   },
   props: {
     contentType: {
       type: String,
-      default: ''
+      default: '',
     },
-    update: Boolean
+    update: Boolean,
   },
   data() {
     return {
@@ -313,23 +319,23 @@ export default {
       item: { ...initItem },
       previewKey: 0,
       rules: {
-        noLeadingWhitespace: value =>
+        noLeadingWhitespace: (value) =>
           value.charAt(0) !== ' ' || 'Delete leading whitespace.',
-        noTrailingWhitespace: value =>
+        noTrailingWhitespace: (value) =>
           value.slice(-1) !== ' ' || 'Delete trailing whitespace.',
-        required: value => !!value || 'Required.',
-        timeperiod: value =>
-          /^\d{4}-\d{4}$/g.test(value) || 'Correct format: yyyy-yyyy'
+        required: (value) => !!value || 'Required.',
+        timeperiod: (value) =>
+          /^\d{4}-\d{4}$/g.test(value) || 'Correct format: yyyy-yyyy',
       },
       saved: false,
-      valid: false
+      valid: false,
     }
   },
   computed: {
     ...mapState('content', {
       content: 'item',
-      contentId: 'itemId'
-    })
+      contentId: 'itemId',
+    }),
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
@@ -338,7 +344,7 @@ export default {
         this.item = prepareItem(newContent)
         this.saved = true
       }
-    }
+    },
   },
   async created() {
     this.appOptions = (await fetchAppsList('published')).data
@@ -357,14 +363,14 @@ export default {
         contentType: this.contentType,
         router: this.$router,
         store: this.$store,
-        update: this.update
+        update: this.update,
       })
     },
     async onReset() {
       if (this.update) {
         await this.$store.dispatch('content/fetchItem', {
           contentType: this.contentType,
-          id: this.contentId
+          id: this.contentId,
         })
       } else {
         this.$store.dispatch('content/setItem', {})
@@ -400,7 +406,7 @@ export default {
       if (this.$refs.form.validate()) {
         const item = {
           ...parseItem(this.item),
-          ...(await addDropzoneFiles(this.dropzoneList))
+          ...(await addDropzoneFiles(this.dropzoneList)),
         }
         this.$store.dispatch('content/setItem', item)
         await this.$nextTick()
@@ -422,11 +428,11 @@ export default {
     useExistingAuthors(e) {
       const { authorString } = this.item
       this.item.authorString = authorString ? `${authorString}\n${e}` : e
-    }
+    },
   },
   static: {
     categoryOptions,
-    ...dropzoneMsgs
-  }
+    ...dropzoneMsgs,
+  },
 }
 </script>

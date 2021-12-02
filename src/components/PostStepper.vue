@@ -29,7 +29,7 @@ export default {
   components: {
     BaseStepper,
     PostForm,
-    ContentTypeSelector
+    ContentTypeSelector,
   },
   created() {
     setupStepper(this)
@@ -37,7 +37,7 @@ export default {
   methods: {
     onNavigateBefore() {
       resetItem(this.$store)
-    }
-  }
+    },
+  },
 }
 </script>

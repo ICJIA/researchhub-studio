@@ -22,11 +22,11 @@ const BaseViewTitle = () => import('@/components/BaseViewTitle')
 
 export default {
   components: {
-    BaseViewTitle
+    BaseViewTitle,
   },
   static: {
     mdiCloseCircle,
-    mdiUndo
-  }
+    mdiUndo,
+  },
 }
 </script>

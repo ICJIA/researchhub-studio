@@ -1,21 +1,21 @@
 import {
   fetchItemById as fetchAppById,
-  fetchItemsList as fetchAppsList
+  fetchItemsList as fetchAppsList,
 } from '@/services/client.apps'
 import {
   fetchItemById as fetchArticleById,
-  fetchItemsList as fetchArticlesList
+  fetchItemsList as fetchArticlesList,
 } from '@/services/client.articles'
 import {
   fetchItemById as fetchDatasetById,
-  fetchItemsList as fetchDatasetsList
+  fetchItemsList as fetchDatasetsList,
 } from '@/services/client.datasets'
 import {
   createItem,
   deleteItem,
   updateItem,
   updateItemStatus,
-  uploadFile
+  uploadFile,
 } from '@/services/client.jobs'
 
 export { namespaced, state, getters, mutations, actions }
@@ -26,24 +26,24 @@ const state = {
   filelist: [],
   item: {},
   itemId: '',
-  itemlist: []
+  itemlist: [],
 }
 
 const getters = {
-  itemToPost: state => {
+  itemToPost: (state) => {
     const item = { ...state.item }
     if (Object.keys(item).length) item.external = false
 
     Object.keys(item)
-      .filter(key => /file$/.test(key))
-      .forEach(key => delete item[key])
+      .filter((key) => /file$/.test(key))
+      .forEach((key) => delete item[key])
 
-    if (item.apps) item.apps = item.apps.map(el => el._id)
-    if (item.articles) item.articles = item.articles.map(el => el._id)
-    if (item.datasets) item.datasets = item.datasets.map(el => el._id)
+    if (item.apps) item.apps = item.apps.map((el) => el._id)
+    if (item.articles) item.articles = item.articles.map((el) => el._id)
+    if (item.datasets) item.datasets = item.datasets.map((el) => el._id)
 
     return item
-  }
+  },
 }
 
 const mutations = {
@@ -58,7 +58,7 @@ const mutations = {
   },
   SET_ITEM_LIST(state, payload) {
     state.itemlist = payload
-  }
+  },
 }
 
 const actions = {
@@ -134,8 +134,8 @@ const actions = {
     return await updateItem(contentType, state.itemId, getters.itemToPost)
   },
   async uploadFiles({ state }, contentType) {
-    state.filelist.forEach(async el => {
+    state.filelist.forEach(async (el) => {
       await uploadFile(contentType, el.field, el.file, state.itemId)
     })
-  }
+  },
 }

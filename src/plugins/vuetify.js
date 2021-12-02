@@ -3,7 +3,7 @@ import Vuetify, {
   VAppBar,
   VFooter,
   VNavigationDrawer,
-  VSpacer
+  VSpacer,
 } from 'vuetify/lib'
 import { ResearchHubLibIcons } from 'researchhub-lib'
 
@@ -12,14 +12,14 @@ Vue.use(Vuetify, {
     VAppBar,
     VFooter,
     VNavigationDrawer,
-    VSpacer
-  }
+    VSpacer,
+  },
 })
 
 export default new Vuetify({
   theme: { disable: true },
   icons: {
     iconfont: 'mdiSvg',
-    values: { ...ResearchHubLibIcons }
-  }
+    values: { ...ResearchHubLibIcons },
+  },
 })

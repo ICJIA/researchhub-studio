@@ -51,12 +51,12 @@ export default {
   props: {
     stepNumTotal: {
       type: Number,
-      default: 1
-    }
+      default: 1,
+    },
   },
   data() {
     return {
-      stepNum: 1
+      stepNum: 1,
     }
   },
   computed: {
@@ -67,7 +67,7 @@ export default {
         this.stepNum == 2 &&
         !Object.keys(item).length
       )
-    }
+    },
   },
   methods: {
     navigateBefore() {
@@ -77,7 +77,7 @@ export default {
 
       this.$emit('stepper-navigate-before', {
         from,
-        to
+        to,
       })
     },
     navigateNext() {
@@ -87,13 +87,13 @@ export default {
 
       this.$emit('stepper-navigate-next', {
         from,
-        to
+        to,
       })
-    }
+    },
   },
   static: {
     mdiChevronLeft,
-    mdiChevronRight
-  }
+    mdiChevronRight,
+  },
 }
 </script>

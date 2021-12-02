@@ -47,21 +47,21 @@ const BaseButtonDialog = () => import('@/components/BaseButtonDialog')
 
 export default {
   components: {
-    BaseButtonDialog
+    BaseButtonDialog,
   },
   props: {
     contentType: {
       type: String,
-      default: ''
+      default: '',
     },
     formType: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
-      stepNum: 1
+      stepNum: 1,
     }
   },
   computed: {
@@ -70,7 +70,7 @@ export default {
     },
     msgMain() {
       return `Make sure to preview the content before you ${this.formType} it!`
-    }
+    },
   },
   static: {
     msgCreate:
@@ -78,7 +78,7 @@ export default {
       ' When you submit a draft, your submission will get a preview link.' +
       ' You may publish your submission once approved.',
     msgWarning:
-      'You will lose the saved work. Are you sure to proceed and reset?'
-  }
+      'You will lose the saved work. Are you sure to proceed and reset?',
+  },
 }
 </script>
