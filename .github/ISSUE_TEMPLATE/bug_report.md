@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help ICJIA improve
+about: Create a researchHub bug report
 title: ''
 labels: ''
 assignees: cschweda
