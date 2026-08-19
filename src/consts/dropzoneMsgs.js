@@ -1,5 +1,5 @@
 export default {
-  dropzoneMsgCsv: 'Drop a CSV file here to upload',
+  dropzoneMsgCsv: 'Drop a CSV or Excel (XLSX/XLS) file here to upload',
   dropzoneMsgFile: 'Drop a file here to upload',
   dropzoneMsgImage: 'Drop an image (JPEG or PNG only) here to upload',
   dropzoneMsgImages: 'Drop images (JPEG or PNG only) here to upload',

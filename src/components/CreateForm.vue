@@ -164,7 +164,7 @@
           <MyDropzone
             ref="DropzoneDatafile"
             key="DropzoneDatafile"
-            file-types=".csv"
+            file-types=".csv, .xlsx, .xls"
             :max-filesize="100"
             :update="update"
           >

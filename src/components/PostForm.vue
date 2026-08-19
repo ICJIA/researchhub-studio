@@ -126,7 +126,7 @@
             <MyDropzone
               ref="DropzoneDatafile"
               key="DropzoneDatafile"
-              file-types=".csv"
+              file-types=".csv, .xlsx, .xls"
               :update="update"
             >
               <template #title>{{ 'Data file' }}</template>
